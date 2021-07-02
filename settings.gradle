@@ -1,0 +1,2 @@
+include ':resource-locator', ":resource-locator-api"
+rootProject.name = 'resource-locator'

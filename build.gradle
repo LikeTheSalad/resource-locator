@@ -1,0 +1,28 @@
+buildscript {
+    ext {
+        kotlin_version = '1.4.32'
+    }
+    repositories {
+        mavenCentral()
+        google()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+ext {
+    junit_version = '4.13.2'
+}
+
+group 'com.likethesalad.android'
+version '1.0.0-SNAPSHOT'
+
+subprojects {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}

@@ -1,4 +1,4 @@
-package com.likethesalad.api.resourcelocator.utils
+package com.likethesalad.tools.resourcelocator.api.utils
 
 class AttributeContainer {
 

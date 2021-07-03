@@ -1,6 +1,6 @@
-package com.likethesalad.api.resourcelocator
+package com.likethesalad.tools.resourcelocator.api
 
-import com.likethesalad.api.resourcelocator.utils.AttributeContainer
+import com.likethesalad.tools.resourcelocator.api.utils.AttributeContainer
 
 interface Resource<T : Any> {
     fun getValue(): T

@@ -17,9 +17,9 @@ import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 
-class AndroidXmlResDocument(val document: Document) {
+class AndroidXmlResDocument(private val document: Document) {
 
-    val resources: Element = getOrCreateResources()
+    private val resources: Element by lazy { getOrCreateResources() }
 
     fun saveToFile(file: File, indentSpaces: Int = 4) {
         val transformerFactory = TransformerFactory.newInstance()

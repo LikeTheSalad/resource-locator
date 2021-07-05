@@ -8,6 +8,8 @@ dependencies {
     implementation project(":resource-locator-api")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compileOnly "com.google.dagger:dagger:$dagger_version"
+    compileOnly "com.google.auto.factory:auto-factory:$autoFactory_version"
+    kapt "com.google.auto.factory:auto-factory:$autoFactory_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     testImplementation "junit:junit:$junit_version"
 }

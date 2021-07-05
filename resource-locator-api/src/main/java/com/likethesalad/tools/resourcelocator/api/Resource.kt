@@ -1,10 +1,10 @@
 package com.likethesalad.tools.resourcelocator.api
 
-import com.likethesalad.tools.resourcelocator.api.utils.AttributeContainer
+import com.likethesalad.tools.resourcelocator.api.data.AttributeContainer
+import com.likethesalad.tools.resourcelocator.api.data.Value
 
 interface Resource<T : Any> {
-    fun getValue(): T
-    fun setValue(value: T)
+    fun value(): Value<T>
     fun attributes(): AttributeContainer
-    fun getScope(): ResourceScope
+    fun scope(): ResourceScope
 }

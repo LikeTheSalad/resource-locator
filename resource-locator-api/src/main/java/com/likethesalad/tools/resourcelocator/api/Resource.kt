@@ -6,5 +6,5 @@ interface Resource<T : Any> {
     fun getValue(): T
     fun setValue(value: T)
     fun attributes(): AttributeContainer
-    fun getScope()
+    fun getScope(): ResourceScope
 }

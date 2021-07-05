@@ -1,11 +1,14 @@
 plugins {
     id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
+    id 'kotlin-kapt'
 }
 
 dependencies {
     implementation project(":resource-locator-api")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compileOnly "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     testImplementation "junit:junit:$junit_version"
 }
 

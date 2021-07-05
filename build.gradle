@@ -15,6 +15,7 @@ buildscript {
 
 ext {
     junit_version = '4.13.2'
+    dagger_version = '2.37'
 }
 
 group 'com.likethesalad.android'

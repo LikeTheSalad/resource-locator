@@ -9,6 +9,8 @@ import org.w3c.dom.NodeList
 import org.xml.sax.InputSource
 import java.io.File
 import java.io.StringReader
+import javax.inject.Inject
+import javax.inject.Singleton
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.OutputKeys
 import javax.xml.transform.TransformerFactory
@@ -55,7 +57,8 @@ class AndroidXmlResDocument(val document: Document) {
         return resources
     }
 
-    class Factory(private val documentBuilderFactory: DocumentBuilderFactory) {
+    @Singleton
+    class Factory @Inject constructor(private val documentBuilderFactory: DocumentBuilderFactory) {
 
         fun fromFile(xmlFile: File): AndroidXmlResDocument {
             val dBuilder = documentBuilderFactory.newDocumentBuilder()

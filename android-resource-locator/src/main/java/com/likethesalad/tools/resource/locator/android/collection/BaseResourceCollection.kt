@@ -5,11 +5,10 @@ import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 
 open class BaseResourceCollection<out T : Resource<out Any>>(
+    private val resources: List<T>,
     private val source: Any,
     private val scope: ResourceScope
 ) : ResourceCollection<T> {
-
-    private val resources = mutableListOf<T>()
 
     override fun getResources(): List<T> = resources
 

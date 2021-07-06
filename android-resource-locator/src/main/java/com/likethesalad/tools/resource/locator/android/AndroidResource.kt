@@ -4,8 +4,8 @@ import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.api.data.AttributeContainer
 import com.likethesalad.tools.resource.api.data.Value
-import com.likethesalad.tools.resource.api.data.impl.DefaultAttributeContainer
-import com.likethesalad.tools.resource.api.data.impl.DefaultValue
+import com.likethesalad.tools.resource.locator.android.data.DefaultAttributeContainer
+import com.likethesalad.tools.resource.locator.android.data.DefaultValue
 
 open class AndroidResource<T : Any>(
     val name: String,

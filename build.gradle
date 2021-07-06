@@ -19,7 +19,7 @@ ext {
     autoFactory_version = '1.0.1'
 }
 
-group 'com.likethesalad.android'
+group 'com.likethesalad.tools'
 version '1.0.0-SNAPSHOT'
 
 subprojects {

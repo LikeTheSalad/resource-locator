@@ -13,6 +13,7 @@ dependencies {
     kapt "com.google.auto.factory:auto-factory:$autoFactory_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     testImplementation "junit:junit:$junit_version"
+    testImplementation "com.google.truth:truth:1.0.1"
 }
 
 compileKotlin {

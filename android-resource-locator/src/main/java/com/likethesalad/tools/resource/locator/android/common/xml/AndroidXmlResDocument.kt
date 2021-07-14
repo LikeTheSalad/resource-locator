@@ -47,6 +47,10 @@ class AndroidXmlResDocument(private val document: Document) {
         }
     }
 
+    fun getElementsByTagName(name: String): NodeList {
+        return resources.getElementsByTagName(name)
+    }
+
     private fun getOrCreateResources(): Element {
         val resourcesList = document.getElementsByTagName(XML_RESOURCES_TAG)
         if (resourcesList.length > 0) {

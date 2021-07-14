@@ -9,11 +9,12 @@ import com.likethesalad.tools.resource.locator.android.data.DefaultValue
 import java.util.Objects
 
 open class AndroidResource<T : Any>(
-    val name: String,
+    attributes: Map<String, String>,
     value: T,
     private val scope: AndroidResourceScope
 ) : Resource<T> {
 
+    val name: String
     private val attributeContainer = DefaultAttributeContainer()
     private val internalValue = DefaultValue(value)
 
@@ -22,8 +23,14 @@ open class AndroidResource<T : Any>(
     }
 
     init {
-        attributeContainer.set(ATTR_NAME, name)
+        for ((key, attribute) in attributes) {
+            attributeContainer.set(key, attribute)
+        }
+        name = attributeContainer.get(ATTR_NAME)!!
     }
+
+    constructor(name: String, value: T, scope: AndroidResourceScope)
+            : this(mapOf(ATTR_NAME to name), value, scope)
 
     fun getAndroidScope(): AndroidResourceScope {
         return scope() as AndroidResourceScope

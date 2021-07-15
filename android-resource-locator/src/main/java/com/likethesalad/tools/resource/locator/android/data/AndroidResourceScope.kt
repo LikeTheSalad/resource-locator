@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android
+package com.likethesalad.tools.resource.locator.android.data
 
 import com.likethesalad.tools.resource.api.ResourceScope
 

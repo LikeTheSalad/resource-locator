@@ -1,11 +1,9 @@
-package com.likethesalad.tools.resource.locator.android
+package com.likethesalad.tools.resource.locator.android.data
 
 import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.api.data.AttributeContainer
 import com.likethesalad.tools.resource.api.data.Value
-import com.likethesalad.tools.resource.locator.android.data.DefaultAttributeContainer
-import com.likethesalad.tools.resource.locator.android.data.DefaultValue
 import java.util.Objects
 
 open class AndroidResource<T : Any>(

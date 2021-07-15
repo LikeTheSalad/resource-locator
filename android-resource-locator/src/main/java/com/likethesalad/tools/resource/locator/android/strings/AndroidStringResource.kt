@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.locator.android.strings
 
-import com.likethesalad.tools.resource.locator.android.AndroidResource
-import com.likethesalad.tools.resource.locator.android.AndroidResourceScope
+import com.likethesalad.tools.resource.locator.android.data.AndroidResource
+import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
 
 class AndroidStringResource : AndroidResource<String> {
 

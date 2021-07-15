@@ -1,6 +1,8 @@
 package com.likethesalad.tools.resource.locator.android
 
 import com.google.common.truth.Truth
+import com.likethesalad.tools.resource.locator.android.data.AndroidResource
+import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
 import org.junit.Test
 
 class AndroidResourceTest {

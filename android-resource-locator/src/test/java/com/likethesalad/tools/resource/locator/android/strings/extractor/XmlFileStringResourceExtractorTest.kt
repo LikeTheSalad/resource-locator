@@ -1,8 +1,8 @@
 package com.likethesalad.tools.resource.locator.android.strings.extractor
 
 import com.google.common.truth.Truth
-import com.likethesalad.tools.resource.locator.android.AndroidResourceScope
 import com.likethesalad.tools.resource.locator.android.common.xml.AndroidXmlResDocument
+import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
 import com.likethesalad.tools.resource.locator.android.strings.AndroidStringResource
 import com.likethesalad.tools.resource.locator.android.testutils.DummyResourcesFinder
 import org.junit.Test

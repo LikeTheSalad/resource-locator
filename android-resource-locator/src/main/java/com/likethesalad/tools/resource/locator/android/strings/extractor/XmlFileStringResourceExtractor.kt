@@ -1,9 +1,9 @@
 package com.likethesalad.tools.resource.locator.android.strings.extractor
 
 import com.likethesalad.tools.resource.extractor.ResourceExtractor
-import com.likethesalad.tools.resource.locator.android.AndroidResourceScope
 import com.likethesalad.tools.resource.locator.android.common.xml.AndroidXmlResDocument
 import com.likethesalad.tools.resource.locator.android.common.xml.Constants.XML_STRING_TAG
+import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
 import com.likethesalad.tools.resource.locator.android.strings.AndroidStringResource
 import com.likethesalad.tools.resource.locator.android.strings.collection.FileStringResourceCollection
 import org.w3c.dom.Node

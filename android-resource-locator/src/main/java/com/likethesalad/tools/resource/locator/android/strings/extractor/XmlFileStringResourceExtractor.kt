@@ -1,11 +1,11 @@
 package com.likethesalad.tools.resource.locator.android.strings.extractor
 
 import com.likethesalad.tools.resource.extractor.ResourceExtractor
+import com.likethesalad.tools.resource.locator.android.collection.FileResourceCollection
 import com.likethesalad.tools.resource.locator.android.common.xml.AndroidXmlResDocument
 import com.likethesalad.tools.resource.locator.android.common.xml.Constants.XML_STRING_TAG
 import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
 import com.likethesalad.tools.resource.locator.android.strings.AndroidStringResource
-import com.likethesalad.tools.resource.locator.android.strings.collection.FileStringResourceCollection
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import java.io.File
@@ -16,11 +16,11 @@ class XmlFileStringResourceExtractor(
     private val xmlDocumentFactory: AndroidXmlResDocument.Factory
 ) : ResourceExtractor<AndroidStringResource> {
 
-    override fun extract(): FileStringResourceCollection {
+    override fun extract(): FileResourceCollection {
         val document = xmlDocumentFactory.fromFile(xmlFile)
         val resources = getAndroidStringResources(document)
 
-        return FileStringResourceCollection(resources, xmlFile, scope)
+        return FileResourceCollection(resources, xmlFile, scope)
     }
 
     private fun getAndroidStringResources(document: AndroidXmlResDocument): List<AndroidStringResource> {

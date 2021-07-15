@@ -3,18 +3,16 @@ package com.likethesalad.tools.resource.locator.android.data
 import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.api.data.AttributeContainer
-import com.likethesalad.tools.resource.api.data.Value
 import java.util.Objects
 
-open class AndroidResource<T : Any>(
+abstract class AndroidResource<T : Any>(
     attributes: Map<String, String>,
-    value: T,
+    private val value: T,
     private val scope: AndroidResourceScope
-) : Resource<T> {
+) : Resource {
 
     val name: String
     private val attributeContainer = DefaultAttributeContainer()
-    private val internalValue = DefaultValue(value)
 
     companion object {
         private const val ATTR_NAME = "name"
@@ -38,10 +36,10 @@ open class AndroidResource<T : Any>(
 
     override fun scope(): ResourceScope = scope
 
-    override fun value(): Value<T> = internalValue
+    override fun value(): Any = value
 
     override fun hashCode(): Int {
-        return Objects.hash(name, scope, attributeContainer, internalValue)
+        return Objects.hash(name, scope, attributeContainer, value)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -49,7 +47,7 @@ open class AndroidResource<T : Any>(
         if (other !is AndroidResource<*>) return false
 
         if (name != other.name) return false
-        if (internalValue != other.internalValue) return false
+        if (value != other.value) return false
         if (scope != other.scope) return false
         if (attributeContainer != other.attributeContainer) return false
 

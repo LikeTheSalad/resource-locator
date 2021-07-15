@@ -4,11 +4,11 @@ import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.ResourceScope
 import java.io.File
 
-open class FileResourceCollection<out T : Resource<out Any>>(
-    resources: List<T>,
+open class FileResourceCollection(
+    resources: List<Resource>,
     source: File,
     scope: ResourceScope
-) : BaseResourceCollection<T>(resources, source, scope) {
+) : BaseResourceCollection(resources, source, scope) {
 
     fun getFileSource(): File = getSource() as File
 }

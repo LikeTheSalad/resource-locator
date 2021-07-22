@@ -1,2 +1,2 @@
-include ':android-resource-locator', ":resource-extractor", ":resource-merger", ":resource-api"
+include ':android-resource-locator', ":resource-extractor", ":resource-api"
 rootProject.name = 'resource-locator'

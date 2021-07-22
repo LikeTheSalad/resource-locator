@@ -1,10 +1,11 @@
 package com.likethesalad.tools.resource.locator.android.strings.extractor
 
 import com.google.common.truth.Truth
-import com.likethesalad.tools.resource.locator.android.common.xml.AndroidXmlResDocument
 import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
-import com.likethesalad.tools.resource.locator.android.strings.AndroidStringResource
+import com.likethesalad.tools.resource.locator.android.modules.strings.data.AndroidStringResource
+import com.likethesalad.tools.resource.locator.android.modules.strings.extractor.XmlFileStringResourceExtractor
 import com.likethesalad.tools.resource.locator.android.testutils.DummyResourcesFinder
+import com.likethesalad.tools.resource.locator.android.tools.xml.AndroidXmlResDocument
 import org.junit.Test
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory

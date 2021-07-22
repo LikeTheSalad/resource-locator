@@ -1,6 +1,6 @@
-package com.likethesalad.tools.resource.locator.android.common.xml
+package com.likethesalad.tools.resource.locator.android.tools.xml
 
-import com.likethesalad.tools.resource.locator.android.common.xml.Constants.XML_RESOURCES_TAG
+import com.likethesalad.tools.resource.locator.android.tools.xml.Constants.XML_RESOURCES_TAG
 import org.w3c.dom.DOMException
 import org.w3c.dom.Document
 import org.w3c.dom.Element

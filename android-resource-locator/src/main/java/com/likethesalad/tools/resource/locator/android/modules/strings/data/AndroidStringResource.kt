@@ -1,9 +1,9 @@
-package com.likethesalad.tools.resource.locator.android.strings
+package com.likethesalad.tools.resource.locator.android.modules.strings.data
 
 import com.likethesalad.tools.resource.api.data.ResourceType
-import com.likethesalad.tools.resource.locator.android.common.AndroidResourceType
 import com.likethesalad.tools.resource.locator.android.data.AndroidResource
 import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
+import com.likethesalad.tools.resource.locator.android.data.AndroidResourceType
 
 class AndroidStringResource : AndroidResource<String> {
 

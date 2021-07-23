@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.locator.android.modules.strings.extractor
 
-import com.likethesalad.tools.resource.extractor.ResourceExtractor
+import com.likethesalad.tools.resource.collector.ResourceExtractor
 import com.likethesalad.tools.resource.locator.android.collection.FileResourceCollection
 import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
 import com.likethesalad.tools.resource.locator.android.modules.strings.data.AndroidStringResource

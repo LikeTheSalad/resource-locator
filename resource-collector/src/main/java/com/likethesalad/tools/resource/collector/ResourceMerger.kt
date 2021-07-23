@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.extractor
+package com.likethesalad.tools.resource.collector
 
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 

@@ -1,6 +1,7 @@
-package com.likethesalad.tools.resource.extractor
+package com.likethesalad.tools.resource.collector
 
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
+import com.likethesalad.tools.resource.collector.source.ResourceSourceContainer
 
 abstract class ResourceCollector {
 
@@ -16,7 +17,7 @@ abstract class ResourceCollector {
         return getMerger().merge(collections)
     }
 
-    abstract fun getSourceProvider(): ResourceSourceProvider
+    abstract fun getSourceProvider(): ResourceSourceContainer
 
     abstract fun getExtractors(): List<ResourceExtractor>
 

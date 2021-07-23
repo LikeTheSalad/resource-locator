@@ -1,5 +1,5 @@
 package com.likethesalad.tools.resource.collector.source
 
-interface ResourceSourceContainer {
+interface ResourceSourceProvider {
     fun getSources(): List<ResourceSource>
 }

@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.collector
+package com.likethesalad.tools.resource.collector.merger
 
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 

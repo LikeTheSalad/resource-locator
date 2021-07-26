@@ -9,4 +9,5 @@ interface ResourceCollection {
     fun getResourcesByType(type: ResourceType): List<Resource>
     fun getSource(): Any
     fun getScope(): ResourceScope
+    fun isEmpty(): Boolean
 }

@@ -1,7 +1,6 @@
-package com.likethesalad.tools.resource.locator.android.tools.android
+package com.likethesalad.tools.resource.locator.android.data.resdir
 
 import com.likethesalad.tools.resource.api.android.data.AndroidVariant
-import com.likethesalad.tools.resource.locator.android.data.android.ResDirContainer
 
 class ResDirFinder {
 

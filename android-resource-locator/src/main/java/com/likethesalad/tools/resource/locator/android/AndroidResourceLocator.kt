@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.locator.android
 
 import com.likethesalad.tools.resource.api.android.data.AndroidVariant
-import com.likethesalad.tools.resource.locator.android.data.language.LanguageResourceContainer
+import com.likethesalad.tools.resource.locator.android.data.LanguageResourceContainer
 
 class AndroidResourceLocator {
 

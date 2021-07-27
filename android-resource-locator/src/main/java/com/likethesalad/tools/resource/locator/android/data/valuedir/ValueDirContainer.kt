@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android.data.android
+package com.likethesalad.tools.resource.locator.android.data.valuedir
 
 import com.likethesalad.tools.resource.api.android.data.Language
 import java.io.File

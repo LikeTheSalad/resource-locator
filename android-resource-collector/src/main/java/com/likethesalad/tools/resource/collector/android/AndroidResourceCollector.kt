@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android.modules.collector
+package com.likethesalad.tools.resource.collector.android
 
 import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractorProvider

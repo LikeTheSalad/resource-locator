@@ -1,6 +1,6 @@
-package com.likethesalad.tools.resource.locator.android.tools.xml
+package com.likethesalad.tools.resource.collector.android.data
 
-import com.likethesalad.tools.resource.locator.android.tools.xml.Constants.XML_RESOURCES_TAG
+import com.likethesalad.tools.resource.collector.android.data.Constants.XML_RESOURCES_TAG
 import org.w3c.dom.DOMException
 import org.w3c.dom.Document
 import org.w3c.dom.Element
@@ -9,8 +9,6 @@ import org.w3c.dom.NodeList
 import org.xml.sax.InputSource
 import java.io.File
 import java.io.StringReader
-import javax.inject.Inject
-import javax.inject.Singleton
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.OutputKeys
 import javax.xml.transform.TransformerFactory
@@ -61,8 +59,7 @@ class AndroidXmlResDocument(private val document: Document) {
         return resources
     }
 
-    @Singleton
-    class Factory @Inject constructor(private val documentBuilderFactory: DocumentBuilderFactory) {
+    class Factory constructor(private val documentBuilderFactory: DocumentBuilderFactory) {
 
         fun fromFile(xmlFile: File): AndroidXmlResDocument {
             val dBuilder = documentBuilderFactory.newDocumentBuilder()

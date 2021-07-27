@@ -1,11 +1,11 @@
-package com.likethesalad.tools.resource.locator.android.modules.collector.extractor
+package com.likethesalad.tools.resource.collector.android.extractor
 
 import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
+import com.likethesalad.tools.resource.collector.android.collection.FileResourceCollection
+import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
+import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractor
-import com.likethesalad.tools.resource.locator.android.collection.FileResourceCollection
-import com.likethesalad.tools.resource.locator.android.modules.collector.source.AndroidXmlResourceSource
-import com.likethesalad.tools.resource.locator.android.tools.xml.AndroidXmlResDocument
 
 abstract class XmlResourceExtractor<T : AndroidResource<out Any>> : ResourceExtractor<AndroidXmlResourceSource>() {
 

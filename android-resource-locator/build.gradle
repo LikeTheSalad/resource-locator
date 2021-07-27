@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     implementation project(":android-resource-api")
-    implementation project(":resource-collector")
+    implementation project(":android-resource-collector")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compileOnly "com.google.dagger:dagger:$dagger_version"
     compileOnly "com.google.auto.factory:auto-factory:$autoFactory_version"

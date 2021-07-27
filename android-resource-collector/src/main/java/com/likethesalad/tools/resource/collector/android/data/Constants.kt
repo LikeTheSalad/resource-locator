@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android.tools.xml
+package com.likethesalad.tools.resource.collector.android.data
 
 object Constants {
     const val XML_STRING_TAG = "string"

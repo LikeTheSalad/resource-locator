@@ -1,11 +1,10 @@
-package com.likethesalad.tools.resource.api.android.collection
+package com.likethesalad.tools.resource.api.collection
 
 import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.ResourceScope
-import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.api.data.ResourceType
 
-open class BaseResourceCollection(
+open class BasicResourceCollection(
     private val resources: List<Resource>,
     private val source: Any,
     private val scope: ResourceScope

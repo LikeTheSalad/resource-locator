@@ -17,6 +17,8 @@ open class BaseResourceCollection(
 
     override fun getScope(): ResourceScope = scope
 
+    override fun isEmpty(): Boolean = resources.isEmpty()
+
     override fun getResourcesByType(type: ResourceType): List<Resource> {
         return resources.filter { it.type() == type }
     }

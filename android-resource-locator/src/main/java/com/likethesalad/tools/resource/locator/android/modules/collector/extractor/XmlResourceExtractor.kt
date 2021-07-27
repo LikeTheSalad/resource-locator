@@ -2,11 +2,18 @@ package com.likethesalad.tools.resource.locator.android.modules.collector.extrac
 
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractor
-import com.likethesalad.tools.resource.locator.android.modules.collector.source.XmlResourceSource
+import com.likethesalad.tools.resource.locator.android.collection.FileResourceCollection
+import com.likethesalad.tools.resource.locator.android.data.AndroidResource
+import com.likethesalad.tools.resource.locator.android.modules.collector.source.AndroidXmlResourceSource
+import com.likethesalad.tools.resource.locator.android.tools.xml.AndroidXmlResDocument
 
-class XmlResourceExtractor : ResourceExtractor<XmlResourceSource>() {
+abstract class XmlResourceExtractor<T : AndroidResource<out Any>> : ResourceExtractor<AndroidXmlResourceSource>() {
 
-    override fun doExtract(source: XmlResourceSource): ResourceCollection {
-        TODO("Not yet implemented")
+    override fun doExtract(source: AndroidXmlResourceSource): ResourceCollection {
+        val resources = getResourcesFromAndroidDocument(source.document)
+
+        return FileResourceCollection(resources, source.getFileSource(), source.getScope())
     }
+
+    abstract fun getResourcesFromAndroidDocument(document: AndroidXmlResDocument): List<T>
 }

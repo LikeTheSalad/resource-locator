@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android.data.language
+package com.likethesalad.tools.resource.api.android.data
 
 sealed class Language(val id: String) {
     object Default : Language("main")

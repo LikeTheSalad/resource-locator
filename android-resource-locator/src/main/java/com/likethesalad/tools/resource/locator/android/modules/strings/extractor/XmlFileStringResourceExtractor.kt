@@ -1,8 +1,8 @@
 package com.likethesalad.tools.resource.locator.android.modules.strings.extractor
 
+import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.collection.FileResourceCollection
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractor
-import com.likethesalad.tools.resource.locator.android.collection.FileResourceCollection
-import com.likethesalad.tools.resource.locator.android.data.AndroidResourceScope
 import com.likethesalad.tools.resource.locator.android.modules.strings.data.AndroidStringResource
 import com.likethesalad.tools.resource.locator.android.tools.xml.AndroidXmlResDocument
 import com.likethesalad.tools.resource.locator.android.tools.xml.Constants.XML_STRING_TAG

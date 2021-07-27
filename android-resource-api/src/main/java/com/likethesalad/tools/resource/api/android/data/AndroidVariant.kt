@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android.data.android
+package com.likethesalad.tools.resource.api.android.data
 
 sealed class AndroidVariant(val name: String) {
     object Default : AndroidVariant("main")

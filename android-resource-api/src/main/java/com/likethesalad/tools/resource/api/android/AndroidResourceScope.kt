@@ -1,8 +1,8 @@
-package com.likethesalad.tools.resource.locator.android.data
+package com.likethesalad.tools.resource.api.android
 
 import com.likethesalad.tools.resource.api.ResourceScope
-import com.likethesalad.tools.resource.locator.android.data.android.AndroidVariant
-import com.likethesalad.tools.resource.locator.android.data.language.Language
+import com.likethesalad.tools.resource.api.android.data.AndroidVariant
+import com.likethesalad.tools.resource.api.android.data.Language
 
 data class AndroidResourceScope(
     val variant: AndroidVariant,

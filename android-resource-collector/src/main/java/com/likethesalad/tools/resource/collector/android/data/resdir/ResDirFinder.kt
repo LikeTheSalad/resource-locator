@@ -5,6 +5,6 @@ import com.likethesalad.tools.resource.api.android.environment.Variant
 class ResDirFinder {
 
     fun findResDirs(variant: Variant): List<ResDir> {
-
+        TODO("Not yet implemented")
     }
 }

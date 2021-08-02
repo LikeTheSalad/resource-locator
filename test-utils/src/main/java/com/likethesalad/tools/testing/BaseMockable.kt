@@ -3,7 +3,7 @@ package com.likethesalad.tools.testing
 import io.mockk.MockKAnnotations
 import org.junit.Before
 
-class BaseMockable {
+open class BaseMockable {
 
     @Before
     fun setUpMockks() {

@@ -6,6 +6,7 @@ plugins {
 dependencies {
     api "junit:junit:$junit_version"
     api "io.mockk:mockk:$mockk_version"
+    api "com.google.truth:truth:$googleTruth_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 

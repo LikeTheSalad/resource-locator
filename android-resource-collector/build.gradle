@@ -7,7 +7,7 @@ dependencies {
     api project(':resource-collector')
     implementation project(':android-resource-api')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testImplementation "junit:junit:$junit_version"
+    testImplementation project(":test-utils")
 }
 
 compileKotlin {

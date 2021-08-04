@@ -5,7 +5,64 @@ import com.likethesalad.tools.resource.collector.android.helpers.AndroidVariantH
 
 class VariantTree(private val androidVariantHelper: AndroidVariantHelper) {
 
-    fun getVariants(): List<Variant> {
-        TODO("Not yet implemented")
+    private val flavors by lazy {
+        androidVariantHelper.getVariantFlavors()
+    }
+
+    private val variantName by lazy {
+        androidVariantHelper.getVariantName()
+    }
+
+    private val variantType by lazy {
+        androidVariantHelper.getVariantType()
+    }
+
+    private val variantNames = mutableListOf<String>()
+
+    init {
+        variantNames.add(Variant.Default.name)
+        addFlavorPaths()
+        addVariantNameWithoutType()
+        addVariantType()
+        addFullVariantName()
+    }
+
+    private val variantList: List<Variant> by lazy {
+        variantNames.map { Variant.Custom(it) }
+    }
+
+    fun getVariants(): List<Variant> = variantList
+
+    private fun addFullVariantName() {
+        if (flavors.isNotEmpty()) {
+            variantNames.add(variantName)
+        }
+    }
+
+    private fun addVariantType() {
+        variantNames.add(variantType)
+    }
+
+    private fun addVariantNameWithoutType() {
+        getMergedFlavorsLowerCamelCase()?.let {
+            variantNames.add(it)
+        }
+    }
+
+    private fun addFlavorPaths() {
+        for (it in flavors.reversed()) {
+            variantNames.add(it)
+        }
+    }
+
+    private fun getMergedFlavorsLowerCamelCase(): String? {
+        if (flavors.size < 2) {
+            return null
+        }
+        var result = flavors.first()
+        for (it in flavors.drop(1)) {
+            result += it.capitalize()
+        }
+        return result
     }
 }

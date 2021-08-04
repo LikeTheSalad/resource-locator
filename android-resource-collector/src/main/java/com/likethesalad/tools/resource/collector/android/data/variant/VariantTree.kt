@@ -65,4 +65,28 @@ class VariantTree(private val androidVariantHelper: AndroidVariantHelper) {
         }
         return result
     }
+
+    fun compare(comparable: Variant): Comparator {
+        TODO("Not yet implemented")
+    }
+
+    class Comparator private constructor(
+        private val comparable: Variant,
+        private val variantsInOrder: List<Variant>
+    ) {
+        fun isParentOf(variant: Variant): Boolean {
+            TODO("Not yet implemented")
+        }
+
+        fun isChildOf(variant: Variant): Boolean {
+            TODO("Not yet implemented")
+        }
+
+        enum class Comparison {
+            EQUAL,
+            PARENT,
+            CHILD,
+            UNKNOWN
+        }
+    }
 }

@@ -53,6 +53,22 @@ class VariantTreeTest : BaseMockable() {
         )
     }
 
+    @Test
+    fun `Compare variants`() {
+        val comparable = Variant.Custom("demoStable")
+        val child = Variant.Custom("debug")
+        val parent = Variant.Custom("demo")
+        val variantTree = createInstance(
+            "demoStableDebug",
+            listOf("demo", "stable"), "debug"
+        )
+
+        val comparison = variantTree.compare(comparable)
+
+        Truth.assertThat(comparison.isParentOf(child)).isTrue()
+        Truth.assertThat(comparison.isChildOf(parent)).isTrue()
+    }
+
     private fun validateTreeOrder(
         variantName: String,
         flavors: List<String>,
@@ -60,12 +76,21 @@ class VariantTreeTest : BaseMockable() {
         vararg expectedVariantNames: String
     ) {
         val expectedVariants = expectedVariantNames.map { Variant.Custom(it) }
+
+        val variantTree = createInstance(variantName, flavors, suffix)
+
+        Truth.assertThat(variantTree.getVariants()).containsExactlyElementsIn(expectedVariants).inOrder()
+    }
+
+    private fun createInstance(
+        variantName: String,
+        flavors: List<String>,
+        suffix: String
+    ): VariantTree {
         every { variantHelper.getVariantName() }.returns(variantName)
         every { variantHelper.getVariantFlavors() }.returns(flavors)
         every { variantHelper.getVariantType() }.returns(suffix)
 
-        val variantTree = VariantTree(variantHelper)
-
-        Truth.assertThat(variantTree.getVariants()).containsExactlyElementsIn(expectedVariants).inOrder()
+        return VariantTree(variantHelper)
     }
 }

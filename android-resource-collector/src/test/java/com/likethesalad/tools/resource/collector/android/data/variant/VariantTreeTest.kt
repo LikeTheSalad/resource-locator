@@ -55,7 +55,7 @@ class VariantTreeTest : BaseMockable() {
 
     @Test
     fun `Compare variants`() {
-        val comparable = Variant.Custom("demoStable")
+        val subject = Variant.Custom("demoStable")
         val child = Variant.Custom("debug")
         val parent = Variant.Custom("demo")
         val variantTree = createInstance(
@@ -63,10 +63,14 @@ class VariantTreeTest : BaseMockable() {
             listOf("demo", "stable"), "debug"
         )
 
-        val comparison = variantTree.compare(comparable)
+        val comparison = variantTree.compare(subject)
 
         Truth.assertThat(comparison.isParentOf(child)).isTrue()
+        Truth.assertThat(comparison.isChildOf(child)).isFalse()
         Truth.assertThat(comparison.isChildOf(parent)).isTrue()
+        Truth.assertThat(comparison.isParentOf(parent)).isFalse()
+        Truth.assertThat(comparison.isParentOf(subject)).isFalse()
+        Truth.assertThat(comparison.isChildOf(subject)).isFalse()
     }
 
     private fun validateTreeOrder(

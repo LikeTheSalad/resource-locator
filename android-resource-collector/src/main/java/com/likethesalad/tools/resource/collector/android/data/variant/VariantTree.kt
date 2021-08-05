@@ -66,7 +66,7 @@ class VariantTree(private val androidVariantHelper: AndroidVariantHelper) {
         return result
     }
 
-    fun compare(subject: Variant): Comparator {
+    fun check(subject: Variant): Comparator {
         return Comparator(subject)
     }
 

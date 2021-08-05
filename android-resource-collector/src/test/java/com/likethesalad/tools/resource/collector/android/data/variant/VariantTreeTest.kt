@@ -63,7 +63,7 @@ class VariantTreeTest : BaseMockable() {
             listOf("demo", "stable"), "debug"
         )
 
-        val comparison = variantTree.compare(subject)
+        val comparison = variantTree.check(subject)
 
         Truth.assertThat(comparison.isParentOf(child)).isTrue()
         Truth.assertThat(comparison.isChildOf(child)).isFalse()

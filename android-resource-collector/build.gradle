@@ -7,6 +7,7 @@ dependencies {
     api project(':resource-collector')
     implementation project(':android-resource-api')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compileOnly "com.android.tools.build:gradle:$androidBuild_version"
     testImplementation project(":test-utils")
 }
 

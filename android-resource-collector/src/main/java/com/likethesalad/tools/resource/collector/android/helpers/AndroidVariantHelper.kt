@@ -7,8 +7,4 @@ interface AndroidVariantHelper {
     fun getVariantType(): String
 
     fun getVariantFlavors(): List<String>
-
-    /*fun getRuntimeConfiguration(): Configuration {
-        return variant.runtimeConfiguration
-    }*/
 }

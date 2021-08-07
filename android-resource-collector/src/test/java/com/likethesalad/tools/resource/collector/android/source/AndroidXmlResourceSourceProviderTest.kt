@@ -5,6 +5,7 @@ import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
+import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
@@ -18,6 +19,7 @@ import io.mockk.impl.annotations.MockK
 import org.junit.Before
 import org.junit.Test
 import java.io.File
+import javax.xml.parsers.DocumentBuilderFactory
 
 class AndroidXmlResourceSourceProviderTest : BaseMockable() {
 
@@ -27,6 +29,9 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
     @MockK
     lateinit var androidExtensionHelper: AndroidExtensionHelper
 
+    @MockK
+    lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSourceFactory
+
     private val main = Variant.Default
     private val demo = Variant.Custom("demo")
     private val paid = Variant.Custom("paid")
@@ -35,9 +40,16 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
 
     @Before
     fun setUp() {
+        every { androidXmlResourceSourceFactory.create(any(), any()) } answers {
+            AndroidXmlResourceSource(
+                firstArg(),
+                secondArg(),
+                AndroidXmlResDocument.Factory(DocumentBuilderFactory.newInstance())
+            )
+        }
         androidXmlResourceSourceProvider = AndroidXmlResourceSourceProvider(
             variantTree, ResDirFinder(androidExtensionHelper),
-            ValueDirFinder(), XmlFileFinder()
+            ValueDirFinder(), XmlFileFinder(), androidXmlResourceSourceFactory
         )
     }
 

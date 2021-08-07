@@ -5,7 +5,17 @@ import java.io.File
 
 class XmlFileFinder {
 
+    companion object {
+        private val XML_FORMAT = Regex(".+\\.[xX][mM][lL]\$")
+    }
+
     fun findXmlFiles(valueDir: ValueDir): List<File> {
-        TODO("Not yet implemented")
+        return valueDir.dir.listFiles { _, name ->
+            isXmlFile(name)
+        }?.toList() ?: emptyList()
+    }
+
+    private fun isXmlFile(name: String): Boolean {
+        return XML_FORMAT.matches(name)
     }
 }

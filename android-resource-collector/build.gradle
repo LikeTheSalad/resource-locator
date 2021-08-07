@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
+    id 'kotlin-kapt'
 }
 
 dependencies {
@@ -9,6 +10,8 @@ dependencies {
     implementation project(':android-resource-api')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compileOnly "com.android.tools.build:gradle:$androidBuild_version"
+    compileOnly "com.google.auto.factory:auto-factory:$autoFactory_version"
+    kapt "com.google.auto.factory:auto-factory:$autoFactory_version"
     testImplementation project(":test-utils")
 }
 

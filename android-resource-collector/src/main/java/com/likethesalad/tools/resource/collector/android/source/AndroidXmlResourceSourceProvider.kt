@@ -1,8 +1,9 @@
 package com.likethesalad.tools.resource.collector.android.source
 
+import com.google.auto.factory.AutoFactory
+import com.google.auto.factory.Provided
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Variant
-import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
@@ -11,13 +12,14 @@ import com.likethesalad.tools.resource.collector.android.data.variant.VariantTre
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
-import javax.xml.parsers.DocumentBuilderFactory
 
+@AutoFactory
 class AndroidXmlResourceSourceProvider(
     private val variantTree: VariantTree,
-    private val resDirFinder: ResDirFinder,
-    private val valueDirFinder: ValueDirFinder,
-    private val xmlFileFinder: XmlFileFinder
+    @Provided private val resDirFinder: ResDirFinder,
+    @Provided private val valueDirFinder: ValueDirFinder,
+    @Provided private val xmlFileFinder: XmlFileFinder,
+    @Provided private val sourceFactory: AndroidXmlResourceSourceFactory
 ) : ResourceSourceProvider {
 
     override fun getSources(): List<ResourceSource> {
@@ -59,13 +61,7 @@ class AndroidXmlResourceSourceProvider(
         val scope = AndroidResourceScope(valueDir.resDir.variant, valueDir.language)
 
         for (file in xmlFiles) {
-            sources.add(
-                AndroidXmlResourceSource(
-                    file,
-                    scope,
-                    AndroidXmlResDocument.Factory(DocumentBuilderFactory.newInstance())
-                )
-            )
+            sources.add(sourceFactory.create(file, scope))
         }
 
         return sources

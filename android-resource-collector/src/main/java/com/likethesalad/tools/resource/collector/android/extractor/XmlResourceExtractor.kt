@@ -7,7 +7,7 @@ import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocum
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractor
 
-abstract class XmlResourceExtractor<T : AndroidResource<out Any>> : ResourceExtractor<AndroidXmlResourceSource>() {
+abstract class XmlResourceExtractor<T : AndroidResource> : ResourceExtractor<AndroidXmlResourceSource>() {
 
     override fun doExtract(source: AndroidXmlResourceSource): ResourceCollection {
         val resources = getResourcesFromAndroidDocument(source.document)

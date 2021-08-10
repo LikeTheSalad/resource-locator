@@ -1,11 +1,11 @@
 package com.likethesalad.tools.resource.locator.android.modules.strings.data
 
-import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.BaseAndroidResource
 import com.likethesalad.tools.resource.api.android.data.AndroidResourceType
 import com.likethesalad.tools.resource.api.data.ResourceType
 
-class AndroidStringResource : AndroidResource<String> {
+class AndroidStringResource : BaseAndroidResource<String> {
 
     constructor(attributes: Map<String, String>, value: String, scope: AndroidResourceScope) : super(
         attributes,

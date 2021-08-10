@@ -15,7 +15,7 @@ import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 @AutoFactory
 class AndroidResourceCollector(
     private val variantTree: VariantTree,
-    private val resourceExtractor: XmlResourceExtractor<out AndroidResource<Any>>,
+    private val resourceExtractor: XmlResourceExtractor<out AndroidResource>,
     @Provided androidXmlResourceSourceProviderFactory: AndroidXmlResourceSourceProviderFactory
 ) : ResourceCollector() {
 

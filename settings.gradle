@@ -4,4 +4,5 @@ include ":resource-collector"
 include ":resource-api"
 include ':android-resource-api'
 include ':android-resource-collector'
+include ':string-android-resource-locator'
 include ':test-utils'

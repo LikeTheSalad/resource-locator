@@ -2,12 +2,13 @@ package com.likethesalad.tools.resource.locator.android
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
+import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.helpers.AndroidVariantHelper
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class AndroidResourceLocatorPlugin : Plugin<Project>, AndroidVariantHelper {
+abstract class AndroidResourceLocatorPlugin : Plugin<Project>, AndroidVariantHelper {
 
     private lateinit var project: Project
 
@@ -25,13 +26,17 @@ class AndroidResourceLocatorPlugin : Plugin<Project>, AndroidVariantHelper {
     }
 
     private fun createTaskForLocator(
-        locator: ResourceLocator,
+        collector: ResourceCollector,
         androidVariant: ApplicationVariant
     ) {
-        val taskName = "${locator.getLocatorName()}${androidVariant.name.toString().capitalize()}"
+        val taskName = "${getLocatorId()}${androidVariant.name.toString().capitalize()}"
         val variantTree = VariantTree(this)
-        val task = project.tasks.register(taskName, ResourceLocatorTask::class.java, locator, variantTree)
+        val task = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, variantTree)
     }
+
+    abstract fun getLocatorId(): String
+
+    abstract fun getResourceCollector(variantTree: VariantTree): ResourceCollector
 
     override fun getVariantName(): String {
         TODO("Not yet implemented")

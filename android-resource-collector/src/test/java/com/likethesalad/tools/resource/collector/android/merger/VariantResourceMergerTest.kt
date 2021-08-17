@@ -22,8 +22,8 @@ class VariantResourceMergerTest {
         val resource1 = StringResource("name1", "value1", scope1)
         val resource2 = StringResource("name2", "value2", scope1)
         val resource3 = StringResource("name3", "value3", scope2)
-        val collection1 = BasicResourceCollection(listOf(resource1, resource2), Any(), scope1)
-        val collection2 = BasicResourceCollection(listOf(resource3), Any(), scope2)
+        val collection1 = BasicResourceCollection(listOf(resource1, resource2))
+        val collection2 = BasicResourceCollection(listOf(resource3))
 
         val result = mergeResources(listOf(collection1, collection2))
 

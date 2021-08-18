@@ -73,11 +73,6 @@ class VariantTree(private val androidVariantHelper: AndroidVariantHelper) {
     inner class Comparator constructor(subject: Variant) {
         private val subjectIndex = getIndexOf(subject)
 
-        fun isParentOf(variant: Variant): Boolean {
-            val otherIndex = getIndexOf(variant)
-            return subjectIndex < otherIndex
-        }
-
         fun isChildOf(variant: Variant): Boolean {
             val otherIndex = getIndexOf(variant)
             return otherIndex < subjectIndex

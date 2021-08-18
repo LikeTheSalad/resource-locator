@@ -9,16 +9,25 @@ import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.api.data.ResourceType
+import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
+import com.likethesalad.tools.testing.BaseMockable
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import org.junit.Test
 
-class VariantResourceMergerTest {
+class VariantResourceMergerTest : BaseMockable() {
 
-    private val merger = VariantResourceMerger()
+    @MockK
+    lateinit var tree: VariantTree
 
     @Test
     fun `Merge resources`() {
-        val scope1 = AndroidResourceScope(Variant.Default, Language.Default)
-        val scope2 = AndroidResourceScope(Variant.Custom("demo"), Language.Default)
+        val variant1 = Variant.Default
+        val variant2 = Variant.Custom("demo")
+        setVariantsOrder(variant1, variant2)
+        val scope1 = AndroidResourceScope(variant1, Language.Default)
+        val scope2 = AndroidResourceScope(variant2, Language.Default)
         val resource1 = StringResource("name1", "value1", scope1)
         val resource2 = StringResource("name2", "value2", scope1)
         val resource3 = StringResource("name3", "value3", scope2)
@@ -31,14 +40,45 @@ class VariantResourceMergerTest {
     }
 
     @Test
-    fun `Keep children variant resources when conflict`() {
-        // val collection1 = BasicResourceCollection()
+    fun `Keep children variant resources when a name and language conflict happens`() {
+        val variant1 = Variant.Default
+        val variant2 = Variant.Custom("demo")
+        setVariantsOrder(variant1, variant2)
+        val scope1 = AndroidResourceScope(variant1, Language.Default)
+        val scope2 = AndroidResourceScope(variant2, Language.Default)
+        val resource1 = StringResource("name1", "value1", scope1)
+        val resource2 = StringResource("name1", "value2", scope2)
+        val resource3 = StringResource("name3", "value3", scope1)
+        val collection1 = BasicResourceCollection(listOf(resource1, resource3))
+        val collection2 = BasicResourceCollection(listOf(resource2))
+
+        val merged = mergeResources(listOf(collection1, collection2))
+
+        Truth.assertThat(merged.getAllResources()).containsExactly(
+            resource2, resource3
+        )
     }
 
     private fun mergeResources(
         collections: List<ResourceCollection>
     ): ResourceCollection {
+        val merger = VariantResourceMerger(tree)
         return merger.merge(collections)
+    }
+
+    private fun setVariantsOrder(vararg variants: Variant) {
+        val variantList = variants.toList()
+        variantList.forEachIndexed { index, variant ->
+            setParentsForVariant(variant, variantList.subList(0, index))
+        }
+    }
+
+    private fun setParentsForVariant(variant: Variant, parents: List<Variant>) {
+        val comparator = mockk<VariantTree.Comparator>()
+        every { tree.check(variant) }.returns(comparator)
+        for (parent in parents) {
+            every { comparator.isChildOf(parent) }.returns(true)
+        }
     }
 
     class StringResource(name: String, value: String, scope: AndroidResourceScope) :
@@ -46,14 +86,6 @@ class VariantResourceMergerTest {
 
         override fun type(): ResourceType {
             return AndroidResourceType.StringType
-        }
-    }
-
-    class IntegerResource(name: String, value: Int, scope: AndroidResourceScope) :
-        BaseAndroidResource<Int>(name, value, scope) {
-
-        override fun type(): ResourceType {
-            return AndroidResourceType.IntegerType
         }
     }
 }

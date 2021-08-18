@@ -7,4 +7,8 @@ sealed class AndroidResourceType(private val name: String) : ResourceType {
     object IntegerType : AndroidResourceType("integer")
 
     override fun getName(): String = name
+
+    override fun toString(): String {
+        return "AndroidResourceType(name='$name')"
+    }
 }

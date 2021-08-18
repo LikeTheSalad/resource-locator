@@ -56,4 +56,8 @@ abstract class BaseAndroidResource<T : Any>(
 
         return true
     }
+
+    override fun toString(): String {
+        return "AndroidResource(type=${type()}, name='$name', value=$value, scope=$scope,  attributes=${attributes()})"
+    }
 }

@@ -12,13 +12,15 @@ class VariantResourceMerger(private val tree: VariantTree) : ResourceMerger {
 
     private val resourcesMap = mutableMapOf<String, Resource>()
 
-    override fun merge(collections: List<ResourceCollection>): ResourceCollection {
+    override fun merge(collections: List<ResourceCollection>): ResourceCollection = synchronized(this) {
         collections.forEach { collection ->
             collection.getAllResources().forEach { resource ->
                 addResourceToMap(resource)
             }
         }
-        return BasicResourceCollection(resourcesMap.values.toList())
+        val result = BasicResourceCollection(resourcesMap.values.toList())
+        resourcesMap.clear()
+        return result
     }
 
     private fun addResourceToMap(resource: Resource) {

@@ -84,12 +84,48 @@ class VariantResourceMergerTest : BaseMockable() {
         )
     }
 
+    @Test
+    fun `Reuse merger`() {
+        val variant1 = Variant.Default
+        val variant2 = Variant.Custom("demo")
+        setVariantsOrder(variant1, variant2)
+        val scope1 = AndroidResourceScope(variant1, Language.Default)
+        val scope2 = AndroidResourceScope(variant2, Language.Default)
+        val resource1 = StringResource("name1", "value1", scope1)
+        val resource2 = StringResource("name2", "value2", scope1)
+        val resource3 = StringResource("name3", "value3", scope2)
+        val resource4 = StringResource("name4", "value4", scope2)
+        val resource5 = StringResource("name5", "value5", scope1)
+        val resource6 = StringResource("name6", "value6", scope2)
+        val collections1 = listOf<ResourceCollection>(
+            BasicResourceCollection(listOf(resource1, resource2)),
+            BasicResourceCollection(listOf(resource3))
+        )
+        val collections2 = listOf<ResourceCollection>(
+            BasicResourceCollection(listOf(resource4)),
+            BasicResourceCollection(listOf(resource5, resource6))
+        )
+        val merger = createMergerInstance()
+
+        // 1st try
+        Truth.assertThat(merger.merge(collections1).getAllResources()).containsExactly(
+            resource1, resource2, resource3
+        )
+
+        // 2nd try
+        Truth.assertThat(merger.merge(collections2).getAllResources()).containsExactly(
+            resource4, resource5, resource6
+        )
+    }
+
     private fun mergeResources(
         collections: List<ResourceCollection>
     ): ResourceCollection {
-        val merger = VariantResourceMerger(tree)
+        val merger = createMergerInstance()
         return merger.merge(collections)
     }
+
+    private fun createMergerInstance() = VariantResourceMerger(tree)
 
     private fun setVariantsOrder(vararg variants: Variant) {
         val variantList = variants.toList()

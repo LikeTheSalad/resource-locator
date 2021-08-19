@@ -14,6 +14,7 @@ import com.likethesalad.tools.testing.BaseMockable
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import org.junit.Assert
 import org.junit.Test
 
 class VariantResourceMergerTest : BaseMockable() {
@@ -37,6 +38,30 @@ class VariantResourceMergerTest : BaseMockable() {
         val result = mergeResources(listOf(collection1, collection2))
 
         Truth.assertThat(result.getAllResources()).containsExactly(resource1, resource2, resource3)
+    }
+
+    @Test
+    fun `Propagate error when conflict with same name, language and variant resources`() {
+        val variant = Variant.Default
+        val scope1 = AndroidResourceScope(variant, Language.Default)
+        val scope2 = AndroidResourceScope(variant, Language.Default)
+        val resource1 = StringResource("name1", "value1", scope1)
+        val resource2 = StringResource("name1", "value2", scope2)
+        val resource3 = StringResource("name3", "value3", scope1)
+        val collection1 = BasicResourceCollection(listOf(resource1, resource3))
+        val collection2 = BasicResourceCollection(listOf(resource2))
+
+        try {
+            mergeResources(listOf(collection1, collection2))
+            Assert.fail()
+        } catch (e: IllegalStateException) {
+            Truth.assertThat(e.message).isEqualTo(
+                "Found resources with the same name 'name1' " +
+                        "within the same variant 'main' for the same language 'main'. " +
+                        "Resource names must be unique within a single" +
+                        "variant-language environment"
+            )
+        }
     }
 
     @Test

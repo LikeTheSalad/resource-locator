@@ -35,12 +35,29 @@ class VariantResourceMerger(private val tree: VariantTree) : ResourceMerger {
 
     private fun resolveVariantConflictAndSaveToMap(key: String, newResource: AndroidResource) {
         val existingResource = resourcesMap.getValue(key)
-        val existingVariant = (existingResource.scope() as AndroidResourceScope).variant
-        val newVariant = (newResource.scope() as AndroidResourceScope).variant
-        val newVariantCheck = tree.check(newVariant)
+        val existingScope = existingResource.scope() as AndroidResourceScope
+        val newScope = newResource.scope() as AndroidResourceScope
 
-        if (newVariantCheck.isChildOf(existingVariant)) {
+        checkResourceNameUniqueness(existingScope, newScope, newResource)
+
+        if (tree.check(newScope.variant).isChildOf(existingScope.variant)) {
             resourcesMap[key] = newResource
+        }
+    }
+
+    private fun checkResourceNameUniqueness(
+        existingScope: AndroidResourceScope,
+        newScope: AndroidResourceScope,
+        newResource: AndroidResource
+    ) {
+        if (existingScope == newScope) {
+            throw IllegalStateException(
+                "Found resources with the same name '${newResource.name()}' " +
+                        "within the same variant '${newScope.variant.name}' for the same language " +
+                        "'${newScope.language.id}'. " +
+                        "Resource names must be unique within a single" +
+                        "variant-language environment"
+            )
         }
     }
 }

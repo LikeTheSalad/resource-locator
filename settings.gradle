@@ -2,7 +2,7 @@ rootProject.name = 'resource-locator'
 include ':android-resource-locator'
 include ":resource-collector"
 include ":resource-api"
-include ':resource-storage'
+include ':resource-serializer'
 include ':android-resource-api'
 include ':android-resource-collector'
 include ':string-android-resource-locator'

@@ -7,6 +7,7 @@ import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.extractor.DefaultResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
+import com.likethesalad.tools.resource.collector.android.merger.VariantResourceMerger
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceProviderFactory
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.merger.ResourceMerger
@@ -32,6 +33,6 @@ class AndroidResourceCollector(
     }
 
     override fun getMerger(): ResourceMerger {
-        TODO("Not yet implemented")
+        return VariantResourceMerger(variantTree)
     }
 }

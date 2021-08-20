@@ -8,6 +8,7 @@ dependencies {
     api gradleApi()
     api project(":android-resource-api")
     api project(":android-resource-collector")
+    implementation project(':resource-serializer')
     implementation project(':android-plugin-tools')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compileOnly "com.android.tools.build:gradle:$androidBuild_version"

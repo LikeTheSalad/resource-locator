@@ -3,6 +3,7 @@ include ':android-resource-locator'
 include ":resource-collector"
 include ":resource-api"
 include ':resource-serializer'
+include ':android-resource-serializer'
 include ':android-resource-api'
 include ':android-resource-collector'
 include ':string-android-resource-locator'

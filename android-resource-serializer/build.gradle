@@ -5,7 +5,9 @@ plugins {
 
 dependencies {
     api project(':resource-serializer')
+    implementation project(':android-resource-api')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.google.code.gson:gson:2.8.7'
     testImplementation "junit:junit:$junit_version"
 }
 

@@ -1,20 +1,20 @@
 package com.likethesalad.tools.resource.collector.android.data.variant
 
-import com.likethesalad.tools.android.plugin.AndroidVariantHelper
+import com.likethesalad.tools.android.plugin.AndroidVariantData
 import com.likethesalad.tools.resource.api.android.environment.Variant
 
-class VariantTree(private val androidVariantHelper: AndroidVariantHelper) {
+class VariantTree(private val androidVariantData: AndroidVariantData) {
 
     private val flavors by lazy {
-        androidVariantHelper.getVariantFlavors()
+        androidVariantData.getVariantFlavors()
     }
 
     private val variantName by lazy {
-        androidVariantHelper.getVariantName()
+        androidVariantData.getVariantName()
     }
 
     private val variantType by lazy {
-        androidVariantHelper.getVariantType()
+        androidVariantData.getVariantType()
     }
 
     private val variantNames = mutableListOf<String>()

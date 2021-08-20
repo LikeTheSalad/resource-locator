@@ -1,20 +1,13 @@
 plugins {
     id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
-    id 'kotlin-kapt'
 }
 
 dependencies {
-    api gradleApi()
-    api project(":android-resource-api")
-    api project(":android-resource-collector")
-    implementation project(':android-build-tools')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compileOnly "com.android.tools.build:gradle:$androidBuild_version"
-    kapt "com.google.auto.factory:auto-factory:$autoFactory_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    compileOnly gradleApi()
     testImplementation "junit:junit:$junit_version"
-    testImplementation "com.google.truth:truth:1.0.1"
 }
 
 compileKotlin {

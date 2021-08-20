@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.collector.android.data.resdir
 
+import com.likethesalad.tools.android.build.AndroidExtensionHelper
 import com.likethesalad.tools.resource.api.android.environment.Variant
-import com.likethesalad.tools.resource.collector.android.helpers.AndroidExtensionHelper
 
 class ResDirFinder(private val androidExtensionHelper: AndroidExtensionHelper) {
 

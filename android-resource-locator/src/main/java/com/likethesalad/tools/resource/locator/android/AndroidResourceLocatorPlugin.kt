@@ -2,7 +2,7 @@ package com.likethesalad.tools.resource.locator.android
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
-import com.likethesalad.tools.android.build.AndroidVariantHelper
+import com.likethesalad.tools.android.plugin.AndroidVariantHelper
 import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import org.gradle.api.Plugin

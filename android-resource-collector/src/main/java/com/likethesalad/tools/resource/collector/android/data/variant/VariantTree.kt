@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.collector.android.data.variant
 
-import com.likethesalad.tools.android.build.AndroidVariantHelper
+import com.likethesalad.tools.android.plugin.AndroidVariantHelper
 import com.likethesalad.tools.resource.api.android.environment.Variant
 
 class VariantTree(private val androidVariantHelper: AndroidVariantHelper) {

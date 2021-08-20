@@ -2,13 +2,13 @@ package com.likethesalad.tools.resource.locator.android
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
-import com.likethesalad.tools.android.plugin.AndroidVariantData
+import com.likethesalad.tools.android.plugin.impl.DefaultAndroidVariantData
 import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-abstract class AndroidResourceLocatorPlugin : Plugin<Project>, AndroidVariantData {
+abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
 
     private lateinit var project: Project
 
@@ -27,8 +27,8 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, AndroidVariantDat
     private fun createResourceLocatorTaskForVariant(
         androidVariant: ApplicationVariant
     ) {
-        val taskName = "${getLocatorId()}${androidVariant.name.toString().capitalize()}"
-        val variantTree = VariantTree(this)
+        val taskName = "${getLocatorId()}${androidVariant.name.toString().capitalize()}ResourceLocator"
+        val variantTree = VariantTree(DefaultAndroidVariantData(androidVariant))
         val collector = getResourceCollector(variantTree)
         val task = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, variantTree)
     }
@@ -36,16 +36,4 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, AndroidVariantDat
     abstract fun getLocatorId(): String
 
     abstract fun getResourceCollector(variantTree: VariantTree): ResourceCollector
-
-    override fun getVariantName(): String {
-        TODO("Not yet implemented")
-    }
-
-    override fun getVariantType(): String {
-        TODO("Not yet implemented")
-    }
-
-    override fun getVariantFlavors(): List<String> {
-        TODO("Not yet implemented")
-    }
 }

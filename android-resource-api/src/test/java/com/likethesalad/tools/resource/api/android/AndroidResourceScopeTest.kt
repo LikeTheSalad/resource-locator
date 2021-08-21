@@ -30,11 +30,11 @@ class AndroidResourceScopeTest {
 
     @Test
     fun `Retrieve scope from name`() {
-        val name = "main:main"
+        val originalScope = AndroidResourceScope(Variant.Default, Language.Custom("es"))
 
-        val scope = AndroidResourceScope.fromName(name)
+        val scope = AndroidResourceScope.fromName(originalScope.getName())
 
-        Truth.assertThat(scope).isEqualTo(AndroidResourceScope(Variant.Default, Language.Default))
+        Truth.assertThat(scope).isEqualTo(originalScope)
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.likethesalad.tools.resource.api.android.data
 
+import com.likethesalad.tools.resource.api.android.utils.SealedParser
 import com.likethesalad.tools.resource.api.data.ResourceType
 
 sealed class AndroidResourceType(private val name: String) : ResourceType {
@@ -11,5 +12,16 @@ sealed class AndroidResourceType(private val name: String) : ResourceType {
 
     override fun toString(): String {
         return "AndroidResourceType(name='$name')"
+    }
+
+    companion object : SealedParser<AndroidResourceType>(AndroidResourceType::class) {
+
+        override fun createUnknown(id: String): AndroidResourceType {
+            return Unknown(id)
+        }
+
+        override fun getInstanceId(item: AndroidResourceType): String {
+            return item.getName()
+        }
     }
 }

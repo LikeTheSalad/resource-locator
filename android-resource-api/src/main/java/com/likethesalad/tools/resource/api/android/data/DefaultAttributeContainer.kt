@@ -2,8 +2,12 @@ package com.likethesalad.tools.resource.api.android.data
 
 import com.likethesalad.tools.resource.api.data.AttributeContainer
 
-class DefaultAttributeContainer : AttributeContainer {
+internal class DefaultAttributeContainer(base: Map<String, String> = emptyMap()) : AttributeContainer {
     private val map: MutableMap<String, String> = mutableMapOf()
+
+    init {
+        map.putAll(base)
+    }
 
     override fun get(name: String): String? {
         return map[name]

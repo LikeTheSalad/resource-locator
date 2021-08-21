@@ -12,16 +12,13 @@ abstract class BaseAndroidResource<T : Any>(
 ) : AndroidResource {
 
     private val name: String
-    private val attributeContainer = DefaultAttributeContainer()
+    private val attributeContainer = DefaultAttributeContainer(attributes)
 
     companion object {
         private const val ATTR_NAME = "name"
     }
 
     init {
-        for ((key, attribute) in attributes) {
-            attributeContainer.set(key, attribute)
-        }
         name = attributeContainer.get(ATTR_NAME)!!
     }
 

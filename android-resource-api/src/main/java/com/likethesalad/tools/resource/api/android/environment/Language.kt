@@ -32,6 +32,5 @@ sealed class Language(val id: String) {
         override fun getInstanceId(item: Language): String {
             return item.id
         }
-
     }
 }

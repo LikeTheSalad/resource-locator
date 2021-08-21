@@ -3,6 +3,7 @@ package com.likethesalad.tools.resource.api.android
 import com.google.common.truth.Truth
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
+import org.junit.Assert.fail
 import org.junit.Test
 
 class AndroidResourceScopeTest {
@@ -34,6 +35,19 @@ class AndroidResourceScopeTest {
         val scope = AndroidResourceScope.fromName(name)
 
         Truth.assertThat(scope).isEqualTo(AndroidResourceScope(Variant.Default, Language.Default))
+    }
+
+    @Test
+    fun `Fail if string is not valid when parsing scope from string`() {
+        try {
+            AndroidResourceScope.fromName("something")
+            fail()
+        } catch (e: IllegalArgumentException) {
+            Truth.assertThat(e.message).isEqualTo(
+                "Invalid AndroidResourceScope format" +
+                        " for: 'something'"
+            )
+        }
     }
 
     private fun checkScopeName(scope: AndroidResourceScope, expectedName: String) {

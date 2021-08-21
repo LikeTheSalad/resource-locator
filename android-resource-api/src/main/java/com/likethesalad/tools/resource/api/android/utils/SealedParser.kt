@@ -4,17 +4,13 @@ import kotlin.reflect.KClass
 
 abstract class SealedParser<T : Any>(private val classItem: KClass<T>) {
 
-    fun fromId(id: String): T {
-        return classItem.sealedSubclasses
-            .firstOrNull { getId(it.objectInstance) == id }
-            ?.objectInstance
-            ?: createUnknown(id)
+    private val objectItems: List<T> by lazy {
+        classItem.sealedSubclasses.mapNotNull { it.objectInstance }
     }
 
-    private fun getId(instance: T?): String? {
-        return instance?.let {
-            getInstanceId(it)
-        }
+    fun fromId(id: String): T {
+        return objectItems.firstOrNull { getInstanceId(it) == id }
+            ?: createUnknown(id)
     }
 
     protected abstract fun createUnknown(id: String): T

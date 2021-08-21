@@ -12,7 +12,7 @@ import org.junit.Test
 class AndroidResourceMapperTest {
 
     @Test
-    fun `Map json to AndroidResource`() {
+    fun `Map Json to AndroidResource`() {
         verifyMappingToAndroidResource(
             AndroidResourceJsonStructure(
                 mapOf("name" to "someName"), "someValue",
@@ -31,6 +31,38 @@ class AndroidResourceMapperTest {
                 AndroidResourceScope(Variant.Default, Language.Custom("es"))
             )
         )
+    }
+
+    @Test
+    fun `Map AndroidResource to Json`() {
+        val resource1 = StringAndroidResource(
+            "someName", "someValue",
+            AndroidResourceScope(Variant.Dependency, Language.Default)
+        )
+        val resource2 = IntegerAndroidResource(
+            "otherName", 15,
+            AndroidResourceScope(Variant.Custom("demo"), Language.Custom("es"))
+        )
+
+        verifyMappingToJson(
+            resource1,
+            AndroidResourceJsonStructure(
+                mapOf("name" to "someName"), "someValue", "--dependency--:main", "string"
+            )
+        )
+        verifyMappingToJson(
+            resource2,
+            AndroidResourceJsonStructure(
+                mapOf("name" to "otherName"), "15", "demo:es", "integer"
+            )
+        )
+    }
+
+    private fun verifyMappingToJson(
+        resource: AndroidResource,
+        expectedJson: AndroidResourceJsonStructure
+    ) {
+        Truth.assertThat(AndroidResourceMapper.mapToJson(resource)).isEqualTo(expectedJson)
     }
 
     private fun verifyMappingToAndroidResource(

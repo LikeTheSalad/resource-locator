@@ -21,6 +21,10 @@ internal class DefaultAttributeContainer(base: Map<String, String> = emptyMap())
         map.remove(name)
     }
 
+    override fun asMap(): Map<String, String> {
+        return map
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is DefaultAttributeContainer) return false

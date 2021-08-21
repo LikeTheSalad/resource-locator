@@ -6,9 +6,9 @@ plugins {
 dependencies {
     implementation project(":android-resource-locator")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "com.google.code.gson:gson:$gson_version"
     compileOnly "com.google.dagger:dagger:$dagger_version"
     compileOnly "com.google.auto.factory:auto-factory:$autoFactory_version"
-    testImplementation "junit:junit:$junit_version"
 }
 
 compileKotlin {

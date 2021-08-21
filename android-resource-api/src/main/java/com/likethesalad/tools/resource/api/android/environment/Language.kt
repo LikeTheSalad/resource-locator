@@ -1,5 +1,7 @@
 package com.likethesalad.tools.resource.api.android.environment
 
+import com.likethesalad.tools.resource.api.android.utils.SealedParser
+
 sealed class Language(val id: String) {
     object Default : Language("main")
     class Custom(id: String) : Language(id)
@@ -19,5 +21,17 @@ sealed class Language(val id: String) {
 
     override fun toString(): String {
         return "Language(id='$id')"
+    }
+
+    companion object : SealedParser<Language>(Language::class) {
+
+        override fun createUnknown(id: String): Language {
+            return Custom(id)
+        }
+
+        override fun getId(item: Language): String {
+            return item.id
+        }
+
     }
 }

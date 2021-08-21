@@ -3,11 +3,12 @@ package com.likethesalad.resource.serializer.android.internal
 import com.likethesalad.tools.resource.api.android.AndroidResource
 
 internal object AndroidResourceMapper {
-    fun fromJsonStructure(structure: AndroidResourceJsonStructure): AndroidResource {
 
+    fun mapToAndroidResource(structure: AndroidResourceJsonStructure): AndroidResource {
+        TODO()
     }
 
-    fun fromResource(resource: AndroidResource): AndroidResourceJsonStructure {
-
+    fun mapToJson(resource: AndroidResource): AndroidResourceJsonStructure {
+        TODO()
     }
 }

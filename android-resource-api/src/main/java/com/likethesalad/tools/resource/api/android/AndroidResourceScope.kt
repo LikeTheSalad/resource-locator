@@ -9,7 +9,13 @@ data class AndroidResourceScope(
     val language: Language
 ) : ResourceScope {
 
+    companion object {
+        fun fromName(name: String): AndroidResourceScope {
+            TODO()
+        }
+    }
+
     override fun getName(): String {
-        TODO("Not yet implemented")
+        return "${variant.name}:${language.id}"
     }
 }

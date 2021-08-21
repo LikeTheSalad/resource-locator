@@ -29,7 +29,7 @@ sealed class Language(val id: String) {
             return Custom(id)
         }
 
-        override fun getId(item: Language): String {
+        override fun getInstanceId(item: Language): String {
             return item.id
         }
 

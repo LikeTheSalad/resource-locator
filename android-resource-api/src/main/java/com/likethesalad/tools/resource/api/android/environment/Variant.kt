@@ -25,7 +25,7 @@ sealed class Variant(val name: String) {
             return Custom(id)
         }
 
-        override fun getId(item: Variant): String {
+        override fun getInstanceId(item: Variant): String {
             return item.name
         }
     }

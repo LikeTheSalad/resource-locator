@@ -5,12 +5,16 @@ import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.collector.ResourceCollector
+import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 
-open class ResourceLocatorTask(private val collector: ResourceCollector) : DefaultTask() {
+open class ResourceLocatorTask(
+    private val collector: ResourceCollector,
+    private val serializer: ResourceSerializer
+) : DefaultTask() {
 
     @OutputDirectory
     lateinit var outputDir: File
@@ -28,6 +32,15 @@ open class ResourceLocatorTask(private val collector: ResourceCollector) : Defau
     }
 
     private fun saveCollection(language: Language, collection: ResourceCollection) {
-        TODO("Not yet implemented")
+        createOutputFileForLanguage(language).writeText(serializer.serializeCollection(collection))
+    }
+
+    private fun createOutputFileForLanguage(language: Language): File {
+        val suffix = when (language) {
+            is Language.Default -> ""
+            else -> "-${language.id}"
+        }
+
+        return File(outputDir, "resources$suffix.json")
     }
 }

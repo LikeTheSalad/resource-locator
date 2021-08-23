@@ -22,7 +22,7 @@ class AndroidResourceSerializer : ResourceSerializer {
         return AndroidResourceMapper.mapToAndroidResource(jsonStructure)
     }
 
-    override fun serializeCollection(collection: ResourceCollection) {
+    override fun serializeCollection(collection: ResourceCollection): String {
         TODO("Not yet implemented")
     }
 

@@ -6,6 +6,6 @@ import com.likethesalad.tools.resource.api.collection.ResourceCollection
 interface ResourceSerializer {
     fun serialize(resource: Resource): String
     fun deserialize(string: String): Resource
-    fun serializeCollection(collection: ResourceCollection)
+    fun serializeCollection(collection: ResourceCollection): String
     fun deserializeCollection(string: String): ResourceCollection
 }

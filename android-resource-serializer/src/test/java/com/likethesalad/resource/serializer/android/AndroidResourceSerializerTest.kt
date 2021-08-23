@@ -6,7 +6,10 @@ import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
+import com.likethesalad.tools.resource.api.android.modules.integer.IntegerAndroidResource
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
+import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
+import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import org.junit.Test
 
 class AndroidResourceSerializerTest {
@@ -20,26 +23,41 @@ class AndroidResourceSerializerTest {
             AndroidResourceScope(Variant.Default, Language.Custom("es"))
         )
 
-        val result = serialize(resource)
+        val stringResource = serialize(resource)
 
-        Truth.assertThat(result).isEqualTo(
-            """{"attributes":{"name":"someName"},"value":"someValue","scope":"main:es","type":"string"}"""
+        Truth.assertThat(deserialize(stringResource)).isEqualTo(
+            resource
         )
     }
 
     @Test
-    fun `Deserialize AndroidResource`() {
-        val jsonString =
-            """{"attributes":{"name":"someName"},"value":"someValue","scope":"main:es","type":"string"}"""
-
-        val result = deserialize(jsonString)
-
-        Truth.assertThat(result).isEqualTo(
-            StringAndroidResource(
-                "someName", "someValue",
-                AndroidResourceScope(Variant.Default, Language.Custom("es"))
-            )
+    fun `Test serialize AndroidResource collection`() {
+        val resource1 = StringAndroidResource(
+            mapOf(
+                "name" to "someName",
+                "translate" to "false"
+            ), "someValue", AndroidResourceScope(Variant.Default, Language.Default)
         )
+        val resource2 = IntegerAndroidResource(
+            "someIntName",
+            20,
+            AndroidResourceScope(Variant.Custom("demo"), Language.Custom("es"))
+        )
+        val collection = BasicResourceCollection(listOf(resource1, resource2))
+
+        val stringCollection = serializeCollection(collection)
+
+        Truth.assertThat(deserializeCollection(stringCollection)).isEqualTo(
+            collection
+        )
+    }
+
+    private fun serializeCollection(collection: ResourceCollection): String {
+        return serializer.serializeCollection(collection)
+    }
+
+    private fun deserializeCollection(string: String): ResourceCollection {
+        return serializer.deserializeCollection(string)
     }
 
     private fun deserialize(serialized: String): Resource {

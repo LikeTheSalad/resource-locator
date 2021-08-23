@@ -5,32 +5,28 @@ import com.likethesalad.resource.serializer.android.internal.AndroidResourceJson
 import com.likethesalad.resource.serializer.android.internal.AndroidResourceMapper
 import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.AndroidResource
+import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.serializer.ResourceSerializer
-import java.util.Base64
 
 class AndroidResourceSerializer : ResourceSerializer {
 
     private val gson by lazy { Gson() }
-    private val encoder by lazy { Base64.getEncoder() }
-    private val decoder by lazy { Base64.getDecoder() }
 
     override fun serialize(resource: Resource): String {
         val jsonStructure = AndroidResourceMapper.mapToJson(resource as AndroidResource)
-        val jsonString = gson.toJson(jsonStructure, AndroidResourceJsonStructure::class.java)
-        return encode(jsonString)
+        return gson.toJson(jsonStructure, AndroidResourceJsonStructure::class.java)
     }
 
     override fun deserialize(string: String): Resource {
-        val jsonString = decode(string)
-        val jsonStructure = gson.fromJson(jsonString, AndroidResourceJsonStructure::class.java)
+        val jsonStructure = gson.fromJson(string, AndroidResourceJsonStructure::class.java)
         return AndroidResourceMapper.mapToAndroidResource(jsonStructure)
     }
 
-    private fun encode(jsonString: String): String {
-        return encoder.encodeToString(jsonString.toByteArray())
+    override fun serializeCollection(collection: ResourceCollection) {
+        TODO("Not yet implemented")
     }
 
-    private fun decode(base64String: String): String {
-        return String(decoder.decode(base64String))
+    override fun deserializeCollection(string: String): ResourceCollection {
+        TODO("Not yet implemented")
     }
 }

@@ -23,16 +23,16 @@ class AndroidResourceSerializerTest {
         val result = serialize(resource)
 
         Truth.assertThat(result).isEqualTo(
-            "eyJhdHRyaWJ1dGVzIjp7Im5hbWUiOiJzb21lTmFtZSJ9LCJ2YWx1ZSI6InNvbWVWYWx1ZSIsInNjb3BlIjoibWFpbjplcyIsInR5cGUiOiJzdHJpbmcifQ=="
+            """{"attributes":{"name":"someName"},"value":"someValue","scope":"main:es","type":"string"}"""
         )
     }
 
     @Test
     fun `Deserialize AndroidResource`() {
-        val serialized =
-            "eyJhdHRyaWJ1dGVzIjp7Im5hbWUiOiJzb21lTmFtZSJ9LCJ2YWx1ZSI6InNvbWVWYWx1ZSIsInNjb3BlIjoibWFpbjplcyIsInR5cGUiOiJzdHJpbmcifQ=="
+        val jsonString =
+            """{"attributes":{"name":"someName"},"value":"someValue","scope":"main:es","type":"string"}"""
 
-        val result = deserialize(serialized)
+        val result = deserialize(jsonString)
 
         Truth.assertThat(result).isEqualTo(
             StringAndroidResource(

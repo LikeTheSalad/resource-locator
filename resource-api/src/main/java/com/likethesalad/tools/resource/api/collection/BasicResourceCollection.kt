@@ -14,4 +14,17 @@ open class BasicResourceCollection(
     override fun getResourcesByType(type: ResourceType): List<Resource> {
         return resources.filter { it.type() == type }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ResourceCollection) return false
+
+        if (resources != other.getAllResources()) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return resources.hashCode()
+    }
 }

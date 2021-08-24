@@ -27,6 +27,18 @@ class CollectedFilesHelperTest {
         verifyFileNameForLanguage(Language.Custom("it"), "resources-it.json")
     }
 
+    @Test
+    fun `Get Language from file name`() {
+        verifyLanguageExtractedFromFileName("resources.json", Language.Default)
+        verifyLanguageExtractedFromFileName("resources-es.json", Language.Custom("es"))
+        verifyLanguageExtractedFromFileName("resources-es-ES.json", Language.Custom("es-ES"))
+        verifyLanguageExtractedFromFileName("resources-it.json", Language.Custom("it"))
+    }
+
+    private fun verifyLanguageExtractedFromFileName(fileName: String, expectedLanguage: Language) {
+        Truth.assertThat(CollectedFilesHelper.getLanguageFromFileName(fileName)).isEqualTo(expectedLanguage)
+    }
+
     private fun verifyFileNameForLanguage(language: Language, expectedName: String) {
         Truth.assertThat(CollectedFilesHelper.getResourceFileName(language)).isEqualTo(expectedName)
     }

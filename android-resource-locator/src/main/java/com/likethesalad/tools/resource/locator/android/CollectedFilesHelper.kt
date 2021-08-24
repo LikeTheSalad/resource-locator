@@ -19,4 +19,14 @@ object CollectedFilesHelper {
 
         return "$COLLECTED_RESOURCES_BASE_NAME$suffix.json"
     }
+
+    fun getLanguageFromFileName(fileName: String): Language {
+        val matchGroupValues = resourceFilePattern.matchEntire(fileName)?.groupValues!!
+        val suffix = matchGroupValues[2]
+        return if (suffix.isEmpty()) {
+            Language.Default
+        } else {
+            Language.fromId(suffix)
+        }
+    }
 }

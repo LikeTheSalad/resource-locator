@@ -36,11 +36,6 @@ open class ResourceLocatorTask(
     }
 
     private fun createOutputFileForLanguage(language: Language): File {
-        val suffix = when (language) {
-            is Language.Default -> ""
-            else -> "-${language.id}"
-        }
-
-        return File(outputDir, "resources$suffix.json")
+        return File(outputDir, CollectedFilesHelper.getResourceFileName(language))
     }
 }

@@ -6,14 +6,13 @@ import java.io.File
 
 class LanguageResourceCollection(private val dir: File) {
 
-    companion object {
-        const val COLLECTED_DIR_BASE_NAME = "resources"
-        private val resourceFilePattern = Regex("$COLLECTED_DIR_BASE_NAME(-([^\\s\\t]+))*\\.json")
-    }
 
     fun listLanguages(): List<Language> {
-        val directories = dir.listFiles()?.filter { it.isDirectory }?.toList() ?: emptyList()
+        val files = dir.listFiles { _, name ->
+            CollectedFilesHelper.isResourceFileName(name)
+        }?.filter { it.isFile }?.toList() ?: emptyList()
 
+        return files.map { CollectedFilesHelper.getLanguageFromFileName(it.name) }
     }
 
     fun getResourcesForLanguage(language: Language): ResourceCollection {

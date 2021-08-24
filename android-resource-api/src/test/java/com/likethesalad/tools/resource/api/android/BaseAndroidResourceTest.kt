@@ -1,10 +1,10 @@
 package com.likethesalad.tools.resource.api.android
 
 import com.google.common.truth.Truth
-import com.likethesalad.tools.resource.api.android.data.AndroidResourceType
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
-import com.likethesalad.tools.resource.api.data.ResourceType
+import com.likethesalad.tools.resource.api.android.modules.integer.IntegerAndroidResource
+import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import org.junit.Test
 
 class BaseAndroidResourceTest {
@@ -42,13 +42,13 @@ class BaseAndroidResourceTest {
             false
         )
         verifyEquality(
-            IntAndroidResource(name1, 1, scope1),
+            IntegerAndroidResource(name1, 1, scope1),
             StringAndroidResource(name1, "someValue", scope1),
             false
         )
         verifyEquality(
-            IntAndroidResource(name2, 1, scope1),
-            IntAndroidResource(name2, 1, scope1),
+            IntegerAndroidResource(name2, 1, scope1),
+            IntegerAndroidResource(name2, 1, scope1),
             true
         )
     }
@@ -62,22 +62,6 @@ class BaseAndroidResourceTest {
             Truth.assertThat(resource1).isEqualTo(resource2)
         } else {
             Truth.assertThat(resource1).isNotEqualTo(resource2)
-        }
-    }
-
-    class StringAndroidResource(name: String, value: String, scope: AndroidResourceScope) :
-        BaseAndroidResource<String>(name, value, scope) {
-
-        override fun type(): ResourceType {
-            return AndroidResourceType.StringType
-        }
-    }
-
-    class IntAndroidResource(name: String, value: Int, scope: AndroidResourceScope) :
-        BaseAndroidResource<Int>(name, value, scope) {
-
-        override fun type(): ResourceType {
-            return AndroidResourceType.IntegerType
         }
     }
 }

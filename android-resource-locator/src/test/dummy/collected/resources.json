@@ -1,0 +1,1 @@
+{"items":[{"attributes":{"name":"someName","translatable":"false"},"value":"someValue","scope":"main:main","type":"string"},{"attributes":{"name":"someIntName"},"value":"20","scope":"demo:es","type":"integer"}]}

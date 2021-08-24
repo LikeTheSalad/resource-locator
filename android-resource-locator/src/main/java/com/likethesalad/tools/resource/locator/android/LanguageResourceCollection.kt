@@ -2,9 +2,13 @@ package com.likethesalad.tools.resource.locator.android
 
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
+import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import java.io.File
 
-class LanguageResourceCollection(private val dir: File) {
+class LanguageResourceCollection(
+    private val dir: File,
+    private val serializer: ResourceSerializer
+) {
 
 
     fun listLanguages(): List<Language> {
@@ -16,6 +20,7 @@ class LanguageResourceCollection(private val dir: File) {
     }
 
     fun getResourcesForLanguage(language: Language): ResourceCollection {
-        TODO()
+        val resourceFile = File(dir, CollectedFilesHelper.getResourceFileName(language))
+        return serializer.deserializeCollection(resourceFile.readText())
     }
 }

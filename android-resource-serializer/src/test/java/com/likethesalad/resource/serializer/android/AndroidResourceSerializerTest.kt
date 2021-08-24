@@ -35,7 +35,7 @@ class AndroidResourceSerializerTest {
         val resource1 = StringAndroidResource(
             mapOf(
                 "name" to "someName",
-                "translate" to "false"
+                "translatable" to "false"
             ), "someValue", AndroidResourceScope(Variant.Default, Language.Default)
         )
         val resource2 = IntegerAndroidResource(
@@ -46,6 +46,7 @@ class AndroidResourceSerializerTest {
         val collection = BasicResourceCollection(listOf(resource1, resource2))
 
         val stringCollection = serializeCollection(collection)
+        println("Resource collection: $stringCollection")
 
         Truth.assertThat(deserializeCollection(stringCollection)).isEqualTo(
             collection

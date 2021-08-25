@@ -11,7 +11,6 @@ class LanguageResourceFinder(
     private val serializer: ResourceSerializer
 ) {
 
-
     fun listLanguages(): List<Language> {
         val files = dir.listFiles { _, name ->
             CollectedFilesHelper.isResourceFileName(name)

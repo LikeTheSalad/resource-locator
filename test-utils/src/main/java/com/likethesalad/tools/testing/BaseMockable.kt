@@ -9,4 +9,6 @@ open class BaseMockable {
     fun setUpMockks() {
         MockKAnnotations.init(this)
     }
+
+    inline fun <reified T : Any> mockk(): T = io.mockk.mockk(relaxUnitFun = true)
 }

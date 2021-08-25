@@ -6,7 +6,7 @@ import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import java.io.File
 import java.io.FileNotFoundException
 
-class LanguageResourceCollection(
+class LanguageResourceFinder(
     private val dir: File,
     private val serializer: ResourceSerializer
 ) {

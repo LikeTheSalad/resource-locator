@@ -12,7 +12,7 @@ import org.junit.Assert
 import org.junit.Test
 import java.io.File
 
-class LanguageResourceCollectionTest {
+class LanguageResourceFinderTest {
 
     @Test
     fun `Get list of languages available`() {
@@ -54,8 +54,8 @@ class LanguageResourceCollectionTest {
         }
     }
 
-    private fun createInstance(collectedDir: File): LanguageResourceCollection {
-        return LanguageResourceCollection(collectedDir, AndroidResourceSerializer())
+    private fun createInstance(collectedDir: File): LanguageResourceFinder {
+        return LanguageResourceFinder(collectedDir, AndroidResourceSerializer())
     }
 
     private fun getCollectedDir(): File {

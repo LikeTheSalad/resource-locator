@@ -5,7 +5,7 @@ import java.io.File
 open class ResourceLocatorExtension {
 
 
-    fun getResourcesFromDir(directory: File): LanguageResourceCollection {
+    fun getResourcesFromDir(directory: File): LanguageResourceFinder {
         TODO()
     }
 }

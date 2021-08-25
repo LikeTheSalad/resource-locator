@@ -26,7 +26,7 @@ object CollectedFilesHelper {
         return if (suffix.isEmpty()) {
             Language.Default
         } else {
-            Language.fromId(suffix)
+            Language.Custom(suffix)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.likethesalad.tools.resource.locator.android
 
 import com.google.common.truth.Truth
 import com.likethesalad.tools.resource.api.android.environment.Language
+import com.likethesalad.tools.resource.locator.android.utils.CollectedFilesHelper
 import org.junit.Test
 
 class CollectedFilesHelperTest {

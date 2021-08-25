@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android
+package com.likethesalad.tools.resource.locator.android.utils
 
 import com.likethesalad.tools.resource.api.android.environment.Language
 

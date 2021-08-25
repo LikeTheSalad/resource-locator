@@ -5,6 +5,7 @@ import com.android.build.gradle.api.ApplicationVariant
 import com.likethesalad.tools.android.plugin.impl.DefaultAndroidVariantData
 import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
+import com.likethesalad.tools.resource.locator.android.extension.ResourceLocatorExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -14,9 +15,9 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         val android = project.extensions.getByType(AppExtension::class.java)
+        this.project = project
         val extension =
             project.extensions.create("${getLocatorId()}ResourceLocator", ResourceLocatorExtension::class.java)
-        this.project = project
         project.afterEvaluate {
             android.applicationVariants.forEach { variant ->
                 createResourceLocatorTaskForVariant(variant)

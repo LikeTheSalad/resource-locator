@@ -4,6 +4,7 @@ import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import java.io.File
+import java.io.FileNotFoundException
 
 class LanguageResourceCollection(
     private val dir: File,
@@ -21,6 +22,10 @@ class LanguageResourceCollection(
 
     fun getResourcesForLanguage(language: Language): ResourceCollection {
         val resourceFile = File(dir, CollectedFilesHelper.getResourceFileName(language))
-        return serializer.deserializeCollection(resourceFile.readText())
+        try {
+            return serializer.deserializeCollection(resourceFile.readText())
+        } catch (e: FileNotFoundException) {
+            throw IllegalArgumentException("No resources found for language: '${language.id}'")
+        }
     }
 }

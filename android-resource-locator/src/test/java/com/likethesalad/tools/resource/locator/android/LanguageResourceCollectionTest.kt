@@ -8,6 +8,7 @@ import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.api.android.modules.integer.IntegerAndroidResource
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import com.likethesalad.tools.testing.DummyResourcesFinder
+import org.junit.Assert
 import org.junit.Test
 import java.io.File
 
@@ -41,6 +42,16 @@ class LanguageResourceCollectionTest {
                 )
             )
         )
+    }
+
+    @Test
+    fun `Throw exception when language file isn't found when trying to get resources by language`() {
+        try {
+            createInstance(getCollectedDir()).getResourcesForLanguage(Language.Custom("jp"))
+            Assert.fail()
+        } catch (e: IllegalArgumentException) {
+            Truth.assertThat(e.message).isEqualTo("No resources found for language: 'jp'")
+        }
     }
 
     private fun createInstance(collectedDir: File): LanguageResourceCollection {

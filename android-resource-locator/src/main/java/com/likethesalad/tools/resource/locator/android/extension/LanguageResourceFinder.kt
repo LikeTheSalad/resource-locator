@@ -1,5 +1,7 @@
 package com.likethesalad.tools.resource.locator.android.extension
 
+import com.google.auto.factory.AutoFactory
+import com.google.auto.factory.Provided
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.locator.android.utils.CollectedFilesHelper
@@ -7,9 +9,10 @@ import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import java.io.File
 import java.io.FileNotFoundException
 
+@AutoFactory
 class LanguageResourceFinder(
     private val dir: File,
-    private val serializer: ResourceSerializer
+    @Provided private val serializer: ResourceSerializer
 ) {
 
     fun listLanguages(): List<Language> {

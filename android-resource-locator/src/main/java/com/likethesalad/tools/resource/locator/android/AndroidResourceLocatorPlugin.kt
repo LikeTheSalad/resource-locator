@@ -16,8 +16,7 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         val android = project.extensions.getByType(AppExtension::class.java)
         this.project = project
-        val extension =
-            project.extensions.create("${getLocatorId()}ResourceLocator", ResourceLocatorExtension::class.java)
+        project.extensions.create("${getLocatorId()}ResourceLocator", ResourceLocatorExtension::class.java)
         project.afterEvaluate {
             android.applicationVariants.forEach { variant ->
                 createResourceLocatorTaskForVariant(variant)

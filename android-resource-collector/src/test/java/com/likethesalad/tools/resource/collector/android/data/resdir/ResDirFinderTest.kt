@@ -1,12 +1,11 @@
 package com.likethesalad.tools.resource.collector.android.data.resdir
 
 import com.google.common.truth.Truth
+import com.likethesalad.tools.android.plugin.AndroidExtension
 import com.likethesalad.tools.resource.api.android.environment.Variant
-import com.likethesalad.tools.resource.collector.android.helpers.AndroidExtensionHelper
 import com.likethesalad.tools.testing.BaseMockable
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
 import java.io.File
@@ -14,7 +13,7 @@ import java.io.File
 class ResDirFinderTest : BaseMockable() {
 
     @MockK
-    lateinit var androidExtensionHelper: AndroidExtensionHelper
+    lateinit var androidExtensionHelper: AndroidExtension
 
     private lateinit var resDirFinder: ResDirFinder
 

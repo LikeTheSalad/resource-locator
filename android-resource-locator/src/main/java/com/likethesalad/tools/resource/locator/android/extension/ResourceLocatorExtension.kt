@@ -6,13 +6,16 @@ import com.likethesalad.tools.resource.locator.android.extension.observer.observ
 import org.gradle.api.Action
 import java.io.File
 
-open class ResourceLocatorExtension(private val taskPublisher: ResourceLocatorTaskPublisher) {
+open class ResourceLocatorExtension(
+    private val taskPublisher: ResourceLocatorTaskPublisher,
+    private val languageResourceFinderFactory: LanguageResourceFinderFactory
+) {
 
     fun onResourceLocatorTaskCreated(action: Action<ResourceLocatorTaskContainer>) {
         taskPublisher.register(ActionResourceLocatorTaskObserver(action))
     }
 
     fun getResourcesFromDir(directory: File): LanguageResourceFinder {
-        TODO()
+        return languageResourceFinderFactory.create(directory)
     }
 }

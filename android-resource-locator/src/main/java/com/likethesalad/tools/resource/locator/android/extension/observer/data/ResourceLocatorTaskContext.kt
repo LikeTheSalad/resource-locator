@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android.extension.observer
+package com.likethesalad.tools.resource.locator.android.extension.observer.data
 
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 

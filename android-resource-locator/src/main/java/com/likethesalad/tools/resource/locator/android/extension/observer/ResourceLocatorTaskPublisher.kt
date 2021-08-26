@@ -1,5 +1,7 @@
 package com.likethesalad.tools.resource.locator.android.extension.observer
 
+import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContainer
+
 class ResourceLocatorTaskPublisher {
 
     private val observers = mutableListOf<ResourceLocatorTaskObserver>()

@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.locator.android.extension
 
-import com.likethesalad.tools.resource.locator.android.extension.observer.ResourceLocatorTaskContainer
 import com.likethesalad.tools.resource.locator.android.extension.observer.ResourceLocatorTaskPublisher
+import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContainer
 import com.likethesalad.tools.resource.locator.android.extension.observer.observers.ActionResourceLocatorTaskObserver
 import org.gradle.api.Action
 import java.io.File

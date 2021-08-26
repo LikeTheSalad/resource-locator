@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.locator.android.extension.observer.observers
 
 import com.google.common.truth.Truth
-import com.likethesalad.tools.resource.locator.android.extension.observer.ResourceLocatorTaskContainer
+import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContainer
 import com.likethesalad.tools.testing.BaseMockable
 import io.mockk.verify
 import org.gradle.api.Action

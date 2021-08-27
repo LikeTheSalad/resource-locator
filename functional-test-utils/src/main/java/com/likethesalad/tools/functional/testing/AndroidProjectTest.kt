@@ -1,6 +1,6 @@
 package com.likethesalad.tools.functional.testing
 
-import com.likethesalad.tools.functional.testing.data.LibraryParameters
+import com.likethesalad.tools.functional.testing.data.JarParameters
 import com.likethesalad.tools.functional.testing.layout.ProjectDescriptor
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
@@ -36,7 +36,7 @@ abstract class AndroidProjectTest {
 
         return GradleRunner.create()
             .withProjectDir(testProjectDir.root)
-            .withGradleVersion("4.10.3")
+            .withGradleVersion(getGradleVersion())
             .withArguments(commands.map { ":$name:$it" }.plus("--stacktrace"))
             .build()
     }
@@ -95,7 +95,7 @@ abstract class AndroidProjectTest {
         rootGradleFile = testProjectDir.newFile(BUILD_GRADLE_FILE_NAME)
 
         val libsDir = Paths.get("build", "libs").toFile().absolutePath
-        val libraryParameters = getLibraryParameters()
+        val libraryParameters = getPluginJarParameters()
         val pluginJarPath = "$libsDir/${libraryParameters.id}-${libraryParameters.version}.jar"
 
         rootGradleFile!!.writeText(
@@ -103,6 +103,7 @@ abstract class AndroidProjectTest {
             buildscript {
                 repositories {
                     google()
+                    mavenCentral()
                     jcenter()
                 }
                 dependencies {
@@ -115,6 +116,7 @@ abstract class AndroidProjectTest {
             subprojects {
                 repositories {
                     google()
+                    mavenCentral()
                     jcenter()
                 }
             }
@@ -131,5 +133,6 @@ abstract class AndroidProjectTest {
     }
 
     abstract fun getAndroidBuildPluginVersion(): String
-    abstract fun getLibraryParameters(): LibraryParameters
+    abstract fun getGradleVersion(): String
+    abstract fun getPluginJarParameters(): JarParameters
 }

@@ -3,7 +3,8 @@ package com.likethesalad.tools.functional.testing.app.layout
 import com.likethesalad.tools.functional.testing.layout.ProjectDescriptor
 
 class AndroidAppProjectDescriptor(
-    private val name: String,
+    private val projectName: String,
+    private val applyPluginId: String,
     private val androidBlockItems: List<AndroidBlockItem> = emptyList(),
     private val dependencies: List<String> = emptyList()
 ) : ProjectDescriptor() {
@@ -11,7 +12,7 @@ class AndroidAppProjectDescriptor(
     override fun getBuildGradleContents(): String {
         return """
             apply plugin: 'com.android.application'
-            apply plugin: 'placeholder-resolver'
+            apply plugin: '$applyPluginId'
             
             android {
                 compileSdkVersion 28
@@ -52,5 +53,5 @@ class AndroidAppProjectDescriptor(
         }
     }
 
-    override fun getProjectName(): String = name
+    override fun getProjectName(): String = projectName
 }

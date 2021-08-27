@@ -1,5 +1,6 @@
 package com.likethesalad.tools.functional.testing
 
+import com.likethesalad.tools.functional.testing.data.LibraryParameters
 import com.likethesalad.tools.functional.testing.layout.ProjectDescriptor
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
@@ -94,7 +95,8 @@ abstract class AndroidProjectTest {
         rootGradleFile = testProjectDir.newFile(BUILD_GRADLE_FILE_NAME)
 
         val libsDir = Paths.get("build", "libs").toFile().absolutePath
-        val pluginJarPath = "$libsDir/string-reference-1.2.2.jar"
+        val libraryParameters = getLibraryParameters()
+        val pluginJarPath = "$libsDir/${libraryParameters.id}-${libraryParameters.version}.jar"
 
         rootGradleFile!!.writeText(
             """
@@ -129,4 +131,5 @@ abstract class AndroidProjectTest {
     }
 
     abstract fun getAndroidBuildPluginVersion(): String
+    abstract fun getLibraryParameters(): LibraryParameters
 }

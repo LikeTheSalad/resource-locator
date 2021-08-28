@@ -2,9 +2,13 @@ package com.likethesalad.tools.resource.collector.android
 
 import com.google.auto.factory.AutoFactory
 import com.google.auto.factory.Provided
+import com.likethesalad.tools.android.plugin.AndroidExtension
 import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.collector.ResourceCollector
+import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
+import com.likethesalad.tools.resource.collector.android.di.CollectorModule
+import com.likethesalad.tools.resource.collector.android.di.DaggerCollectorComponent
 import com.likethesalad.tools.resource.collector.android.extractor.DefaultResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
 import com.likethesalad.tools.resource.collector.android.merger.VariantResourceMerger
@@ -14,14 +18,31 @@ import com.likethesalad.tools.resource.collector.merger.ResourceMerger
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 
 @AutoFactory
-class AndroidResourceCollector(
+class AndroidResourceCollector internal constructor(
+    private val androidExtension: AndroidExtension,
     private val variantTree: VariantTree,
     private val resourceExtractor: XmlResourceExtractor<out AndroidResource>,
     @Provided androidXmlResourceSourceProviderFactory: AndroidXmlResourceSourceProviderFactory
 ) : ResourceCollector() {
 
+    companion object {
+        private val component by lazy {
+            DaggerCollectorComponent.builder()
+                .collectorModule(CollectorModule())
+                .build()
+        }
+
+        fun newInstance(
+            androidExtension: AndroidExtension,
+            variantTree: VariantTree,
+            resourceExtractor: XmlResourceExtractor<out AndroidResource>
+        ): AndroidResourceCollector {
+            return component.androidResourceCollectorFactory().create(androidExtension, variantTree, resourceExtractor)
+        }
+    }
+
     private val resourceSourceProvider by lazy {
-        androidXmlResourceSourceProviderFactory.create(variantTree)
+        androidXmlResourceSourceProviderFactory.create(variantTree, ResDirFinder(androidExtension))
     }
 
     override fun getSourceProvider(): ResourceSourceProvider {

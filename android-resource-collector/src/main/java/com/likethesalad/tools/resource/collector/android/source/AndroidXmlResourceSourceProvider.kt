@@ -16,7 +16,7 @@ import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 @AutoFactory
 class AndroidXmlResourceSourceProvider(
     private val variantTree: VariantTree,
-    @Provided private val resDirFinder: ResDirFinder,
+    private val resDirFinder: ResDirFinder,
     @Provided private val valueDirFinder: ValueDirFinder,
     @Provided private val xmlFileFinder: XmlFileFinder,
     @Provided private val sourceFactory: AndroidXmlResourceSourceFactory

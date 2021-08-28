@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
+    api gradleTestKit()
+    api project(":test-utils")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation gradleTestKit()
-    implementation project(":test-utils")
 }
 
 compileKotlin {

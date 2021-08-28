@@ -20,7 +20,9 @@ import java.io.File
 abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
 
     private lateinit var project: Project
-    private val taskPublisher: ResourceLocatorTaskPublisher by lazy { ResourceLocatorTaskPublisher() }
+    private val taskPublisher: ResourceLocatorTaskPublisher by lazy {
+        ResourceLocatorTaskPublisher()
+    }
 
     override fun apply(project: Project) {
         val android = project.extensions.getByType(AppExtension::class.java)

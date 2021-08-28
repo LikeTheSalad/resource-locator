@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android
+package com.likethesalad.tools.resource.locator.android.test
 
 import com.google.common.truth.Truth
 import com.likethesalad.tools.functional.testing.AndroidProjectTest
@@ -11,7 +11,7 @@ import org.gradle.testkit.runner.BuildResult
 import org.junit.Test
 import java.io.File
 
-abstract class ResourceLocatorTest : AndroidProjectTest() {
+class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
     private val inputAssetsProvider = TestAssetsProvider("inputs")
     private val outputAssetsProvider = TestAssetsProvider("outputs")
@@ -111,6 +111,11 @@ abstract class ResourceLocatorTest : AndroidProjectTest() {
         return JarParameters("android-resource-locator", "1.0.0")
     }
 
-    abstract fun getPluginId(): String
-    abstract fun getLocatorId(): String
+    private fun getPluginId(): String {
+        return "android-resources-locator-test"
+    }
+
+    private fun getLocatorId(): String {
+        return "test"
+    }
 }

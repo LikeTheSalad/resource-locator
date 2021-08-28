@@ -1,7 +1,33 @@
 plugins {
     id 'java-library'
-    id 'org.jetbrains.kotlin.jvm'
+    id 'kotlin'
     id 'kotlin-kapt'
+    id 'idea'
+}
+
+sourceSets {
+    functionalTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    functionalTestImplementation.extendsFrom implementation
+    functionalTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
+idea {
+    module {
+        testSourceDirs += sourceSets.functionalTest.java.srcDirs
+        testResourceDirs += sourceSets.functionalTest.resources.srcDirs
+        scopes.TEST.plus += [configurations.functionalTestCompileClasspath]
+    }
+}
+
+task functionalTest(type: Test) {
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    classpath = sourceSets.functionalTest.runtimeClasspath
 }
 
 dependencies {
@@ -18,6 +44,7 @@ dependencies {
     kapt "com.google.auto.factory:auto-factory:$autoFactory_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     testImplementation project(':test-utils')
+    functionalTestImplementation project(':functional-test-utils')
 }
 
 compileKotlin {

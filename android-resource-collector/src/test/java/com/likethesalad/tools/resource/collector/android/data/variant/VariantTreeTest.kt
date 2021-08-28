@@ -1,8 +1,8 @@
 package com.likethesalad.tools.resource.collector.android.data.variant
 
 import com.google.common.truth.Truth
+import com.likethesalad.tools.android.plugin.AndroidVariantData
 import com.likethesalad.tools.resource.api.android.environment.Variant
-import com.likethesalad.tools.resource.collector.android.helpers.AndroidVariantHelper
 import com.likethesalad.tools.testing.BaseMockable
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -12,7 +12,7 @@ import org.junit.Test
 class VariantTreeTest : BaseMockable() {
 
     @MockK
-    lateinit var variantHelper: AndroidVariantHelper
+    lateinit var variantData: AndroidVariantData
 
     @Test
     fun `Get variants from empty flavors`() {
@@ -88,10 +88,10 @@ class VariantTreeTest : BaseMockable() {
         flavors: List<String>,
         suffix: String
     ): VariantTree {
-        every { variantHelper.getVariantName() }.returns(variantName)
-        every { variantHelper.getVariantFlavors() }.returns(flavors)
-        every { variantHelper.getVariantType() }.returns(suffix)
+        every { variantData.getVariantName() }.returns(variantName)
+        every { variantData.getVariantFlavors() }.returns(flavors)
+        every { variantData.getVariantType() }.returns(suffix)
 
-        return VariantTree(variantHelper)
+        return VariantTree(variantData)
     }
 }

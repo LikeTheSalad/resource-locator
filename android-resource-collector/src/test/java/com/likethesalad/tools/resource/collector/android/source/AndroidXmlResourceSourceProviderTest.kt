@@ -1,6 +1,7 @@
 package com.likethesalad.tools.resource.collector.android.source
 
 import com.google.common.truth.Truth
+import com.likethesalad.tools.android.plugin.AndroidExtension
 import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
@@ -10,7 +11,6 @@ import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinde
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
-import com.likethesalad.tools.resource.collector.android.helpers.AndroidExtensionHelper
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.testing.BaseMockable
 import com.likethesalad.tools.testing.DummyResourcesFinder.getResourceFile
@@ -27,7 +27,7 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
     lateinit var variantTree: VariantTree
 
     @MockK
-    lateinit var androidExtensionHelper: AndroidExtensionHelper
+    lateinit var androidExtension: AndroidExtension
 
     @MockK
     lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSourceFactory
@@ -48,7 +48,7 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
             )
         }
         androidXmlResourceSourceProvider = AndroidXmlResourceSourceProvider(
-            variantTree, ResDirFinder(androidExtensionHelper),
+            variantTree, ResDirFinder(androidExtension),
             ValueDirFinder(), XmlFileFinder(), androidXmlResourceSourceFactory
         )
     }
@@ -126,7 +126,7 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
 
     private fun stubSrcDirsFor(variant: Variant, srcDirs: Set<File>) {
         every {
-            androidExtensionHelper.getVariantSrcDirs(variant.name)
+            androidExtension.getVariantSrcDirs(variant.name)
         }.returns(srcDirs)
     }
 

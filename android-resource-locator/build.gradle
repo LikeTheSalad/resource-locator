@@ -5,6 +5,8 @@ plugins {
     id 'idea'
 }
 
+version = '1.0.0'
+
 sourceSets {
     functionalTest {
         compileClasspath += sourceSets.main.output

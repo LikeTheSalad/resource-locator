@@ -32,32 +32,33 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         val inputDir = getInputTestAsset(inOutDirName)
         descriptor.projectDirectoryBuilder.register(ValuesResFoldersPlacer(inputDir))
 
-        createProjectAndRunStringResolver(descriptor, variantNames)
+        val taskNames = variantNames.map { "${getLocatorId()}${it.capitalize()}ResourceLocator" }
+        createProjectAndRunResourceLocatorTasks(descriptor, taskNames)
 
-        variantNames.forEach {
+        taskNames.forEach {
             verifyExpectedOutput(inOutDirName, it)
         }
     }
 
     private fun verifyExpectedOutput(
         inOutDirName: String,
-        variantName: String
+        taskName: String
     ) {
         val projectDir = getProjectDir(inOutDirName)
-        val resultDir = File(projectDir, "build/generated/resolved/$variantName")
+        val resultDir = File(projectDir, "build/intermediates/incremental/$taskName")
         Truth.assertThat(resultDir.exists()).isTrue()
-        verifyDirsContentsAreEqual(getExpectedOutputDir(inOutDirName, variantName), resultDir)
+        verifyDirsContentsAreEqual(getExpectedOutputDir(inOutDirName, taskName), resultDir)
     }
 
-    private fun getExpectedOutputDir(inOutDirName: String, variantName: String): File {
-        // Return specific variant's outputs dir if any, else fallback to "main".
+    private fun getExpectedOutputDir(inOutDirName: String, taskName: String): File {
         val expectedOutputRootDir = getOutputTestAsset(inOutDirName)
-        val variantOutputDir = File(expectedOutputRootDir, variantName)
-        if (variantOutputDir.exists()) {
-            return variantOutputDir
+        val variantOutputDir = File(expectedOutputRootDir, taskName)
+
+        if (!variantOutputDir.exists()) {
+            throw IllegalStateException("Dir not found: $variantOutputDir")
         }
 
-        return File(expectedOutputRootDir, "main")
+        return variantOutputDir
     }
 
     private fun verifyDirsContentsAreEqual(dir1: File, dir2: File) {
@@ -87,12 +88,11 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         Truth.assertThat(fileWithSameName.readText()).isEqualTo(file.readText())
     }
 
-    private fun createProjectAndRunStringResolver(
+    private fun createProjectAndRunResourceLocatorTasks(
         projectDescriptor: ProjectDescriptor,
-        variantNames: List<String>
+        taskNames: List<String>
     ): BuildResult {
-        val commandList = variantNames.map { "${getLocatorId()}${it.capitalize()}ResourceLocator" }
-        return createProjectAndRun(projectDescriptor, commandList)
+        return createProjectAndRun(projectDescriptor, taskNames)
     }
 
     private fun getInputTestAsset(inputDirName: String): File {
@@ -108,7 +108,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     override fun getGradleVersion(): String = "4.20.3"
 
     override fun getPluginJarParameters(): JarParameters {
-        return JarParameters("android-resource-locator", "1.0.0")
+        return JarParameters("android-resource-locator-test")
     }
 
     private fun getPluginId(): String {

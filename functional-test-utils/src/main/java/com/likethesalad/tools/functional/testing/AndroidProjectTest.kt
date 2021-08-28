@@ -96,7 +96,8 @@ abstract class AndroidProjectTest {
 
         val libsDir = Paths.get("build", "libs").toFile().absolutePath
         val libraryParameters = getPluginJarParameters()
-        val pluginJarPath = "$libsDir/${libraryParameters.id}-${libraryParameters.version}.jar"
+        val version = libraryParameters.version?.let { "-$it" } ?: ""
+        val pluginJarPath = "$libsDir/${libraryParameters.id}$version.jar"
 
         rootGradleFile!!.writeText(
             """

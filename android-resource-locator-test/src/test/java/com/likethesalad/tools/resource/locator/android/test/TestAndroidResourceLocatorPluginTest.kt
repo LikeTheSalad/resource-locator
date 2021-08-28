@@ -13,8 +13,9 @@ import java.io.File
 
 class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
-    private val inputAssetsProvider = TestAssetsProvider("inputs")
-    private val outputAssetsProvider = TestAssetsProvider("outputs")
+    private val testsDirName = "test"
+    private val inputAssetsProvider = TestAssetsProvider(testsDirName, "inputs")
+    private val outputAssetsProvider = TestAssetsProvider(testsDirName, "outputs")
 
     @Test
     fun `Check gathering strings from single variant`() {
@@ -105,7 +106,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
     override fun getAndroidBuildPluginVersion(): String = "3.3.3"
 
-    override fun getGradleVersion(): String = "4.20.3"
+    override fun getGradleVersion(): String = "4.10.3"
 
     override fun getPluginJarParameters(): JarParameters {
         return JarParameters("android-resource-locator-test")

@@ -8,8 +8,8 @@ dependencies {
     api gradleApi()
     api project(":android-resource-api")
     api project(":android-resource-collector")
+    api project(':android-plugin-tools')
     implementation project(':android-resource-serializer')
-    implementation project(':android-plugin-tools')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.google.code.gson:gson:$gson_version"
     compileOnly "com.google.dagger:dagger:$dagger_version"

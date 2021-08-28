@@ -1,6 +1,5 @@
 package com.likethesalad.tools.resource.collector.android.data
 
-import com.likethesalad.tools.resource.collector.android.data.Constants.XML_RESOURCES_TAG
 import org.w3c.dom.DOMException
 import org.w3c.dom.Document
 import org.w3c.dom.Element
@@ -18,6 +17,10 @@ import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 
 class AndroidXmlResDocument(private val document: Document) {
+
+    companion object {
+        private const val XML_RESOURCES_TAG = "resources"
+    }
 
     private val resources: Element by lazy { getOrCreateResources() }
 

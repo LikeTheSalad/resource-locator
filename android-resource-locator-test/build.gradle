@@ -9,6 +9,27 @@ dependencies {
     testImplementation project(':functional-test-utils')
 }
 
+tasks.register("lele") {
+    doLast {
+        configurations.runtimeClasspath.forEach {
+            println "ONE FILE -> ${it.name}"
+        }
+    }
+}
+
+def includeJarsForIntegrationTest = ["android-resource-locator.jar"]
+
+tasks.register('integrationTestJar', Jar) {
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll {
+            it.name in includeJarsForIntegrationTest
+        }.collect { zipTree(it) }
+    }
+}
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }

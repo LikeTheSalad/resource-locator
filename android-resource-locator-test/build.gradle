@@ -9,7 +9,7 @@ dependencies {
     testImplementation project(':functional-test-utils')
 }
 
-tasks.register("lele") {
+tasks.register("listAvailableJars") {
     doLast {
         configurations.runtimeClasspath.forEach {
             println "ONE FILE -> ${it.name}"

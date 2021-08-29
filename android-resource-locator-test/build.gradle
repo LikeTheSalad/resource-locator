@@ -3,15 +3,22 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
+configurations {
+    iTest {
+        transitive false
+    }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(':android-resource-locator')
     testImplementation project(':functional-test-utils')
+    iTest project(':android-resource-locator')
 }
 
 tasks.register("listAvailableJars") {
     doLast {
-        configurations.runtimeClasspath.forEach {
+        configurations.iTest.forEach {
             println "ONE FILE -> ${it.name}"
         }
     }
@@ -22,9 +29,9 @@ def includeJarsForIntegrationTest = ["android-resource-locator.jar"]
 tasks.register('integrationTestJar', Jar) {
     from sourceSets.main.output
 
-    dependsOn configurations.runtimeClasspath
+    dependsOn configurations.iTest
     from {
-        configurations.runtimeClasspath.findAll {
+        configurations.iTest.findAll {
             it.name in includeJarsForIntegrationTest
         }.collect { zipTree(it) }
     }

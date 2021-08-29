@@ -98,6 +98,9 @@ abstract class AndroidProjectTest {
         val libraryParameters = getPluginJarParameters()
         val version = libraryParameters.version?.let { "-$it" } ?: ""
         val pluginJarPath = "$libsDir/${libraryParameters.id}$version.jar"
+        if (!File(pluginJarPath).exists()) {
+            throw IllegalArgumentException("Plugin JAR file not found: $pluginJarPath")
+        }
 
         rootGradleFile!!.writeText(
             """

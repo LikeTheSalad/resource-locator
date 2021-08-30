@@ -11,8 +11,9 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import java.io.File
+import javax.inject.Inject
 
-open class ResourceLocatorTask(
+open class ResourceLocatorTask @Inject constructor(
     private val collector: ResourceCollector,
     private val serializer: ResourceSerializer
 ) : DefaultTask() {

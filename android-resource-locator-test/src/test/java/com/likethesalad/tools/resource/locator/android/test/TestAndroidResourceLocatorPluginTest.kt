@@ -86,7 +86,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
     private fun checkIfFileIsInList(file: File, list: List<File>) {
         val fileWithSameName = list.first { it.name == file.name }
-        Truth.assertThat(fileWithSameName.readText()).isEqualTo(file.readText())
+        Truth.assertThat(file.readText()).isEqualTo(fileWithSameName.readText())
     }
 
     private fun createProjectAndRunResourceLocatorTasks(

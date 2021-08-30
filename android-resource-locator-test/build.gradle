@@ -14,6 +14,14 @@ dependencies {
     implementation project(':android-resource-locator')
     testImplementation project(':functional-test-utils')
     iTest project(':android-resource-locator')
+    iTest project(':android-resource-collector')
+    iTest project(':android-plugin-tools')
+    iTest project(':android-resource-api')
+    iTest project(':resource-collector')
+    iTest project(':resource-api')
+    iTest project(':resource-serializer')
+    iTest project(':android-resource-serializer')
+    iTest "com.google.dagger:dagger:$dagger_version"
 }
 
 tasks.register("listAvailableJars") {

@@ -2,6 +2,7 @@ package com.likethesalad.tools.resource.locator.android
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
+import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
 import com.likethesalad.tools.android.plugin.AndroidExtension
 import com.likethesalad.tools.android.plugin.impl.DefaultAndroidExtension
 import com.likethesalad.tools.android.plugin.impl.DefaultAndroidVariantData
@@ -58,7 +59,8 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         val outputDir = getOutputDirForTaskName(taskName)
         val variantTree = VariantTree(DefaultAndroidVariantData(androidVariant))
         val collector = getResourceCollector(DefaultAndroidExtension(appExtension), variantTree)
-        val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, variantTree)
+        val serializer = AndroidResourceSerializer()
+        val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer)
 
         configureTask(taskProvider, outputDir)
 

@@ -18,8 +18,13 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     private val outputAssetsProvider = TestAssetsProvider(testsDirName, "outputs")
 
     @Test
-    fun `Check gathering strings from single variant`() {
+    fun `Check gathering strings from single variant and single file`() {
         runInputOutputComparisonTest("basic", listOf("debug"))
+    }
+
+    @Test
+    fun `Gather strings from multiple files, single variant`() {
+        runInputOutputComparisonTest("multiplefiles", listOf("debug"))
     }
 
     private fun runInputOutputComparisonTest(
@@ -86,7 +91,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
     private fun checkIfFileIsInList(file: File, list: List<File>) {
         val fileWithSameName = list.first { it.name == file.name }
-        Truth.assertThat(file.readText()).isEqualTo(fileWithSameName.readText())
+        Truth.assertThat(fileWithSameName.readText()).isEqualTo(file.readText())
     }
 
     private fun createProjectAndRunResourceLocatorTasks(

@@ -1,5 +1,6 @@
 package com.likethesalad.tools.resource.locator.android
 
+import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
@@ -25,6 +26,7 @@ open class ResourceLocatorTask @Inject constructor(
     fun runTask() {
         val collection = collector.collect()
         val collectionsByLanguage = collection.getAllResources()
+            .sortedBy { (it as AndroidResource).name() }
             .groupBy { (it.scope() as AndroidResourceScope).language }
             .mapValues { BasicResourceCollection(it.value) }
 

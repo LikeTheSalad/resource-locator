@@ -27,6 +27,11 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         runInputOutputComparisonTest("multiplefiles", listOf("debug"))
     }
 
+    @Test
+    fun `Gather strings for multiple languages`() {
+        runInputOutputComparisonTest("multiplelanguages", listOf("debug"))
+    }
+
     private fun runInputOutputComparisonTest(
         inOutDirName: String,
         variantNames: List<String>,

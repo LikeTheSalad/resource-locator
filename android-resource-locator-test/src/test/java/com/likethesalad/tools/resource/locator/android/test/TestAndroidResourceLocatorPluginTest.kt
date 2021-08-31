@@ -4,6 +4,7 @@ import com.google.common.truth.Truth
 import com.likethesalad.tools.functional.testing.AndroidProjectTest
 import com.likethesalad.tools.functional.testing.app.content.ValuesResFoldersPlacer
 import com.likethesalad.tools.functional.testing.app.layout.AndroidAppProjectDescriptor
+import com.likethesalad.tools.functional.testing.app.layout.items.FlavorAndroidBlockItem
 import com.likethesalad.tools.functional.testing.data.JarParameters
 import com.likethesalad.tools.functional.testing.layout.ProjectDescriptor
 import com.likethesalad.tools.functional.testing.utils.TestAssetsProvider
@@ -30,6 +31,32 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     @Test
     fun `Gather strings for multiple languages`() {
         runInputOutputComparisonTest("multiplelanguages", listOf("debug"))
+    }
+
+    @Test
+    fun `Gather flavored strings`() {
+        val inOutDirName = "flavored-app"
+        val flavors = mutableListOf<FlavorAndroidBlockItem.FlavorDescriptor>()
+        val modeFlavors = listOf("demo", "full")
+        val environmentFlavors = listOf("stable", "prod")
+        flavors.add(FlavorAndroidBlockItem.FlavorDescriptor("mode", modeFlavors))
+        flavors.add(FlavorAndroidBlockItem.FlavorDescriptor("environment", environmentFlavors))
+        val flavoredDescriptor = AndroidAppProjectDescriptor(
+            inOutDirName,
+            getPluginId(),
+            listOf(FlavorAndroidBlockItem(flavors))
+        )
+
+        runInputOutputComparisonTest(
+            inOutDirName,
+            listOf(
+                "fullStableDebug",
+                "demoStableDebug",
+                "fullProdDebug",
+                "demoProdDebug"
+            ),
+            flavoredDescriptor
+        )
     }
 
     private fun runInputOutputComparisonTest(

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Strings playground on demo</string>
+    <string name="welcome_message">Welcome to the app on demo</string>
+</resources>

@@ -13,6 +13,7 @@ import com.likethesalad.tools.resource.collector.android.extractor.DefaultResour
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
 import com.likethesalad.tools.resource.collector.android.merger.VariantResourceMerger
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceProviderFactory
+import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlExtraSourceProvider
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.merger.ResourceMerger
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
@@ -22,6 +23,7 @@ class AndroidResourceCollector internal constructor(
     private val androidExtension: AndroidExtension,
     private val variantTree: VariantTree,
     private val resourceExtractor: XmlResourceExtractor<out AndroidResource>,
+    private val extraXmlSourceProviders: List<AndroidXmlExtraSourceProvider>,
     @Provided androidXmlResourceSourceProviderFactory: AndroidXmlResourceSourceProviderFactory
 ) : ResourceCollector() {
 
@@ -42,7 +44,11 @@ class AndroidResourceCollector internal constructor(
     }
 
     private val resourceSourceProvider by lazy {
-        androidXmlResourceSourceProviderFactory.create(variantTree, ResDirFinder(androidExtension), emptyList())
+        androidXmlResourceSourceProviderFactory.create(
+            variantTree,
+            ResDirFinder(androidExtension),
+            extraXmlSourceProviders
+        )
     }
 
     override fun getSourceProvider(): ResourceSourceProvider {

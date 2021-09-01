@@ -11,6 +11,8 @@ import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinde
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
+import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlExtraResourceProvider
+import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlResourceDescriptor
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.testing.BaseMockable
 import com.likethesalad.tools.testing.DummyResourcesFinder.getResourceFile
@@ -36,8 +38,6 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
     private val demo = Variant.Custom("demo")
     private val paid = Variant.Custom("paid")
 
-    private lateinit var androidXmlResourceSourceProvider: AndroidXmlResourceSourceProvider
-
     @Before
     fun setUp() {
         every { androidXmlResourceSourceFactory.create(any(), any()) } answers {
@@ -47,17 +47,13 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
                 AndroidXmlResDocument.Factory(DocumentBuilderFactory.newInstance())
             )
         }
-        androidXmlResourceSourceProvider = AndroidXmlResourceSourceProvider(
-            variantTree, ResDirFinder(androidExtension),
-            ValueDirFinder(), XmlFileFinder(), androidXmlResourceSourceFactory
-        )
     }
 
     @Test
     fun `Provide android xml resource sources`() {
         prepareVariantTree()
 
-        val sources = androidXmlResourceSourceProvider.getSources()
+        val sources = getInstance().getSources()
 
         Truth.assertThat(sources.size).isEqualTo(6)
         checkSourceIn(
@@ -95,6 +91,56 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
                 getVariantFile("paid/res/values-es/strings.xml"),
                 AndroidResourceScope(paid, Language.Custom("es"))
             ), sources
+        )
+    }
+
+    @Test
+    fun `Add extra resources provided`() {
+        val variants = listOf(main)
+        every {
+            variantTree.getVariants()
+        }.returns(variants)
+        stubSrcDirsFor(main, setOf(getVariantFile("main/res"), getVariantFile("main/res2")))
+        val extraResourceProvider = mockk<AndroidXmlExtraResourceProvider>()
+        val extraResourceFile = mockk<File>()
+        every { extraResourceFile.path }.returns("/extra/resource/path/file.xml")
+        val extraResourceScope = AndroidResourceScope(demo, Language.Default)
+        val extraResource = AndroidXmlResourceDescriptor(extraResourceFile, extraResourceScope)
+        every { extraResourceProvider.getXmlDescriptors() }.returns(listOf(extraResource))
+
+        val sources = getInstance().getSources()
+
+        checkSourceIn(
+            ResourceSourceExpected(extraResourceFile, extraResourceScope),
+            sources
+        )
+        checkSourceIn(
+            ResourceSourceExpected(
+                getVariantFile("main/res/values/strings.xml"),
+                AndroidResourceScope(main, Language.Default)
+            ), sources
+        )
+        checkSourceIn(
+            ResourceSourceExpected(
+                getVariantFile("main/res/values-es/strings.xml"),
+                AndroidResourceScope(main, Language.Custom("es"))
+            ), sources
+        )
+        checkSourceIn(
+            ResourceSourceExpected(
+                getVariantFile("main/res2/values/strings.xml"),
+                AndroidResourceScope(main, Language.Default)
+            ), sources
+        )
+    }
+
+    private fun getInstance(extraResourceProviders: List<AndroidXmlExtraResourceProvider> = emptyList())
+            : AndroidXmlResourceSourceProvider {
+        return AndroidXmlResourceSourceProvider(
+            variantTree,
+            ResDirFinder(androidExtension),
+            extraResourceProviders,
+            ValueDirFinder(), XmlFileFinder(), androidXmlResourceSourceFactory
         )
     }
 

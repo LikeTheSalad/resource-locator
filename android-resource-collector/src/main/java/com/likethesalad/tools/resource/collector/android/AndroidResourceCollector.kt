@@ -42,7 +42,7 @@ class AndroidResourceCollector internal constructor(
     }
 
     private val resourceSourceProvider by lazy {
-        androidXmlResourceSourceProviderFactory.create(variantTree, ResDirFinder(androidExtension))
+        androidXmlResourceSourceProviderFactory.create(variantTree, ResDirFinder(androidExtension), emptyList())
     }
 
     override fun getSourceProvider(): ResourceSourceProvider {

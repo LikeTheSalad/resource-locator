@@ -10,21 +10,42 @@ import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
-import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlExtraResourceProvider
+import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlExtraSourceProvider
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
+import java.io.File
 
 @AutoFactory
 class AndroidXmlResourceSourceProvider(
     private val variantTree: VariantTree,
     private val resDirFinder: ResDirFinder,
-    private val extraXmlProviders: List<AndroidXmlExtraResourceProvider>,
+    private val extraXmlProviders: List<AndroidXmlExtraSourceProvider>,
     @Provided private val valueDirFinder: ValueDirFinder,
     @Provided private val xmlFileFinder: XmlFileFinder,
     @Provided private val sourceFactory: AndroidXmlResourceSourceFactory
 ) : ResourceSourceProvider {
 
     override fun getSources(): List<ResourceSource> {
+        val sources = mutableListOf<ResourceSource>()
+
+        sources.addAll(getResourceSourcesFromVariants())
+        sources.addAll(getResourcesFromExtraXmlProviders())
+
+        return sources
+    }
+
+    private fun getResourcesFromExtraXmlProviders(): List<ResourceSource> {
+        val sources = mutableListOf<ResourceSource>()
+        val sourceDescriptors = extraXmlProviders.flatMap { it.getXmlDescriptors() }
+
+        sourceDescriptors.forEach { descriptor ->
+            sources.add(createAndroidResourceSource(descriptor.file, descriptor.scope))
+        }
+
+        return sources
+    }
+
+    private fun getResourceSourcesFromVariants(): List<ResourceSource> {
         val sources = mutableListOf<ResourceSource>()
         val variants = variantTree.getVariants()
 
@@ -63,10 +84,15 @@ class AndroidXmlResourceSourceProvider(
         val scope = AndroidResourceScope(valueDir.resDir.variant, valueDir.language)
 
         for (file in xmlFiles) {
-            sources.add(sourceFactory.create(file, scope))
+            sources.add(createAndroidResourceSource(file, scope))
         }
 
         return sources
     }
+
+    private fun createAndroidResourceSource(
+        file: File,
+        scope: AndroidResourceScope
+    ): AndroidXmlResourceSource = sourceFactory.create(file, scope)
 
 }

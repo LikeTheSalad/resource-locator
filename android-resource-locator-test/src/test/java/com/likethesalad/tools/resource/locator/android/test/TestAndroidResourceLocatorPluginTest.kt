@@ -4,6 +4,7 @@ import com.google.common.truth.Truth
 import com.likethesalad.tools.functional.testing.AndroidProjectTest
 import com.likethesalad.tools.functional.testing.app.content.ValuesResFoldersPlacer
 import com.likethesalad.tools.functional.testing.app.layout.AndroidAppProjectDescriptor
+import com.likethesalad.tools.functional.testing.app.layout.items.DefaultConfigAndroidBlockItem
 import com.likethesalad.tools.functional.testing.app.layout.items.FlavorAndroidBlockItem
 import com.likethesalad.tools.functional.testing.data.JarParameters
 import com.likethesalad.tools.functional.testing.layout.ProjectDescriptor
@@ -25,7 +26,15 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
     @Test
     fun `Check gathering strings from resources and also android generating task`() {
-        runInputOutputComparisonTest("android-generated", listOf("debug"))
+        val inOutDirName = "android-generated"
+        val generatedStrings = mapOf("android_generated" to "This string was generated using Android's build plugin")
+        val appDescriptor = AndroidAppProjectDescriptor(
+            inOutDirName,
+            getPluginId(), listOf(
+                DefaultConfigAndroidBlockItem(generatedStrings)
+            )
+        )
+        runInputOutputComparisonTest(inOutDirName, listOf("debug"), appDescriptor)
     }
 
     @Test

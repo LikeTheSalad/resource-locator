@@ -37,9 +37,11 @@ class AndroidResourceCollector internal constructor(
         fun newInstance(
             androidExtension: AndroidExtension,
             variantTree: VariantTree,
-            resourceExtractor: XmlResourceExtractor<out AndroidResource>
+            resourceExtractor: XmlResourceExtractor<out AndroidResource>,
+            extraXmlSourceProviders: List<AndroidXmlExtraSourceProvider>
         ): AndroidResourceCollector {
-            return component.androidResourceCollectorFactory().create(androidExtension, variantTree, resourceExtractor)
+            return component.androidResourceCollectorFactory()
+                .create(androidExtension, variantTree, resourceExtractor, extraXmlSourceProviders)
         }
     }
 

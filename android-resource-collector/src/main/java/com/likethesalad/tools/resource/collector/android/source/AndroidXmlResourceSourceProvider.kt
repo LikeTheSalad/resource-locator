@@ -10,6 +10,7 @@ import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
+import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlExtraResourceProvider
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 
@@ -17,6 +18,7 @@ import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 class AndroidXmlResourceSourceProvider(
     private val variantTree: VariantTree,
     private val resDirFinder: ResDirFinder,
+    private val extraXmlProviders: List<AndroidXmlExtraResourceProvider>,
     @Provided private val valueDirFinder: ValueDirFinder,
     @Provided private val xmlFileFinder: XmlFileFinder,
     @Provided private val sourceFactory: AndroidXmlResourceSourceFactory

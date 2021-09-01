@@ -24,6 +24,11 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     }
 
     @Test
+    fun `Check gathering strings from resources and also android generating task`() {
+        runInputOutputComparisonTest("android-generated", listOf("debug"))
+    }
+
+    @Test
     fun `Gather strings from multiple files, single variant`() {
         runInputOutputComparisonTest("multiplefiles", listOf("debug"))
     }

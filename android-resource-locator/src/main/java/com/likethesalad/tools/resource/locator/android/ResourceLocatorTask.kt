@@ -9,6 +9,8 @@ import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.locator.android.utils.CollectedFilesHelper
 import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.FileCollection
+import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import java.io.File
@@ -18,6 +20,9 @@ open class ResourceLocatorTask @Inject constructor(
     private val collector: ResourceCollector,
     private val serializer: ResourceSerializer
 ) : DefaultTask() {
+
+    @InputFiles
+    lateinit var androidGeneratedResDirs: FileCollection
 
     @OutputDirectory
     lateinit var outputDir: File

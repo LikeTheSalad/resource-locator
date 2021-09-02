@@ -17,6 +17,7 @@ import com.likethesalad.tools.resource.locator.android.extension.observer.data.R
 import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContext
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
 import java.io.File
 
@@ -62,7 +63,7 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         val serializer = AndroidResourceSerializer()
         val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer)
 
-        configureTask(taskProvider, outputDir)
+        configureTask(androidVariant.name, taskProvider, outputDir)
 
         notifyTaskCreated(variantTree, taskProvider, outputDir)
     }
@@ -78,10 +79,12 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
     }
 
     private fun configureTask(
+        variantName: String,
         taskProvider: TaskProvider<ResourceLocatorTask>,
         outputDir: File
     ) {
         taskProvider.configure { task ->
+            task.androidGeneratedResDirs = getAndroidGenerateResourcesTask(variantName).get().outputs.files
             task.outputDir = outputDir
         }
     }
@@ -92,6 +95,10 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
 
     private fun getResourceLocatorComponent(): ResourceLocatorComponent {
         return DaggerResourceLocatorComponent.builder().resourceLocatorModule(ResourceLocatorModule()).build()
+    }
+
+    private fun getAndroidGenerateResourcesTask(variantName: String): TaskProvider<Task> {
+        return project.tasks.named("generate${variantName.capitalize()}ResValues")
     }
 
     abstract fun getLocatorId(): String

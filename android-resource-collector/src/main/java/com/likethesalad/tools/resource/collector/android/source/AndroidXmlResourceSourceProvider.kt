@@ -10,7 +10,6 @@ import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
-import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlExtraSourceProvider
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 import java.io.File
@@ -19,7 +18,6 @@ import java.io.File
 class AndroidXmlResourceSourceProvider(
     private val variantTree: VariantTree,
     private val resDirFinder: ResDirFinder,
-    private val extraXmlProviders: List<AndroidXmlExtraSourceProvider>,
     @Provided private val valueDirFinder: ValueDirFinder,
     @Provided private val xmlFileFinder: XmlFileFinder,
     @Provided private val sourceFactory: AndroidXmlResourceSourceFactory
@@ -29,18 +27,6 @@ class AndroidXmlResourceSourceProvider(
         val sources = mutableListOf<ResourceSource>()
 
         sources.addAll(getResourceSourcesFromVariants())
-        sources.addAll(getResourcesFromExtraXmlProviders())
-
-        return sources
-    }
-
-    private fun getResourcesFromExtraXmlProviders(): List<ResourceSource> {
-        val sources = mutableListOf<ResourceSource>()
-        val sourceDescriptors = extraXmlProviders.flatMap { it.getXmlDescriptors() }
-
-        sourceDescriptors.forEach { descriptor ->
-            sources.add(createAndroidResourceSource(descriptor.file, descriptor.scope))
-        }
 
         return sources
     }

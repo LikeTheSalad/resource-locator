@@ -11,8 +11,6 @@ import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinde
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
-import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlExtraSourceProvider
-import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlSourceDescriptor
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.testing.BaseMockable
 import com.likethesalad.tools.testing.DummyResourcesFinder.getResourceFile
@@ -94,52 +92,10 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
         )
     }
 
-    @Test
-    fun `Add extra resources provided`() {
-        val variants = listOf(main)
-        every {
-            variantTree.getVariants()
-        }.returns(variants)
-        stubSrcDirsFor(main, setOf(getVariantFile("main/res"), getVariantFile("main/res2")))
-        val extraResourceProvider = mockk<AndroidXmlExtraSourceProvider>()
-        val extraResourceFile = mockk<File>()
-        every { extraResourceFile.path }.returns("/extra/resource/path/file.xml")
-        val extraResourceScope = AndroidResourceScope(demo, Language.Default)
-        val extraResource = AndroidXmlSourceDescriptor(extraResourceFile, extraResourceScope)
-        every { extraResourceProvider.getXmlDescriptors() }.returns(listOf(extraResource))
-
-        val sources = getInstance(listOf(extraResourceProvider)).getSources()
-
-        checkSourceIn(
-            ResourceSourceExpected(extraResourceFile, extraResourceScope),
-            sources
-        )
-        checkSourceIn(
-            ResourceSourceExpected(
-                getVariantFile("main/res/values/strings.xml"),
-                AndroidResourceScope(main, Language.Default)
-            ), sources
-        )
-        checkSourceIn(
-            ResourceSourceExpected(
-                getVariantFile("main/res/values-es/strings.xml"),
-                AndroidResourceScope(main, Language.Custom("es"))
-            ), sources
-        )
-        checkSourceIn(
-            ResourceSourceExpected(
-                getVariantFile("main/res2/values/strings.xml"),
-                AndroidResourceScope(main, Language.Default)
-            ), sources
-        )
-    }
-
-    private fun getInstance(extraSourceProviders: List<AndroidXmlExtraSourceProvider> = emptyList())
-            : AndroidXmlResourceSourceProvider {
+    private fun getInstance(): AndroidXmlResourceSourceProvider {
         return AndroidXmlResourceSourceProvider(
             variantTree,
             ResDirFinder(androidExtension),
-            extraSourceProviders,
             ValueDirFinder(), XmlFileFinder(), androidXmlResourceSourceFactory
         )
     }

@@ -23,7 +23,6 @@ class AndroidResourceCollector internal constructor(
     private val androidExtension: AndroidExtension,
     private val variantTree: VariantTree,
     private val resourceExtractor: XmlResourceExtractor<out AndroidResource>,
-    private val extraXmlSourceProviders: List<AndroidXmlExtraSourceProvider>,
     @Provided androidXmlResourceSourceProviderFactory: AndroidXmlResourceSourceProviderFactory
 ) : ResourceCollector() {
 
@@ -48,8 +47,7 @@ class AndroidResourceCollector internal constructor(
     private val resourceSourceProvider by lazy {
         androidXmlResourceSourceProviderFactory.create(
             variantTree,
-            ResDirFinder(androidExtension),
-            extraXmlSourceProviders
+            ResDirFinder(androidExtension)
         )
     }
 

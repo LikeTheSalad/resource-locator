@@ -7,6 +7,7 @@ import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
+import com.likethesalad.tools.resource.collector.android.di.CollectorComponentProvider
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceFactory
 import com.likethesalad.tools.resource.collector.source.ResourceSource
@@ -20,6 +21,14 @@ class ResDirResourceSourceProvider(
     @Provided private val xmlFileFinder: XmlFileFinder,
     @Provided private val sourceFactory: AndroidXmlResourceSourceFactory
 ) : ResourceSourceProvider {
+
+    companion object {
+        fun createInstance(resDir: ResDir): ResDirResourceSourceProvider {
+            val component = CollectorComponentProvider.getComponent()
+            return component.resDirResourceSourceProviderFactory()
+                .create(resDir)
+        }
+    }
 
     override fun getSources(): List<ResourceSource> {
         val sources = mutableListOf<ResourceSource>()

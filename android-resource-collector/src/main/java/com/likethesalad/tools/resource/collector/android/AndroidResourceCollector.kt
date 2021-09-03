@@ -6,8 +6,7 @@ import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
-import com.likethesalad.tools.resource.collector.android.di.CollectorModule
-import com.likethesalad.tools.resource.collector.android.di.DaggerCollectorComponent
+import com.likethesalad.tools.resource.collector.android.di.CollectorComponentProvider
 import com.likethesalad.tools.resource.collector.android.extractor.DefaultResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
 import com.likethesalad.tools.resource.collector.android.merger.VariantResourceMerger
@@ -24,11 +23,6 @@ class AndroidResourceCollector internal constructor(
 ) : ResourceCollector() {
 
     companion object {
-        private val component by lazy {
-            DaggerCollectorComponent.builder()
-                .collectorModule(CollectorModule())
-                .build()
-        }
 
         fun newInstance(
             androidExtension: AndroidExtension,
@@ -39,7 +33,8 @@ class AndroidResourceCollector internal constructor(
                 variantTree,
                 ResDirFinder(androidExtension)
             )
-            val collector = component.androidResourceCollectorFactory()
+            val collector = CollectorComponentProvider.getComponent()
+                .androidResourceCollectorFactory()
                 .create(variantTree, resourceExtractor)
 
             val sourceProvider = collector.getComposableSourceProvider()
@@ -52,7 +47,8 @@ class AndroidResourceCollector internal constructor(
             variantTree: VariantTree,
             resDirFinder: ResDirFinder
         ): VariantTreeResourceSourceProvider {
-            return component.variantTreeResourceSourceProviderFactory()
+            return CollectorComponentProvider.getComponent()
+                .variantTreeResourceSourceProviderFactory()
                 .create(variantTree, resDirFinder)
         }
     }

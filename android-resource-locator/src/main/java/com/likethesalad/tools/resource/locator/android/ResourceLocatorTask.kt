@@ -3,9 +3,14 @@ package com.likethesalad.tools.resource.locator.android
 import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
+import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.collector.ResourceCollector
+import com.likethesalad.tools.resource.collector.android.AndroidResourceCollector
+import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
+import com.likethesalad.tools.resource.collector.android.source.providers.ResDirResourceSourceProvider
+import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 import com.likethesalad.tools.resource.locator.android.utils.CollectedFilesHelper
 import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import org.gradle.api.DefaultTask
@@ -29,6 +34,8 @@ open class ResourceLocatorTask @Inject constructor(
 
     @TaskAction
     fun runTask() {
+        addGeneratedResourceSourceProvider()
+
         val collection = collector.collect()
         val collectionsByLanguage = collection.getAllResources()
             .sortedBy { (it as AndroidResource).name() }
@@ -38,6 +45,15 @@ open class ResourceLocatorTask @Inject constructor(
         collectionsByLanguage.forEach { (language, collection) ->
             saveCollection(language, collection)
         }
+    }
+
+    private fun addGeneratedResourceSourceProvider() {
+        val androidResourceCollector = collector as AndroidResourceCollector
+        androidResourceCollector.getComposableSourceProvider().addProvider(getGeneratedResourceSourceProvider())
+    }
+
+    private fun getGeneratedResourceSourceProvider(): ResourceSourceProvider {
+        return ResDirResourceSourceProvider.createInstance(ResDir(Variant.Default, androidGeneratedResDirs.singleFile))
     }
 
     private fun saveCollection(language: Language, collection: ResourceCollection) {

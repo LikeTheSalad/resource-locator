@@ -27,7 +27,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     @Test
     fun `Check gathering strings from resources and also android generating task`() {
         val inOutDirName = "android-generated"
-        val generatedStrings = mapOf("android_generated" to "This string was generated using Android's build plugin")
+        val generatedStrings = mapOf("android_generated" to "This string was generated using Androids build plugin")
         val appDescriptor = AndroidAppProjectDescriptor(
             inOutDirName,
             getPluginId(), listOf(

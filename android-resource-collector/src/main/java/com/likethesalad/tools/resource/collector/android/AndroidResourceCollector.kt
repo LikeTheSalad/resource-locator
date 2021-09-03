@@ -40,7 +40,7 @@ class AndroidResourceCollector internal constructor(
             extraXmlSourceProviders: List<AndroidXmlExtraSourceProvider>
         ): AndroidResourceCollector {
             return component.androidResourceCollectorFactory()
-                .create(androidExtension, variantTree, resourceExtractor, extraXmlSourceProviders)
+                .create(androidExtension, variantTree, resourceExtractor)
         }
     }
 

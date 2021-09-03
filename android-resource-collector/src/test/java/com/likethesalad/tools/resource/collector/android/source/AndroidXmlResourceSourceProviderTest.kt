@@ -30,6 +30,9 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
     lateinit var androidExtension: AndroidExtension
 
     @MockK
+    lateinit var resDirResourceSourceProviderFactory: ResDirResourceSourceProviderFactory
+
+    @MockK
     lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSourceFactory
 
     private val main = Variant.Default
@@ -43,6 +46,12 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
                 firstArg(),
                 secondArg(),
                 AndroidXmlResDocument.Factory(DocumentBuilderFactory.newInstance())
+            )
+        }
+        every { resDirResourceSourceProviderFactory.create(any()) } answers {
+            ResDirResourceSourceProvider(
+                firstArg(), ValueDirFinder(), XmlFileFinder(),
+                androidXmlResourceSourceFactory
             )
         }
     }
@@ -96,7 +105,7 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
         return AndroidXmlResourceSourceProvider(
             variantTree,
             ResDirFinder(androidExtension),
-            ValueDirFinder(), XmlFileFinder(), androidXmlResourceSourceFactory
+            resDirResourceSourceProviderFactory
         )
     }
 

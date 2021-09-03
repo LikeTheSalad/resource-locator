@@ -19,7 +19,6 @@ import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 
 @AutoFactory
 class AndroidResourceCollector internal constructor(
-    private val androidExtension: AndroidExtension,
     private val variantTree: VariantTree,
     private val resourceExtractor: XmlResourceExtractor<out AndroidResource>
 ) : ResourceCollector() {
@@ -41,9 +40,9 @@ class AndroidResourceCollector internal constructor(
                 ResDirFinder(androidExtension)
             )
             val collector = component.androidResourceCollectorFactory()
-                .create(androidExtension, variantTree, resourceExtractor)
+                .create(variantTree, resourceExtractor)
 
-            val sourceProvider = collector.getSourceProvider() as ComposableResourceSourceProvider
+            val sourceProvider = collector.getComposableSourceProvider()
             sourceProvider.addProvider(variantTreeResourceProvider)
 
             return collector
@@ -60,6 +59,10 @@ class AndroidResourceCollector internal constructor(
 
     private val resourceSourceProvider by lazy {
         ComposableResourceSourceProvider()
+    }
+
+    fun getComposableSourceProvider(): ComposableResourceSourceProvider {
+        return resourceSourceProvider
     }
 
     override fun getSourceProvider(): ResourceSourceProvider {

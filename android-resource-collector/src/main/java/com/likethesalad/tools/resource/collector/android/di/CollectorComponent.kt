@@ -1,6 +1,7 @@
 package com.likethesalad.tools.resource.collector.android.di
 
 import com.likethesalad.tools.resource.collector.android.AndroidResourceCollectorFactory
+import com.likethesalad.tools.resource.collector.android.source.providers.VariantTreeResourceSourceProviderFactory
 import dagger.Component
 import javax.inject.Singleton
 
@@ -8,4 +9,5 @@ import javax.inject.Singleton
 @Component(modules = [CollectorModule::class])
 interface CollectorComponent {
     fun androidResourceCollectorFactory(): AndroidResourceCollectorFactory
+    fun variantTreeResourceSourceProviderFactory(): VariantTreeResourceSourceProviderFactory
 }

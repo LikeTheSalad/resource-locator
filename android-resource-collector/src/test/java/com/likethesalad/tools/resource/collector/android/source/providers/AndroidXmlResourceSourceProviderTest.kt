@@ -13,7 +13,6 @@ import com.likethesalad.tools.resource.collector.android.data.variant.VariantTre
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceFactory
-import com.likethesalad.tools.resource.collector.android.source.ResDirResourceSourceProviderFactory
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.testing.BaseMockable
 import com.likethesalad.tools.testing.DummyResourcesFinder.getResourceFile

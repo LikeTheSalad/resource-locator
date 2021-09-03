@@ -12,8 +12,7 @@ import com.likethesalad.tools.resource.collector.android.di.DaggerCollectorCompo
 import com.likethesalad.tools.resource.collector.android.extractor.DefaultResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
 import com.likethesalad.tools.resource.collector.android.merger.VariantResourceMerger
-import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceProviderFactory
-import com.likethesalad.tools.resource.collector.android.source.extra.AndroidXmlExtraSourceProvider
+import com.likethesalad.tools.resource.collector.android.source.providers.AndroidXmlResourceSourceProviderFactory
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.merger.ResourceMerger
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
@@ -36,8 +35,7 @@ class AndroidResourceCollector internal constructor(
         fun newInstance(
             androidExtension: AndroidExtension,
             variantTree: VariantTree,
-            resourceExtractor: XmlResourceExtractor<out AndroidResource>,
-            extraXmlSourceProviders: List<AndroidXmlExtraSourceProvider>
+            resourceExtractor: XmlResourceExtractor<out AndroidResource>
         ): AndroidResourceCollector {
             return component.androidResourceCollectorFactory()
                 .create(androidExtension, variantTree, resourceExtractor)

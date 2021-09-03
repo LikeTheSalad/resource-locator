@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.collector.android.source
+package com.likethesalad.tools.resource.collector.android.source.providers
 
 import com.google.auto.factory.AutoFactory
 import com.google.auto.factory.Provided
@@ -7,6 +7,8 @@ import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
+import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
+import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceFactory
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 import java.io.File

@@ -25,6 +25,7 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
 
     private lateinit var project: Project
     private lateinit var appExtension: AppExtension
+    private var androidExtension: AndroidExtension? = null
     private val taskPublisher: ResourceLocatorTaskPublisher by lazy {
         ResourceLocatorTaskPublisher()
     }
@@ -59,7 +60,7 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         val taskName = "${getLocatorId()}${androidVariant.name.toString().capitalize()}ResourceLocator"
         val outputDir = getOutputDirForTaskName(taskName)
         val variantTree = VariantTree(DefaultAndroidVariantData(androidVariant))
-        val collector = getResourceCollector(DefaultAndroidExtension(appExtension), variantTree)
+        val collector = getResourceCollector(variantTree)
         val serializer = AndroidResourceSerializer()
         val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer)
 
@@ -101,10 +102,17 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         return project.tasks.named("generate${variantName.capitalize()}ResValues")
     }
 
+    protected fun getAndroidExtension(): AndroidExtension {
+        if (androidExtension == null) {
+            androidExtension = DefaultAndroidExtension(appExtension)
+        }
+
+        return androidExtension!!
+    }
+
     abstract fun getLocatorId(): String
 
     abstract fun getResourceCollector(
-        androidExtension: AndroidExtension,
         variantTree: VariantTree
     ): ResourceCollector
 }

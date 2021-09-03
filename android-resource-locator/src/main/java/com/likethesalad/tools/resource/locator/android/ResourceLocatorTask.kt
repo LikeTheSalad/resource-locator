@@ -34,7 +34,7 @@ open class ResourceLocatorTask @Inject constructor(
 
     @TaskAction
     fun runTask() {
-        addGeneratedResourceSourceProvider()
+        addGeneratedResources()
 
         val collection = collector.collect()
         val collectionsByLanguage = collection.getAllResources()
@@ -47,7 +47,7 @@ open class ResourceLocatorTask @Inject constructor(
         }
     }
 
-    private fun addGeneratedResourceSourceProvider() {
+    private fun addGeneratedResources() {
         val androidResourceCollector = collector as AndroidResourceCollector
         androidResourceCollector.getComposableSourceProvider().addProvider(getGeneratedResourceSourceProvider())
     }

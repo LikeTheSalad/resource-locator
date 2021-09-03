@@ -23,7 +23,7 @@ import org.junit.Test
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 
-class AndroidXmlResourceSourceProviderTest : BaseMockable() {
+class VariantTreeResourceSourceProviderTest : BaseMockable() {
 
     @MockK
     lateinit var variantTree: VariantTree
@@ -103,8 +103,8 @@ class AndroidXmlResourceSourceProviderTest : BaseMockable() {
         )
     }
 
-    private fun getInstance(): AndroidXmlResourceSourceProvider {
-        return AndroidXmlResourceSourceProvider(
+    private fun getInstance(): VariantTreeResourceSourceProvider {
+        return VariantTreeResourceSourceProvider(
             variantTree,
             ResDirFinder(androidExtension),
             resDirResourceSourceProviderFactory

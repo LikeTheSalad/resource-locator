@@ -12,7 +12,7 @@ import com.likethesalad.tools.resource.collector.android.di.DaggerCollectorCompo
 import com.likethesalad.tools.resource.collector.android.extractor.DefaultResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
 import com.likethesalad.tools.resource.collector.android.merger.VariantResourceMerger
-import com.likethesalad.tools.resource.collector.android.source.providers.AndroidXmlResourceSourceProviderFactory
+import com.likethesalad.tools.resource.collector.android.source.providers.VariantTreeResourceSourceProviderFactory
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.merger.ResourceMerger
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
@@ -22,7 +22,7 @@ class AndroidResourceCollector internal constructor(
     private val androidExtension: AndroidExtension,
     private val variantTree: VariantTree,
     private val resourceExtractor: XmlResourceExtractor<out AndroidResource>,
-    @Provided androidXmlResourceSourceProviderFactory: AndroidXmlResourceSourceProviderFactory
+    @Provided variantTreeResourceSourceProviderFactory: VariantTreeResourceSourceProviderFactory
 ) : ResourceCollector() {
 
     companion object {
@@ -43,7 +43,7 @@ class AndroidResourceCollector internal constructor(
     }
 
     private val resourceSourceProvider by lazy {
-        androidXmlResourceSourceProviderFactory.create(
+        variantTreeResourceSourceProviderFactory.create(
             variantTree,
             ResDirFinder(androidExtension)
         )

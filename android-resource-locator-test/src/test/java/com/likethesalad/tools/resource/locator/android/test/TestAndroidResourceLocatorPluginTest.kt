@@ -7,6 +7,7 @@ import com.likethesalad.tools.functional.testing.app.layout.AndroidAppProjectDes
 import com.likethesalad.tools.functional.testing.app.layout.items.DefaultConfigAndroidBlockItem
 import com.likethesalad.tools.functional.testing.app.layout.items.FlavorAndroidBlockItem
 import com.likethesalad.tools.functional.testing.data.JarParameters
+import com.likethesalad.tools.functional.testing.layout.AndroidLibProjectDescriptor
 import com.likethesalad.tools.functional.testing.layout.ProjectDescriptor
 import com.likethesalad.tools.functional.testing.utils.TestAssetsProvider
 import org.gradle.testkit.runner.BuildResult
@@ -71,6 +72,26 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
             ),
             flavoredDescriptor
         )
+    }
+
+    @Test
+    fun `Verify app that takes resources from libraries`() {
+        // Create library
+        val libName = "mylibrary"
+        val libDescriptor = AndroidLibProjectDescriptor(libName)
+        libDescriptor.projectDirectoryBuilder
+            .register(ValuesResFoldersPlacer(getInputTestAsset(libName)))
+        createProject(libDescriptor)
+
+        // Set up app
+        val appName = "with-library"
+        val appDescriptor = AndroidAppProjectDescriptor(
+            appName,
+            getPluginId(),
+            dependencies = listOf("implementation project(':$libName')"),
+        )
+
+        runInputOutputComparisonTest(appName, listOf("debug"), appDescriptor)
     }
 
     private fun runInputOutputComparisonTest(

@@ -4,6 +4,7 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
 import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
 import com.likethesalad.tools.android.plugin.AndroidExtension
+import com.likethesalad.tools.android.plugin.AndroidVariantData
 import com.likethesalad.tools.android.plugin.impl.DefaultAndroidExtension
 import com.likethesalad.tools.android.plugin.impl.DefaultAndroidVariantData
 import com.likethesalad.tools.resource.collector.ResourceCollector
@@ -15,6 +16,7 @@ import com.likethesalad.tools.resource.locator.android.extension.ResourceLocator
 import com.likethesalad.tools.resource.locator.android.extension.observer.ResourceLocatorTaskPublisher
 import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContainer
 import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContext
+import com.likethesalad.tools.resource.locator.android.utils.AndroidResourcesHelper
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -59,12 +61,13 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
     ) {
         val taskName = "${getLocatorId()}${androidVariant.name.toString().capitalize()}ResourceLocator"
         val outputDir = getOutputDirForTaskName(taskName)
-        val variantTree = VariantTree(DefaultAndroidVariantData(androidVariant))
+        val variantData = DefaultAndroidVariantData(androidVariant)
+        val variantTree = VariantTree(variantData)
         val collector = getResourceCollector(variantTree)
         val serializer = AndroidResourceSerializer()
         val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer)
 
-        configureTask(androidVariant.name, taskProvider, outputDir)
+        configureTask(variantData, taskProvider, outputDir)
 
         notifyTaskCreated(variantTree, taskProvider, outputDir)
     }
@@ -80,12 +83,14 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
     }
 
     private fun configureTask(
-        variantName: String,
+        variantData: AndroidVariantData,
         taskProvider: TaskProvider<ResourceLocatorTask>,
         outputDir: File
     ) {
         taskProvider.configure { task ->
-            task.androidGeneratedResDirs = getAndroidGenerateResourcesTask(variantName).get().outputs.files
+            task.androidGeneratedResDirs =
+                getAndroidGenerateResourcesTask(variantData.getVariantName()).get().outputs.files
+            task.libraryResources = AndroidResourcesHelper.getLibrariesResourceFileCollection(variantData)
             task.outputDir = outputDir
         }
     }

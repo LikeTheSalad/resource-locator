@@ -10,7 +10,6 @@ import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.AndroidResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.source.providers.ResDirResourceSourceProvider
-import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 import com.likethesalad.tools.resource.locator.android.utils.CollectedFilesHelper
 import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import org.gradle.api.DefaultTask
@@ -29,12 +28,15 @@ open class ResourceLocatorTask @Inject constructor(
     @InputFiles
     lateinit var androidGeneratedResDirs: FileCollection
 
+    @InputFiles
+    lateinit var libraryResources: FileCollection
+
     @OutputDirectory
     lateinit var outputDir: File
 
     @TaskAction
     fun runTask() {
-        addGeneratedResources()
+        addExtraResourceSources()
 
         val collection = collector.collect()
         val collectionsByLanguage = collection.getAllResources()
@@ -47,13 +49,25 @@ open class ResourceLocatorTask @Inject constructor(
         }
     }
 
-    private fun addGeneratedResources() {
+    private fun addExtraResourceSources() {
         val androidResourceCollector = collector as AndroidResourceCollector
-        androidResourceCollector.getComposableSourceProvider().addProvider(getGeneratedResourceSourceProvider())
+        addGeneratedResources(androidResourceCollector)
+        addLibrariesResources(androidResourceCollector)
     }
 
-    private fun getGeneratedResourceSourceProvider(): ResourceSourceProvider {
-        return ResDirResourceSourceProvider.createInstance(ResDir(Variant.Default, androidGeneratedResDirs.singleFile))
+    private fun addLibrariesResources(androidResourceCollector: AndroidResourceCollector) {
+        if (libraryResources.isEmpty) {
+            return
+        }
+        val provider =
+            ResDirResourceSourceProvider.createInstance(ResDir(Variant.Dependency, libraryResources.singleFile))
+        androidResourceCollector.getComposableSourceProvider().addProvider(provider)
+    }
+
+    private fun addGeneratedResources(androidResourceCollector: AndroidResourceCollector) {
+        val provider =
+            ResDirResourceSourceProvider.createInstance(ResDir(Variant.Default, androidGeneratedResDirs.singleFile))
+        androidResourceCollector.getComposableSourceProvider().addProvider(provider)
     }
 
     private fun saveCollection(language: Language, collection: ResourceCollection) {

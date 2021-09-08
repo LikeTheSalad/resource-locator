@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Strings playground</string>
     <string name="welcome_message">Welcome to the app</string>
+    <string name="library_name">App-overridden library name</string>
 </resources>

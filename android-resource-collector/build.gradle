@@ -13,7 +13,7 @@ dependencies {
     compileOnly "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.auto.factory:auto-factory:$autoFactory_version"
-    testImplementation project(":test-utils")
+    testImplementation "com.likethesalad.tools.testing:unit-testing:$testingUtilities_version"
 }
 
 compileKotlin {

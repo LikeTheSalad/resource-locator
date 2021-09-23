@@ -17,7 +17,7 @@ dependencies {
     compileOnly "com.android.tools.build:gradle:$androidBuild_version"
     kapt "com.google.auto.factory:auto-factory:$autoFactory_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    testImplementation project(':test-utils')
+    testImplementation "com.likethesalad.tools.testing:unit-testing:$testingUtilities_version"
 }
 
 compileKotlin {

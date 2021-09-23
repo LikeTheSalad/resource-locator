@@ -8,7 +8,7 @@ dependencies {
     implementation project(':android-resource-api')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.google.code.gson:gson:$gson_version"
-    testImplementation project(':test-utils')
+    testImplementation "com.likethesalad.tools.testing:unit-testing:$testingUtilities_version"
 }
 
 compileKotlin {

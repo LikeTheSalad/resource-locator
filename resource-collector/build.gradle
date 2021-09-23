@@ -6,7 +6,6 @@ plugins {
 dependencies {
     implementation project(":resource-api")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testImplementation "junit:junit:$junit_version"
 }
 
 compileKotlin {

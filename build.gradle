@@ -10,8 +10,10 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.likethesalad.tools:artifact-publisher:1.1.0'
     }
 }
+apply plugin: 'artifact-publisher'
 
 ext {
     dagger_version = '2.37'
@@ -21,8 +23,16 @@ ext {
     testingUtilities_version = '1.0.0'
 }
 
+artifactPublisher {
+    displayName = "Resource locator"
+    url = "https://github.com/LikeTheSalad/resource-locator"
+    vcsUrl = "https://github.com/LikeTheSalad/resource-locator.git"
+    issueTrackerUrl = "https://github.com/LikeTheSalad/resource-locator/issues"
+}
+
 group 'com.likethesalad.tools'
 version '1.0.0-SNAPSHOT'
+description 'Plugin that gathers resources from Android projects for compilation purposes.'
 
 subprojects {
     repositories {

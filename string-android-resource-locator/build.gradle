@@ -7,6 +7,7 @@ plugins {
 dependencies {
     implementation project(":android-resource-locator")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation "com.likethesalad.tools.testing:unit-testing:$testingUtilities_version"
 }
 
 gradlePlugin {

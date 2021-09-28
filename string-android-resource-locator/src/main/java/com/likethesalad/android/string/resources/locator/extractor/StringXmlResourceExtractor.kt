@@ -47,7 +47,7 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
     }
 
     private fun trimQuotes(text: String): String {
-        return text.replace(Regex("^\"|\"$"), "")
+        return text.replace(Regex("(?<!\\\\)\""), "")
     }
 
     private fun getStringNodeList(document: AndroidXmlResDocument): NodeList {

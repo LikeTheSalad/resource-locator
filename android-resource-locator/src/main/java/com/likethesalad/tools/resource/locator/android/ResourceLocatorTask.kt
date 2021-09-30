@@ -15,7 +15,7 @@ import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.OutputFiles
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import javax.inject.Inject
@@ -31,8 +31,8 @@ open class ResourceLocatorTask @Inject constructor(
     @InputFiles
     lateinit var libraryResources: FileCollection
 
-    @OutputDirectory
-    lateinit var outputDir: File
+    @OutputFiles
+    lateinit var outputDir: FileCollection
 
     @TaskAction
     fun runTask() {
@@ -75,6 +75,6 @@ open class ResourceLocatorTask @Inject constructor(
     }
 
     private fun createOutputFileForLanguage(language: Language): File {
-        return File(outputDir, CollectedFilesHelper.getResourceFileName(language))
+        return File(outputDir.singleFile, CollectedFilesHelper.getResourceFileName(language))
     }
 }

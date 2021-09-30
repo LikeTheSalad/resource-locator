@@ -1,11 +1,8 @@
 package com.likethesalad.tools.resource.locator.android.extension.observer.data
 
-import com.likethesalad.tools.resource.locator.android.ResourceLocatorTask
-import org.gradle.api.tasks.TaskProvider
-import java.io.File
+import org.gradle.api.file.FileCollection
 
 data class ResourceLocatorTaskContainer(
-    val taskProvider: TaskProvider<ResourceLocatorTask>,
-    val outputDir: File,
+    val outputDir: FileCollection,
     val taskContext: ResourceLocatorTaskContext
 )

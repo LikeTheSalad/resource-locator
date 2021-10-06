@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.collector.android
 
 import com.google.auto.factory.AutoFactory
-import com.likethesalad.tools.android.plugin.AndroidExtension
+import com.likethesalad.tools.android.plugin.data.AndroidExtension
 import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder

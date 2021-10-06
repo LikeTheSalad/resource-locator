@@ -36,6 +36,7 @@ open class ResourceLocatorTask @Inject constructor(
 
     @TaskAction
     fun runTask() {
+        cleanUpIfNeeded() // todo?
         addExtraResourceSources()
 
         val collection = collector.collect()
@@ -46,6 +47,13 @@ open class ResourceLocatorTask @Inject constructor(
 
         collectionsByLanguage.forEach { (language, collection) ->
             saveCollection(language, collection)
+        }
+    }
+
+    private fun cleanUpIfNeeded() {
+        val dir = outputDir.singleFile
+        if (dir.exists()) {
+            dir.delete()
         }
     }
 
@@ -75,6 +83,10 @@ open class ResourceLocatorTask @Inject constructor(
     }
 
     private fun createOutputFileForLanguage(language: Language): File {
-        return File(outputDir.singleFile, CollectedFilesHelper.getResourceFileName(language))
+        val dir = outputDir.singleFile
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return File(dir, CollectedFilesHelper.getResourceFileName(language))
     }
 }

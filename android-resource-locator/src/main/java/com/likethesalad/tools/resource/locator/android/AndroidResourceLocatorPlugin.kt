@@ -3,10 +3,10 @@ package com.likethesalad.tools.resource.locator.android
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
 import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
-import com.likethesalad.tools.android.plugin.AndroidExtension
-import com.likethesalad.tools.android.plugin.AndroidVariantData
-import com.likethesalad.tools.android.plugin.impl.DefaultAndroidExtension
-import com.likethesalad.tools.android.plugin.impl.DefaultAndroidVariantData
+import com.likethesalad.tools.android.plugin.data.AndroidExtension
+import com.likethesalad.tools.android.plugin.data.AndroidVariantData
+import com.likethesalad.tools.android.plugin.data.impl.DefaultAndroidExtension
+import com.likethesalad.tools.android.plugin.data.impl.DefaultAndroidVariantData
 import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.locator.android.di.DaggerResourceLocatorComponent

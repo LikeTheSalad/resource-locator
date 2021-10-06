@@ -181,7 +181,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     override fun getGradleVersion(): String = "4.10.3"
 
     override fun getPluginJarParameters(): JarParameters {
-        return JarParameters("android-resource-locator-test")
+        return JarParameters("android-resource-locator-test-integration")
     }
 
     private fun getPluginId(): String {

@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.locator.android.utils
 
-import com.likethesalad.tools.android.plugin.AndroidVariantData
+import com.likethesalad.tools.android.plugin.data.AndroidVariantData
 import org.gradle.api.Action
 import org.gradle.api.artifacts.ArtifactView
 import org.gradle.api.attributes.Attribute

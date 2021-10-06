@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlin_version = '1.4.10'
+        kotlin_version = '1.5.10'
     }
     repositories {
         mavenCentral()
@@ -20,7 +20,8 @@ ext {
     autoFactory_version = '1.0.1'
     androidBuild_version = '3.3.3'
     gson_version = '2.8.7'
-    testingUtilities_version = '1.0.1'
+    testingUtilities_version = '1.0.0'
+    androidTools_version = '1.0.0-SNAPSHOT5'
 }
 
 artifactPublisher {
@@ -36,6 +37,7 @@ description 'Plugin that gathers resources from Android projects for compilation
 
 subprojects {
     repositories {
+        mavenLocal()
         mavenCentral()
         google()
     }

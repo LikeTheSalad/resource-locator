@@ -1,12 +1,10 @@
 package com.likethesalad.tools.resource.locator.android
 
-import com.android.build.gradle.AppExtension
-import com.android.build.gradle.api.ApplicationVariant
 import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
+import com.likethesalad.tools.android.plugin.AndroidToolsPlugin
 import com.likethesalad.tools.android.plugin.data.AndroidExtension
 import com.likethesalad.tools.android.plugin.data.AndroidVariantData
-import com.likethesalad.tools.android.plugin.data.impl.DefaultAndroidExtension
-import com.likethesalad.tools.android.plugin.data.impl.DefaultAndroidVariantData
+import com.likethesalad.tools.android.plugin.extension.AndroidToolsPluginExtension
 import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.locator.android.di.DaggerResourceLocatorComponent
@@ -26,23 +24,31 @@ import org.gradle.api.tasks.TaskProvider
 abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
 
     private lateinit var project: Project
-    private lateinit var appExtension: AppExtension
-    private var androidExtension: AndroidExtension? = null
+    private lateinit var androidExtension: AndroidExtension
     private val taskPublisher: ResourceLocatorTaskPublisher by lazy {
         ResourceLocatorTaskPublisher()
     }
 
     override fun apply(project: Project) {
-        appExtension = project.extensions.getByType(AppExtension::class.java)
         this.project = project
+        val androidToolsPluginExtension = findAndroidToolsPluginExtension()
+        androidExtension = androidToolsPluginExtension.androidExtension
         val component = getResourceLocatorComponent()
         createExtension(project, component)
 
-        project.afterEvaluate {
-            appExtension.applicationVariants.forEach { variant ->
-                createResourceLocatorTaskForVariant(variant)
-            }
+        androidToolsPluginExtension.onVariant { variant ->
+            createResourceLocatorTaskForVariant(variant)
         }
+    }
+
+    private fun findAndroidToolsPluginExtension(): AndroidToolsPluginExtension {
+        val toolsPluginExtension = project.extensions.findByType(AndroidToolsPluginExtension::class.java)
+        if (toolsPluginExtension == null) {
+            project.plugins.apply(AndroidToolsPlugin::class.java)
+            return project.extensions.getByType(AndroidToolsPluginExtension::class.java)
+        }
+
+        return toolsPluginExtension
     }
 
     private fun createExtension(
@@ -57,17 +63,16 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
     }
 
     private fun createResourceLocatorTaskForVariant(
-        androidVariant: ApplicationVariant
+        androidVariant: AndroidVariantData
     ) {
-        val taskName = "${getLocatorId()}${androidVariant.name.toString().capitalize()}ResourceLocator"
-        val variantData = DefaultAndroidVariantData(androidVariant)
-        val variantTree = VariantTree(variantData)
+        val taskName = "${getLocatorId()}${androidVariant.getVariantName().capitalize()}ResourceLocator"
+        val variantTree = VariantTree(androidVariant)
         val collector = getResourceCollector(variantTree)
         val serializer = AndroidResourceSerializer()
         val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer)
         val outputDir = getOutputDirForTaskName(taskProvider)
 
-        configureTask(variantData, taskProvider, outputDir)
+        configureTask(androidVariant, taskProvider, outputDir)
 
         notifyTaskCreated(variantTree, outputDir)
     }
@@ -109,11 +114,7 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
     }
 
     protected fun getAndroidExtension(): AndroidExtension {
-        if (androidExtension == null) {
-            androidExtension = DefaultAndroidExtension(appExtension)
-        }
-
-        return androidExtension!!
+        return androidExtension
     }
 
     abstract fun getLocatorId(): String

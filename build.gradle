@@ -30,7 +30,7 @@ artifactPublisher {
 }
 
 group 'com.likethesalad.tools'
-version '1.0.0-SNAPSHOT2'
+version '1.0.0-SNAPSHOT4'
 description 'Plugin that gathers resources from Android projects for compilation purposes.'
 
 subprojects {

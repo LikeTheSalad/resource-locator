@@ -16,4 +16,6 @@ class StringAndroidResource : BaseAndroidResource<String> {
     constructor(name: String, value: String, scope: AndroidResourceScope) : super(name, value, scope)
 
     override fun type(): ResourceType = AndroidResourceType.StringType
+
+    fun stringValue() = value() as String
 }

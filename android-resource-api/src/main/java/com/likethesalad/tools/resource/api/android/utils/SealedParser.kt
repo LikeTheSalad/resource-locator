@@ -13,5 +13,5 @@ abstract class SealedParser<T : Any> {
 
     protected abstract fun createUnknown(id: String): T
     protected abstract fun getInstanceId(item: T): String
-    protected abstract fun getSealedObjects(): Set<T>
+    internal abstract fun getSealedObjects(): Set<T>
 }

@@ -1,11 +1,16 @@
 package com.likethesalad.tools.resource.api.android.environment
 
-import com.likethesalad.tools.resource.api.android.utils.SealedParser
+import com.likethesalad.tools.resource.api.android.parser.SealedParseable
+import com.likethesalad.tools.resource.api.android.parser.SealedParser
 
-sealed class Variant(val name: String) {
+sealed class Variant(val name: String) : SealedParseable {
     object Default : Variant("main")
     object Dependency : Variant("--dependency--")
     class Custom(name: String) : Variant(name)
+
+    override fun getSealedItemId(): String {
+        return name
+    }
 
     override fun hashCode(): Int {
         return name.hashCode()
@@ -23,10 +28,6 @@ sealed class Variant(val name: String) {
     companion object : SealedParser<Variant>() {
         override fun createUnknown(id: String): Variant {
             return Custom(id)
-        }
-
-        override fun getInstanceId(item: Variant): String {
-            return item.name
         }
 
         override fun getSealedObjects(): Set<Variant> {

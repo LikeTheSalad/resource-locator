@@ -1,17 +1,16 @@
-package com.likethesalad.tools.resource.api.android.utils
+package com.likethesalad.tools.resource.api.android.parser
 
-abstract class SealedParser<T : Any> {
+abstract class SealedParser<T : SealedParseable> {
 
     private val objectItems: List<T> by lazy {
         getSealedObjects().toList()
     }
 
     fun fromId(id: String): T {
-        return objectItems.firstOrNull { getInstanceId(it) == id }
+        return objectItems.firstOrNull { it.getSealedItemId() == id }
             ?: createUnknown(id)
     }
 
     protected abstract fun createUnknown(id: String): T
-    protected abstract fun getInstanceId(item: T): String
     internal abstract fun getSealedObjects(): Set<T>
 }

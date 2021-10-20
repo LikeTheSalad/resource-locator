@@ -1,13 +1,18 @@
 package com.likethesalad.tools.resource.api.android.environment
 
-import com.likethesalad.tools.resource.api.android.utils.SealedParser
+import com.likethesalad.tools.resource.api.android.parser.SealedParseable
+import com.likethesalad.tools.resource.api.android.parser.SealedParser
 
-sealed class Language(val id: String) {
+sealed class Language(val id: String) : SealedParseable {
     object Default : Language("main")
     class Custom(id: String) : Language(id)
 
     override fun hashCode(): Int {
         return id.hashCode()
+    }
+
+    override fun getSealedItemId(): String {
+        return id
     }
 
     override fun equals(other: Any?): Boolean {
@@ -27,10 +32,6 @@ sealed class Language(val id: String) {
 
         override fun createUnknown(id: String): Language {
             return Custom(id)
-        }
-
-        override fun getInstanceId(item: Language): String {
-            return item.id
         }
 
         override fun getSealedObjects(): Set<Language> {

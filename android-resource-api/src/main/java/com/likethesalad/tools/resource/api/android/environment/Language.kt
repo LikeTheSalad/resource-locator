@@ -23,7 +23,7 @@ sealed class Language(val id: String) {
         return "Language(id='$id')"
     }
 
-    companion object : SealedParser<Language>(Language::class) {
+    companion object : SealedParser<Language>() {
 
         override fun createUnknown(id: String): Language {
             return Custom(id)
@@ -31,6 +31,10 @@ sealed class Language(val id: String) {
 
         override fun getInstanceId(item: Language): String {
             return item.id
+        }
+
+        override fun getSealedObjects(): Set<Language> {
+            return setOf(Default)
         }
     }
 }

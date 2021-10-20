@@ -14,7 +14,7 @@ sealed class AndroidResourceType(private val name: String) : ResourceType {
         return "AndroidResourceType(name='$name')"
     }
 
-    companion object : SealedParser<AndroidResourceType>(AndroidResourceType::class) {
+    companion object : SealedParser<AndroidResourceType>() {
 
         override fun createUnknown(id: String): AndroidResourceType {
             return Unknown(id)
@@ -22,6 +22,10 @@ sealed class AndroidResourceType(private val name: String) : ResourceType {
 
         override fun getInstanceId(item: AndroidResourceType): String {
             return item.getName()
+        }
+
+        override fun getSealedObjects(): Set<AndroidResourceType> {
+            return setOf(StringType, IntegerType)
         }
     }
 }

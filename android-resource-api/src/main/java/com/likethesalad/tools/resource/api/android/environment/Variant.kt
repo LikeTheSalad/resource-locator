@@ -20,13 +20,17 @@ sealed class Variant(val name: String) {
         return true
     }
 
-    companion object : SealedParser<Variant>(Variant::class) {
+    companion object : SealedParser<Variant>() {
         override fun createUnknown(id: String): Variant {
             return Custom(id)
         }
 
         override fun getInstanceId(item: Variant): String {
             return item.name
+        }
+
+        override fun getSealedObjects(): Set<Variant> {
+            return setOf(Default, Dependency)
         }
     }
 }

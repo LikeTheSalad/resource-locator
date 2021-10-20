@@ -5,8 +5,8 @@ plugins {
 
 dependencies {
     api project(":resource-api")
+    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation "com.likethesalad.tools.testing:unit-testing:$testingUtilities_version"
 }
 

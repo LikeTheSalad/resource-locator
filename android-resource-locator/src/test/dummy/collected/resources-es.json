@@ -1,0 +1,1 @@
+{"items":[{"attributes":{"name":"someOtherName"},"value":"otro valor","scope":"main:es","type":"string"},{"attributes":{"name":"someIntName"},"value":"Not an int","scope":"demo:es","type":"string"},{"attributes":{"name":"someSpanishOnlyValue"},"value":"Hola","scope":"main:es","type":"string"}]}

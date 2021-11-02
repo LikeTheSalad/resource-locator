@@ -26,7 +26,7 @@ class LanguageResourceFinderTest {
     }
 
     @Test
-    fun `Get resources for Language`() {
+    fun `Get resources for default Language`() {
         val language = Language.Default
 
         val result = createInstance(getCollectedDir()).getResourcesForLanguage(language)
@@ -36,10 +36,54 @@ class LanguageResourceFinderTest {
                 mapOf("name" to "someName", "translatable" to "false"),
                 "someValue", AndroidResourceScope(Variant.Default, Language.Default)
             ),
+            StringAndroidResource(
+                mapOf("name" to "someOtherName"),
+                "some other value", AndroidResourceScope(Variant.Default, Language.Default)
+            ),
+            StringAndroidResource(
+                mapOf("name" to "someNameFromLib"),
+                "some lib value", AndroidResourceScope(Variant.Dependency, Language.Default)
+            ),
             IntegerAndroidResource(
                 "someIntName", 20, AndroidResourceScope(
                     Variant.Custom("demo"),
-                    Language.Custom("es")
+                    Language.Default
+                )
+            )
+        )
+    }
+
+    @Test
+    fun `Get resources for custom Language`() {
+        val language = Language.Custom("es")
+
+        val result = createInstance(getCollectedDir()).getResourcesForLanguage(language)
+
+        Truth.assertThat(result.getAllResources()).containsExactly(
+            StringAndroidResource(
+                mapOf("name" to "someName", "translatable" to "false"),
+                "someValue", AndroidResourceScope(Variant.Default, Language.Default)
+            ),
+            StringAndroidResource(
+                mapOf("name" to "someOtherName"),
+                "otro valor", AndroidResourceScope(Variant.Default, language)
+            ),
+            StringAndroidResource(
+                mapOf("name" to "someNameFromLib"),
+                "some lib value", AndroidResourceScope(Variant.Dependency, Language.Default)
+            ),
+            StringAndroidResource(
+                mapOf("name" to "someIntName"),
+                "Not an int", AndroidResourceScope(Variant.Custom("demo"), language)
+            ),
+            StringAndroidResource(
+                mapOf("name" to "someSpanishOnlyValue"),
+                "Hola", AndroidResourceScope(Variant.Default, language)
+            ),
+            IntegerAndroidResource(
+                "someIntName", 20, AndroidResourceScope(
+                    Variant.Custom("demo"),
+                    Language.Default
                 )
             )
         )

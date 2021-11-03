@@ -29,7 +29,7 @@ class LanguageResourceFinderTest {
     fun `Get resources for default Language`() {
         val language = Language.Default
 
-        val result = createInstance(getCollectedDir()).getResourcesForLanguage(language)
+        val result = createInstance(getCollectedDir()).getMergedResourcesForLanguage(language)
 
         Truth.assertThat(result.getAllResources()).containsExactly(
             StringAndroidResource(
@@ -57,7 +57,7 @@ class LanguageResourceFinderTest {
     fun `Get resources for custom Language`() {
         val language = Language.Custom("es")
 
-        val result = createInstance(getCollectedDir()).getResourcesForLanguage(language)
+        val result = createInstance(getCollectedDir()).getMergedResourcesForLanguage(language)
 
         Truth.assertThat(result.getAllResources()).containsExactly(
             StringAndroidResource(
@@ -92,7 +92,7 @@ class LanguageResourceFinderTest {
     @Test
     fun `Throw exception when language file isn't found when trying to get resources by language`() {
         try {
-            createInstance(getCollectedDir()).getResourcesForLanguage(Language.Custom("jp"))
+            createInstance(getCollectedDir()).getMergedResourcesForLanguage(Language.Custom("jp"))
             Assert.fail()
         } catch (e: IllegalArgumentException) {
             Truth.assertThat(e.message).isEqualTo("No resources found for language: 'jp'")

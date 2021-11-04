@@ -18,7 +18,7 @@ class LanguageResourcesMerger(private val language: Language) : ResourceMerger {
             }
         }
 
-        val resources = resourcesMap.values.toList()
+        val resources = resourcesMap.values.toList().sortedBy { it.name() }
         resourcesMap.clear()
         return BasicResourceCollection(resources)
     }

@@ -6,7 +6,6 @@ import com.likethesalad.tools.functional.testing.app.content.ValuesResFoldersPla
 import com.likethesalad.tools.functional.testing.app.layout.AndroidAppProjectDescriptor
 import com.likethesalad.tools.functional.testing.app.layout.items.DefaultConfigAndroidBlockItem
 import com.likethesalad.tools.functional.testing.app.layout.items.FlavorAndroidBlockItem
-import com.likethesalad.tools.functional.testing.data.JarParameters
 import com.likethesalad.tools.functional.testing.layout.AndroidLibProjectDescriptor
 import com.likethesalad.tools.functional.testing.layout.ProjectDescriptor
 import com.likethesalad.tools.functional.testing.utils.TestAssetsProvider
@@ -176,13 +175,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         return outputAssetsProvider.getAssetFile(outputDirName)
     }
 
-    override fun getAndroidBuildPluginVersion(): String = "3.3.3"
-
     override fun getGradleVersion(): String = "4.10.3"
-
-    override fun getPluginJarParameters(): JarParameters {
-        return JarParameters("android-resource-locator-test-integration")
-    }
 
     private fun getPluginId(): String {
         return "android-resources-locator-test"

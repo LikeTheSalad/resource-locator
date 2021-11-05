@@ -3,35 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-configurations {
-    iTest {
-        transitive false
-    }
-}
-
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(':android-resource-locator')
-    implementation "com.likethesalad.tools.testing:android-gradle:$testingUtilities_version"
-    iTest project(':android-resource-locator')
-    iTest project(':android-resource-collector')
-    iTest project(':android-resource-api')
-    iTest project(':resource-collector')
-    iTest project(':resource-api')
-    iTest project(':resource-serializer')
-    iTest project(':android-resource-serializer')
-    iTest "com.google.dagger:dagger:$dagger_version"
-    iTest "com.likethesalad.tools:android-tools-plugin:$androidTools_version"
+    compileOnly("com.android.tools.build:gradle:3.3.3")
+    compileOnly "com.google.dagger:dagger:$dagger_version"
+    testImplementation "com.likethesalad.tools.testing:android-gradle:$testingUtilities_version"
 }
 
-tasks.register('integrationTestJar', Jar) {
-    classifier 'integration'
-    from sourceSets.main.output
-
-    dependsOn configurations.iTest
-    from {
-        configurations.iTest.findAll().collect { zipTree(it) }
-    }
+tasks.withType(PluginUnderTestMetadata).configureEach {
+    pluginClasspath.from(configurations.compileOnly)
 }
 
 gradlePlugin {

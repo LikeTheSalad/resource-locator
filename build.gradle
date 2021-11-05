@@ -15,10 +15,10 @@ buildscript {
 apply plugin: 'artifact-publisher'
 
 ext {
-    dagger_version = '2.37'
+    dagger_version = '2.39.1'
     autoFactory_version = '1.0.1'
     gson_version = '2.8.7'
-    testingUtilities_version = '1.0.2'
+    testingUtilities_version = '1.0.3'
     androidTools_version = '1.0.0-SNAPSHOT10'
 }
 

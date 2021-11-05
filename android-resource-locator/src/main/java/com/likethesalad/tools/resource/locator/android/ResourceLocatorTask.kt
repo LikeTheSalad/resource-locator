@@ -36,7 +36,7 @@ open class ResourceLocatorTask @Inject constructor(
 
     @TaskAction
     fun runTask() {
-        cleanUpIfNeeded() // todo?
+        cleanUpIfNeeded()
         addExtraResourceSources()
 
         val collection = collector.collect()

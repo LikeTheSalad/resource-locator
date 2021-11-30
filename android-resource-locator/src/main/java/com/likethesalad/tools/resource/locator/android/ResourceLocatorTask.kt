@@ -13,16 +13,18 @@ import com.likethesalad.tools.resource.collector.android.source.providers.ResDir
 import com.likethesalad.tools.resource.locator.android.utils.CollectedFilesHelper
 import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.OutputFiles
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import javax.inject.Inject
 
 open class ResourceLocatorTask @Inject constructor(
     private val collector: ResourceCollector,
-    private val serializer: ResourceSerializer
+    private val serializer: ResourceSerializer,
+    providedOutputDir: DirectoryProperty
 ) : DefaultTask() {
 
     @InputFiles
@@ -31,12 +33,14 @@ open class ResourceLocatorTask @Inject constructor(
     @InputFiles
     lateinit var libraryResources: FileCollection
 
-    @OutputFiles
-    lateinit var outputDir: FileCollection
+    @InputFiles
+    lateinit var rawFiles: FileCollection
+
+    @OutputDirectory
+    val outputDir: DirectoryProperty = providedOutputDir
 
     @TaskAction
     fun runTask() {
-        cleanUpIfNeeded()
         addExtraResourceSources()
 
         val collection = collector.collect()
@@ -47,13 +51,6 @@ open class ResourceLocatorTask @Inject constructor(
 
         collectionsByLanguage.forEach { (language, collection) ->
             saveCollection(language, collection)
-        }
-    }
-
-    private fun cleanUpIfNeeded() {
-        val dir = outputDir.singleFile
-        if (dir.exists()) {
-            dir.delete()
         }
     }
 
@@ -83,10 +80,7 @@ open class ResourceLocatorTask @Inject constructor(
     }
 
     private fun createOutputFileForLanguage(language: Language): File {
-        val dir = outputDir.singleFile
-        if (!dir.exists()) {
-            dir.mkdirs()
-        }
+        val dir = outputDir.get().asFile
         return File(dir, CollectedFilesHelper.getResourceFileName(language))
     }
 }

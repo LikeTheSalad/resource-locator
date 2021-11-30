@@ -18,7 +18,7 @@ ext {
     dagger_version = '2.39.1'
     autoFactory_version = '1.0.1'
     gson_version = '2.8.7'
-    testingUtilities_version = '1.0.3'
+    testingUtilities_version = '1.0.4.2'
     androidTools_version = '1.0.0-SNAPSHOT10'
 }
 

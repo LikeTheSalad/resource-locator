@@ -16,12 +16,14 @@ class VariantTreeResourceSourceProvider(
     @Provided private val resDirResourceSourceProviderFactory: ResDirResourceSourceProviderFactory
 ) : ResourceSourceProvider {
 
-    override fun getSources(): List<ResourceSource> {
+    private val lazySources: List<ResourceSource> by lazy {
         val sources = mutableListOf<ResourceSource>()
-
         sources.addAll(getResourceSourcesFromVariants())
+        sources
+    }
 
-        return sources
+    override fun getSources(): List<ResourceSource> {
+        return lazySources
     }
 
     private fun getResourceSourcesFromVariants(): List<ResourceSource> {

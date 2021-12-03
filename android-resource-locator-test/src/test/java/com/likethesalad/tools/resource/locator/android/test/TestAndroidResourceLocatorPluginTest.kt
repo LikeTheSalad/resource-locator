@@ -79,6 +79,37 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     }
 
     @Test
+    fun `Check gathering strings from single variant and multiple languages twice after changes to inputs`() {
+        val variantNames = listOf("debug")
+        val inOutDirName = "multiplelanguages-changed"
+        val descriptor = AndroidAppProjectDescriptor(inOutDirName, getPluginId())
+        val inputDir = getInputTestAsset(inOutDirName)
+        val resFoldersPlacer = ValuesResFoldersPlacer(inputDir)
+        descriptor.projectDirectoryBuilder.register(resFoldersPlacer)
+        val commandList = variantNamesToTaskCommands(variantNames)
+
+        createProject(descriptor)
+        val result1 = buildProject(commandList, inOutDirName)
+
+        verifyVariantResults(variantNames, inOutDirName, inOutDirName)
+        verifyResultContainsLine(result1, "> Task :multiplelanguages-changed:testDebugResourceLocator")
+
+        // Second time
+        val dirNames2 = "multiplelanguages-changed2"
+        val descriptor2 = AndroidAppProjectDescriptor(inOutDirName, getPluginId())
+        val inputDir2 = getInputTestAsset(dirNames2)
+        descriptor2.projectDirectoryBuilder.register(ValuesResFoldersPlacer(inputDir2))
+        val projectDir = getProjectDir(inOutDirName)
+        resFoldersPlacer.getFilesCreated().forEach { it.delete() }
+        descriptor2.projectDirectoryBuilder.buildDirectory(projectDir)
+
+        val result2 = buildProject(commandList, inOutDirName)
+
+        verifyVariantResults(variantNames, inOutDirName, dirNames2)
+        verifyResultContainsLine(result2, "> Task :multiplelanguages-changed:testDebugResourceLocator")
+    }
+
+    @Test
     fun `Check gathering strings from resources and also android generating task`() {
         val inOutDirName = "android-generated"
         val generatedStrings = mapOf("android_generated" to "This string was generated using Androids build plugin")
@@ -217,7 +248,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     private fun checkRootContentFileNames(dirFiles1: List<File>, dirFiles2: List<File>) {
         val dirFileNames1 = dirFiles1.map { it.name }
         val dirFileNames2 = dirFiles2.map { it.name }
-        Truth.assertThat(dirFileNames1).containsExactlyElementsIn(dirFileNames2)
+        Truth.assertThat(dirFileNames2).containsExactlyElementsIn(dirFileNames1)
     }
 
     private fun checkIfFileIsInList(file: File, list: List<File>) {

@@ -41,6 +41,7 @@ open class ResourceLocatorTask @Inject constructor(
 
     @TaskAction
     fun runTask() {
+        clearOutputDir()
         addExtraResourceSources()
 
         val collection = collector.collect()
@@ -51,6 +52,13 @@ open class ResourceLocatorTask @Inject constructor(
 
         collectionsByLanguage.forEach { (language, collection) ->
             saveCollection(language, collection)
+        }
+    }
+
+    private fun clearOutputDir() {
+        val dir = outputDir.get().asFile
+        if (dir.exists()) {
+            dir.listFiles()?.forEach { it.deleteRecursively() }
         }
     }
 

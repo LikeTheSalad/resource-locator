@@ -12,13 +12,15 @@ import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorCompone
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorModule
 import com.likethesalad.tools.resource.locator.android.extension.ResourceLocatorExtension
 import com.likethesalad.tools.resource.locator.android.extension.observer.ResourceLocatorTaskPublisher
+import com.likethesalad.tools.resource.locator.android.extension.observer.data.OutputDirProvider
 import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContainer
 import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContext
 import com.likethesalad.tools.resource.locator.android.utils.AndroidResourcesHelper
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
-import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.Directory
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskProvider
 import java.io.File
 
@@ -72,27 +74,27 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         val variantTree = VariantTree(androidVariant)
         val collector = getResourceCollector(variantTree)
         val outputDir = getOutputDirForTaskName(taskName)
-        val taskProvider =
-            project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer, outputDir)
+        val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer)
 
-        configureTask(androidVariant, taskProvider, collector)
+        configureTask(androidVariant, taskProvider, collector, outputDir)
 
-        notifyTaskCreated(variantTree, outputDir)
+        notifyTaskCreated(variantTree, taskProvider)
     }
 
     private fun notifyTaskCreated(
         variantTree: VariantTree,
-        outputDir: DirectoryProperty
+        taskProvider: TaskProvider<ResourceLocatorTask>
     ) {
         val taskContext = ResourceLocatorTaskContext(variantTree)
-        val taskContainer = ResourceLocatorTaskContainer(outputDir, taskContext)
+        val taskContainer = ResourceLocatorTaskContainer(OutputDirProvider(taskProvider), taskContext)
         taskPublisher.notify(taskContainer)
     }
 
     private fun configureTask(
         variantData: AndroidVariantData,
         taskProvider: TaskProvider<ResourceLocatorTask>,
-        collector: ResourceCollector
+        collector: ResourceCollector,
+        outputDir: Provider<Directory>
     ) {
         taskProvider.configure { task ->
             task.androidGeneratedResDirs =
@@ -100,12 +102,12 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
             task.libraryResources = AndroidResourcesHelper.getLibrariesResourceFileCollection(variantData)
             val sourceFiles = collector.getSourceProvider().getSources().map { it.getSource() as File }
             task.rawFiles = project.files(sourceFiles)
+            task.outputDir.set(outputDir)
         }
     }
 
-    private fun getOutputDirForTaskName(name: String): DirectoryProperty {
-        val provider = project.layout.buildDirectory.dir("intermediates/incremental/$name")
-        return project.objects.directoryProperty().value(provider)
+    private fun getOutputDirForTaskName(name: String): Provider<Directory> {
+        return project.layout.buildDirectory.dir("intermediates/incremental/$name")
     }
 
     private fun getResourceLocatorComponent(): ResourceLocatorComponent {

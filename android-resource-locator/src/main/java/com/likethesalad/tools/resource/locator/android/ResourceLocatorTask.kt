@@ -21,10 +21,10 @@ import org.gradle.api.tasks.TaskAction
 import java.io.File
 import javax.inject.Inject
 
+@Suppress("UnstableApiUsage")
 open class ResourceLocatorTask @Inject constructor(
     private val collector: ResourceCollector,
-    private val serializer: ResourceSerializer,
-    providedOutputDir: DirectoryProperty
+    private val serializer: ResourceSerializer
 ) : DefaultTask() {
 
     @InputFiles
@@ -37,7 +37,7 @@ open class ResourceLocatorTask @Inject constructor(
     lateinit var rawFiles: FileCollection
 
     @OutputDirectory
-    val outputDir: DirectoryProperty = providedOutputDir
+    val outputDir: DirectoryProperty = project.objects.directoryProperty()
 
     @TaskAction
     fun runTask() {

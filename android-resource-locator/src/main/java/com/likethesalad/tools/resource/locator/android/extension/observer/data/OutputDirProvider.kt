@@ -8,7 +8,9 @@ import org.gradle.api.tasks.TaskProvider
 @Suppress("UnstableApiUsage")
 class OutputDirProvider(private val taskProvider: TaskProvider<ResourceLocatorTask>) {
 
+    private val outputDirProvider by lazy { taskProvider.flatMap { it.outputDir } }
+
     fun getOutputDirProperty(): Provider<Directory> {
-        return taskProvider.flatMap { it.outputDir }
+        return outputDirProvider
     }
 }

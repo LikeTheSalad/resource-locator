@@ -100,20 +100,13 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         configuration: ResourceLocatorConfiguration
     ) {
         taskProvider.configure { task ->
-            addSourceFilterRules(collector, configuration)
+            collector.getSourceProvider().addFilterRules(configuration.filterRules)
             val sourceFiles = collector.getSourceProvider().getSources().map { it.getSource() as File }
             task.androidGeneratedResDirs =
                 getAndroidGenerateResourcesTask(variantData.getVariantName()).get().outputs.files
             task.libraryResources = AndroidResourcesHelper.getLibrariesResourceFileCollection(variantData)
             task.rawFiles = project.files(sourceFiles)
             task.outputDir.set(outputDir)
-        }
-    }
-
-    private fun addSourceFilterRules(collector: ResourceCollector, configuration: ResourceLocatorConfiguration) {
-        val sourceFilter = collector.getSourceFilter()
-        for (rule in configuration.filterRules) {
-            sourceFilter.addRule(rule)
         }
     }
 

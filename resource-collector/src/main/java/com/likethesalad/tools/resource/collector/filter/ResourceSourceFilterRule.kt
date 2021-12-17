@@ -4,7 +4,7 @@ import com.likethesalad.tools.resource.collector.source.ResourceSource
 
 abstract class ResourceSourceFilterRule<T : ResourceSource> {
 
-    protected abstract fun doExclude(source: ResourceSource): Boolean
+    protected abstract fun doExclude(source: T): Boolean
 
     @Suppress("UNCHECKED_CAST")
     fun exclude(source: ResourceSource): Boolean {

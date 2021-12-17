@@ -20,7 +20,7 @@ class ResDirResourceSourceProvider(
     @Provided private val valueDirFinder: ValueDirFinder,
     @Provided private val xmlFileFinder: XmlFileFinder,
     @Provided private val sourceFactory: AndroidXmlResourceSourceFactory
-) : ResourceSourceProvider {
+) : ResourceSourceProvider() {
 
     companion object {
         fun createInstance(resDir: ResDir): ResDirResourceSourceProvider {
@@ -30,7 +30,7 @@ class ResDirResourceSourceProvider(
         }
     }
 
-    override fun getSources(): List<ResourceSource> {
+    override fun doGetSources(): List<ResourceSource> {
         val sources = mutableListOf<ResourceSource>()
         val valueDirs = valueDirFinder.findValueDirs(resDir)
 

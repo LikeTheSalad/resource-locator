@@ -3,14 +3,11 @@ package com.likethesalad.tools.resource.collector
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractor
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractorProvider
-import com.likethesalad.tools.resource.collector.filter.ResourceSourceFilter
 import com.likethesalad.tools.resource.collector.merger.ResourceMerger
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
 
 abstract class ResourceCollector {
-
-    private val filter: ResourceSourceFilter by lazy { ResourceSourceFilter() }
 
     fun collect(): ResourceCollection {
         val collections = mutableListOf<ResourceCollection>()
@@ -46,8 +43,4 @@ abstract class ResourceCollector {
     abstract fun getExtractorProvider(): ResourceExtractorProvider
 
     abstract fun getMerger(): ResourceMerger
-
-    fun getSourceFilter(): ResourceSourceFilter {
-        return filter
-    }
 }

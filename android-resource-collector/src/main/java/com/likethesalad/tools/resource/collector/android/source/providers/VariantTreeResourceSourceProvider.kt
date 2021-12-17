@@ -14,7 +14,7 @@ class VariantTreeResourceSourceProvider(
     private val variantTree: VariantTree,
     private val resDirFinder: ResDirFinder,
     @Provided private val resDirResourceSourceProviderFactory: ResDirResourceSourceProviderFactory
-) : ResourceSourceProvider {
+) : ResourceSourceProvider() {
 
     private val lazySources: List<ResourceSource> by lazy {
         val sources = mutableListOf<ResourceSource>()
@@ -22,7 +22,7 @@ class VariantTreeResourceSourceProvider(
         sources
     }
 
-    override fun getSources(): List<ResourceSource> {
+    override fun doGetSources(): List<ResourceSource> {
         return lazySources
     }
 

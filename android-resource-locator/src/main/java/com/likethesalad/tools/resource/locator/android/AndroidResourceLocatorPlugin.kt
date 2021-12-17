@@ -11,6 +11,7 @@ import com.likethesalad.tools.resource.locator.android.di.DaggerResourceLocatorC
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorComponent
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorModule
 import com.likethesalad.tools.resource.locator.android.extension.ResourceLocatorExtension
+import com.likethesalad.tools.resource.locator.android.extension.configuration.ResourceLocatorConfiguration
 import com.likethesalad.tools.resource.locator.android.extension.observer.ResourceLocatorTaskPublisher
 import com.likethesalad.tools.resource.locator.android.extension.observer.data.OutputDirProvider
 import com.likethesalad.tools.resource.locator.android.extension.observer.data.ResourceLocatorTaskContainer
@@ -38,10 +39,10 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         val androidToolsPluginExtension = findAndroidToolsPluginExtension()
         androidExtension = androidToolsPluginExtension.androidExtension
         val component = getResourceLocatorComponent()
-        createExtension(project, component)
+        val resourceLocatorExtension = createExtension(project, component)
 
         androidToolsPluginExtension.onVariant { variant ->
-            createResourceLocatorTaskForVariant(variant)
+            createResourceLocatorTaskForVariant(variant, resourceLocatorExtension)
         }
     }
 
@@ -58,8 +59,8 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
     private fun createExtension(
         project: Project,
         component: ResourceLocatorComponent
-    ) {
-        project.extensions.create(
+    ): ResourceLocatorExtension {
+        return project.extensions.create(
             "${getLocatorId()}ResourceLocator", ResourceLocatorExtension::class.java,
             taskPublisher,
             component.languageResourceFinderFactory(),
@@ -68,7 +69,8 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
     }
 
     private fun createResourceLocatorTaskForVariant(
-        androidVariant: AndroidVariantData
+        androidVariant: AndroidVariantData,
+        resourceLocatorExtension: ResourceLocatorExtension
     ) {
         val taskName = "${getLocatorId()}${androidVariant.getVariantName().capitalize()}ResourceLocator"
         val variantTree = VariantTree(androidVariant)
@@ -76,7 +78,7 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         val outputDir = getOutputDirForTaskName(taskName)
         val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer)
 
-        configureTask(androidVariant, taskProvider, collector, outputDir)
+        configureTask(androidVariant, taskProvider, collector, outputDir, resourceLocatorExtension.getConfiguration())
 
         notifyTaskCreated(variantTree, taskProvider)
     }
@@ -94,15 +96,24 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         variantData: AndroidVariantData,
         taskProvider: TaskProvider<ResourceLocatorTask>,
         collector: ResourceCollector,
-        outputDir: Provider<Directory>
+        outputDir: Provider<Directory>,
+        configuration: ResourceLocatorConfiguration
     ) {
         taskProvider.configure { task ->
+            addSourceFilterRules(collector, configuration)
+            val sourceFiles = collector.getSourceProvider().getSources().map { it.getSource() as File }
             task.androidGeneratedResDirs =
                 getAndroidGenerateResourcesTask(variantData.getVariantName()).get().outputs.files
             task.libraryResources = AndroidResourcesHelper.getLibrariesResourceFileCollection(variantData)
-            val sourceFiles = collector.getSourceProvider().getSources().map { it.getSource() as File }
             task.rawFiles = project.files(sourceFiles)
             task.outputDir.set(outputDir)
+        }
+    }
+
+    private fun addSourceFilterRules(collector: ResourceCollector, configuration: ResourceLocatorConfiguration) {
+        val sourceFilter = collector.getSourceFilter()
+        for (rule in configuration.filterRules) {
+            sourceFilter.addRule(rule)
         }
     }
 

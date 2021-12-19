@@ -28,8 +28,8 @@ artifactPublisher {
     issueTrackerUrl = "https://github.com/LikeTheSalad/resource-locator/issues"
 }
 
-group 'com.likethesalad.tools'
-version '1.0.0-SNAPSHOT24'
+group 'com.likethesalad.tools.resources'
+version '1.0.0'
 description 'Plugin that gathers resources from Android projects for compilation purposes.'
 
 subprojects {

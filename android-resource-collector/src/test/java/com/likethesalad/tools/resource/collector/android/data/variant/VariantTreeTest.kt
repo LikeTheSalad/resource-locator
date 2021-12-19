@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.collector.android.data.variant
 
 import com.google.common.truth.Truth
-import com.likethesalad.tools.android.plugin.AndroidVariantData
+import com.likethesalad.tools.android.plugin.data.AndroidVariantData
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.testing.BaseMockable
 import io.mockk.every

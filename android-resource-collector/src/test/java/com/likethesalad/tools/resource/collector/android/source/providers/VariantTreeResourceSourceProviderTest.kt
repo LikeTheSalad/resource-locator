@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.collector.android.source.providers
 
 import com.google.common.truth.Truth
-import com.likethesalad.tools.android.plugin.AndroidExtension
+import com.likethesalad.tools.android.plugin.data.AndroidExtension
 import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language

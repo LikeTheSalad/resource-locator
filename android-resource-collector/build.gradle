@@ -9,11 +9,10 @@ dependencies {
     implementation "com.likethesalad.tools:android-tools-plugin:$androidTools_version"
     implementation project(':android-resource-api')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compileOnly "com.google.auto.factory:auto-factory:$autoFactory_version"
     compileOnly "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt "com.google.auto.factory:auto-factory:$autoFactory_version"
     testImplementation "com.likethesalad.tools.testing:unit-testing:$testingUtilities_version"
+    testImplementation gradleApi()
 }
 
 compileKotlin {

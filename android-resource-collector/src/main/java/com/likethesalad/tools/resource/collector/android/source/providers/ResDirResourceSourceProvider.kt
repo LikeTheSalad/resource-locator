@@ -1,7 +1,5 @@
 package com.likethesalad.tools.resource.collector.android.source.providers
 
-import com.google.auto.factory.AutoFactory
-import com.google.auto.factory.Provided
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
@@ -9,18 +7,24 @@ import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirF
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
 import com.likethesalad.tools.resource.collector.android.di.CollectorComponentProvider
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
-import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceFactory
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import java.io.File
 
-@AutoFactory
-class ResDirResourceSourceProvider(
-    private val resDir: ResDir,
-    @Provided private val valueDirFinder: ValueDirFinder,
-    @Provided private val xmlFileFinder: XmlFileFinder,
-    @Provided private val sourceFactory: AndroidXmlResourceSourceFactory
+class ResDirResourceSourceProvider @AssistedInject constructor(
+    @Assisted private val resDir: ResDir,
+    private val valueDirFinder: ValueDirFinder,
+    private val xmlFileFinder: XmlFileFinder,
+    private val sourceFactory: AndroidXmlResourceSource.Factory
 ) : ResourceSourceProvider() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(resDir: ResDir): ResDirResourceSourceProvider
+    }
 
     companion object {
         fun createInstance(resDir: ResDir): ResDirResourceSourceProvider {

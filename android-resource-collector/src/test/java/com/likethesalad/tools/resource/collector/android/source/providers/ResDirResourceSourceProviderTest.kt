@@ -10,7 +10,6 @@ import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
-import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceFactory
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.testing.BaseMockable
 import com.likethesalad.tools.testing.DummyResourcesFinder
@@ -24,7 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 class ResDirResourceSourceProviderTest : BaseMockable() {
 
     @MockK
-    lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSourceFactory
+    lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSource.Factory
 
     @Before
     fun setUp() {

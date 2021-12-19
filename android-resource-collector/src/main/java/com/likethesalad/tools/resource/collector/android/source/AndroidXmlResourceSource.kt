@@ -1,18 +1,23 @@
 package com.likethesalad.tools.resource.collector.android.source
 
-import com.google.auto.factory.AutoFactory
-import com.google.auto.factory.Provided
 import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
 import com.likethesalad.tools.resource.collector.source.ResourceSource
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import java.io.File
 
-@AutoFactory
-class AndroidXmlResourceSource(
-    private val xmlFile: File,
-    private val scope: ResourceScope,
-    @Provided private val documentFactory: AndroidXmlResDocument.Factory
+class AndroidXmlResourceSource @AssistedInject constructor(
+    @Assisted private val xmlFile: File,
+    @Assisted private val scope: ResourceScope,
+    private val documentFactory: AndroidXmlResDocument.Factory
 ) : ResourceSource {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(xmlFile: File, scope: ResourceScope): AndroidXmlResourceSource
+    }
 
     val document: AndroidXmlResDocument by lazy {
         documentFactory.fromFile(xmlFile)

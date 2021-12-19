@@ -1,20 +1,25 @@
 package com.likethesalad.tools.resource.locator.android.extension
 
-import com.google.auto.factory.AutoFactory
-import com.google.auto.factory.Provided
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.locator.android.merger.LanguageResourcesMerger
 import com.likethesalad.tools.resource.locator.android.utils.CollectedFilesHelper
 import com.likethesalad.tools.resource.serializer.ResourceSerializer
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import java.io.File
 import java.io.FileNotFoundException
 
-@AutoFactory
-class LanguageResourceFinder(
-    private val dir: File,
-    @Provided private val serializer: ResourceSerializer
+class LanguageResourceFinder @AssistedInject constructor(
+    @Assisted private val dir: File,
+    private val serializer: ResourceSerializer
 ) {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(dir: File): LanguageResourceFinder
+    }
 
     private var defaultResources: ResourceCollection? = null
 

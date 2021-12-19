@@ -8,7 +8,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import org.junit.Test
 
-
 class VariantTreeTest : BaseMockable() {
 
     @MockK

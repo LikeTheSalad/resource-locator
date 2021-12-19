@@ -1,20 +1,25 @@
 package com.likethesalad.tools.resource.collector.android.source.providers
 
-import com.google.auto.factory.AutoFactory
-import com.google.auto.factory.Provided
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 
-@AutoFactory
-class VariantTreeResourceSourceProvider(
-    private val variantTree: VariantTree,
-    private val resDirFinder: ResDirFinder,
-    @Provided private val resDirResourceSourceProviderFactory: ResDirResourceSourceProviderFactory
+class VariantTreeResourceSourceProvider @AssistedInject constructor(
+    @Assisted private val variantTree: VariantTree,
+    @Assisted private val resDirFinder: ResDirFinder,
+    private val resDirResourceSourceProviderFactory: ResDirResourceSourceProvider.Factory
 ) : ResourceSourceProvider() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(variantTree: VariantTree, resDirFinder: ResDirFinder): VariantTreeResourceSourceProvider
+    }
 
     private val lazySources: List<ResourceSource> by lazy {
         val sources = mutableListOf<ResourceSource>()

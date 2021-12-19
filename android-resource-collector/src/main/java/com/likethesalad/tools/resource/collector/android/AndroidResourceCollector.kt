@@ -1,6 +1,5 @@
 package com.likethesalad.tools.resource.collector.android
 
-import com.google.auto.factory.AutoFactory
 import com.likethesalad.tools.android.plugin.data.AndroidExtension
 import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.collector.ResourceCollector
@@ -15,12 +14,22 @@ import com.likethesalad.tools.resource.collector.android.source.providers.Varian
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.merger.ResourceMerger
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 
-@AutoFactory
-class AndroidResourceCollector internal constructor(
-    private val variantTree: VariantTree,
-    private val resourceExtractor: XmlResourceExtractor<out AndroidResource>
+class AndroidResourceCollector @AssistedInject internal constructor(
+    @Assisted private val variantTree: VariantTree,
+    @Assisted private val resourceExtractor: XmlResourceExtractor<out AndroidResource>
 ) : ResourceCollector() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(
+            variantTree: VariantTree,
+            resourceExtractor: XmlResourceExtractor<out AndroidResource>
+        ): AndroidResourceCollector
+    }
 
     companion object {
 

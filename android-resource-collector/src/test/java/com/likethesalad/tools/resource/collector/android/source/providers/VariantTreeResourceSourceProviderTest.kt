@@ -12,7 +12,6 @@ import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirF
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
-import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSourceFactory
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.testing.BaseMockable
 import com.likethesalad.tools.testing.DummyResourcesFinder.getResourceFile
@@ -32,10 +31,10 @@ class VariantTreeResourceSourceProviderTest : BaseMockable() {
     lateinit var androidExtension: AndroidExtension
 
     @MockK
-    lateinit var resDirResourceSourceProviderFactory: ResDirResourceSourceProviderFactory
+    lateinit var resDirResourceSourceProviderFactory: ResDirResourceSourceProvider.Factory
 
     @MockK
-    lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSourceFactory
+    lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSource.Factory
 
     private val main = Variant.Default
     private val demo = Variant.Custom("demo")

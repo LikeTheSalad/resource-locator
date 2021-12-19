@@ -10,7 +10,7 @@ import java.io.File
 
 open class ResourceLocatorExtension(
     private val taskPublisher: ResourceLocatorTaskPublisher,
-    private val languageResourceFinderFactory: LanguageResourceFinderFactory,
+    private val languageResourceFinderFactory: LanguageResourceFinder.Factory,
     private val resourceSerializer: ResourceSerializer,
 ) {
     private val resourceLocatorConfiguration: ResourceLocatorConfiguration by lazy { ResourceLocatorConfiguration() }

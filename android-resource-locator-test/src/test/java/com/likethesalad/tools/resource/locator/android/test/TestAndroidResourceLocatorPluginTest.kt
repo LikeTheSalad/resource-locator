@@ -281,9 +281,4 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     private fun getLocatorId(): String {
         return "test"
     }
-
-    private fun verifyResultContainsLine(result: BuildResult, line: String) {
-        val lines = result.output.lines()
-        Truth.assertThat(lines).contains(line)
-    }
 }

@@ -17,8 +17,8 @@ apply plugin: 'artifact-publisher'
 ext {
     dagger_version = '2.39.1'
     gson_version = '2.8.7'
-    testingUtilities_version = '1.0.4'
-    androidTools_version = '1.0.0-SNAPSHOT10'
+    testingUtilities_version = '1.0.5'
+    androidTools_version = '1.0.0'
 }
 
 artifactPublisher {

@@ -180,8 +180,8 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
     @Test
     fun `Verify app that takes resources from more than one library`() {
-        val libName = "mylibrary"
-        val libName2 = "mylibrary2"
+        val libName = "mylibrary-of-libraries"
+        val libName2 = "mylibrary2-of-libraries"
         val libDescriptor = AndroidLibProjectDescriptor(libName)
         val libDescriptor2 = AndroidLibProjectDescriptor(libName2)
         libDescriptor.projectDirectoryBuilder

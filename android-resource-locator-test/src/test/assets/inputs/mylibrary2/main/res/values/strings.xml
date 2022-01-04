@@ -1,0 +1,4 @@
+<resources>
+    <string name="library2_name">Library2 Strings playground</string>
+    <string name="library2_welcome_message">Welcome to the library2</string>
+</resources>

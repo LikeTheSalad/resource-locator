@@ -178,6 +178,33 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         runInputOutputComparisonTest(appName, listOf("debug"), appDescriptor)
     }
 
+    @Test
+    fun `Verify app that takes resources from more than one library`() {
+        val libName = "mylibrary"
+        val libName2 = "mylibrary2"
+        val libDescriptor = AndroidLibProjectDescriptor(libName)
+        val libDescriptor2 = AndroidLibProjectDescriptor(libName2)
+        libDescriptor.projectDirectoryBuilder
+            .register(ValuesResFoldersPlacer(getInputTestAsset(libName)))
+        createProject(libDescriptor)
+        libDescriptor2.projectDirectoryBuilder
+            .register(ValuesResFoldersPlacer(getInputTestAsset(libName2)))
+        createProject(libDescriptor2)
+
+        // Set up app
+        val appName = "with-libraries"
+        val appDescriptor = AndroidAppProjectDescriptor(
+            appName,
+            getPluginId(),
+            dependencies = listOf(
+                "implementation project(':$libName')",
+                "implementation project(':$libName2')"
+            )
+        )
+
+        runInputOutputComparisonTest(appName, listOf("debug"), appDescriptor)
+    }
+
     private fun runInputOutputComparisonTest(
         inOutDirName: String,
         variantNames: List<String>,

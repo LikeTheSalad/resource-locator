@@ -72,9 +72,12 @@ open class ResourceLocatorTask @Inject constructor(
         if (libraryResources.isEmpty) {
             return
         }
-        val provider =
-            ResDirResourceSourceProvider.createInstance(ResDir(Variant.Dependency, libraryResources.singleFile))
-        androidResourceCollector.getComposableSourceProvider().addProvider(provider)
+        val composableSourceProvider = androidResourceCollector.getComposableSourceProvider()
+
+        for (file in libraryResources.files) {
+            val provider = ResDirResourceSourceProvider.createInstance(ResDir(Variant.Dependency, file))
+            composableSourceProvider.addProvider(provider)
+        }
     }
 
     private fun addGeneratedResources(androidResourceCollector: AndroidResourceCollector) {

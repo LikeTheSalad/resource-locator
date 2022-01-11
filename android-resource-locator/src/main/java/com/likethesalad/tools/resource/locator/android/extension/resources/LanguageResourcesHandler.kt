@@ -1,11 +1,10 @@
-package com.likethesalad.tools.resource.locator.android.extension
+package com.likethesalad.tools.resource.locator.android.extension.resources
 
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
-import com.likethesalad.tools.resource.locator.android.extension.resources.LanguageCollectionProvider
 import com.likethesalad.tools.resource.locator.android.merger.LanguageResourcesMerger
 
-class LanguageResourceFinder(
+class LanguageResourcesHandler(
     private val languageCollectionProvider: LanguageCollectionProvider
 ) {
     private var defaultResources: ResourceCollection? = null

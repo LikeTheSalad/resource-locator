@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android
+package com.likethesalad.tools.resource.locator.android.extension.resources
 
 import com.google.common.truth.Truth
 import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
@@ -7,14 +7,12 @@ import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.api.android.modules.integer.IntegerAndroidResource
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
-import com.likethesalad.tools.resource.locator.android.extension.LanguageResourceFinder
-import com.likethesalad.tools.resource.locator.android.extension.resources.DirLanguageCollectorProvider
 import com.likethesalad.tools.testing.DummyResourcesFinder
 import org.junit.Assert
 import org.junit.Test
 import java.io.File
 
-class LanguageResourceFinderTest {
+class LanguageResourcesHandlerTest {
 
     @Test
     fun `Get list of languages available`() {
@@ -100,8 +98,8 @@ class LanguageResourceFinderTest {
         }
     }
 
-    private fun createInstance(collectedDir: File): LanguageResourceFinder {
-        return LanguageResourceFinder(DirLanguageCollectorProvider(collectedDir, AndroidResourceSerializer()))
+    private fun createInstance(collectedDir: File): LanguageResourcesHandler {
+        return LanguageResourcesHandler(DirLanguageCollectorProvider(collectedDir, AndroidResourceSerializer()))
     }
 
     private fun getCollectedDir(): File {

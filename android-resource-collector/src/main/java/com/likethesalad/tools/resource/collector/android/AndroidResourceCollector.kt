@@ -34,6 +34,20 @@ class AndroidResourceCollector @AssistedInject internal constructor(
     companion object {
 
         fun newInstance(
+            sourceProvider: ResourceSourceProvider,
+            variantTree: VariantTree,
+            resourceExtractor: XmlResourceExtractor<out AndroidResource>
+        ): AndroidResourceCollector {
+            val collector = CollectorComponentProvider.getComponent()
+                .androidResourceCollectorFactory()
+                .create(variantTree, resourceExtractor)
+
+            collector.getComposableSourceProvider().addProvider(sourceProvider)
+
+            return collector
+        }
+
+        fun newInstance(
             androidExtension: AndroidExtension,
             variantTree: VariantTree,
             resourceExtractor: XmlResourceExtractor<out AndroidResource>
@@ -42,14 +56,8 @@ class AndroidResourceCollector @AssistedInject internal constructor(
                 variantTree,
                 ResDirFinder(androidExtension)
             )
-            val collector = CollectorComponentProvider.getComponent()
-                .androidResourceCollectorFactory()
-                .create(variantTree, resourceExtractor)
 
-            val sourceProvider = collector.getComposableSourceProvider()
-            sourceProvider.addProvider(variantTreeResourceProvider)
-
-            return collector
+            return newInstance(variantTreeResourceProvider, variantTree, resourceExtractor)
         }
 
         private fun createVariantTreeResourceProvider(

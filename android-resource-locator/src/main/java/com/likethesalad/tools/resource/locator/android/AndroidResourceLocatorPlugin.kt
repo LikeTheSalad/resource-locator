@@ -63,7 +63,7 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         return project.extensions.create(
             "${getLocatorId()}ResourceLocator", ResourceLocatorExtension::class.java,
             taskPublisher,
-            component.languageResourceFinderFactory(),
+            component.dirLanguageCollectorProvider(),
             serializer
         )
     }
@@ -77,8 +77,9 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project> {
         val collector = getResourceCollector(variantTree)
         val outputDir = getOutputDirForTaskName(taskName)
         val taskProvider = project.tasks.register(taskName, ResourceLocatorTask::class.java, collector, serializer)
+        val locatorConfiguration = resourceLocatorExtension.getConfiguration(androidVariant.getVariantName())
 
-        configureTask(androidVariant, taskProvider, collector, outputDir, resourceLocatorExtension.getConfiguration())
+        configureTask(androidVariant, taskProvider, collector, outputDir, locatorConfiguration)
 
         notifyTaskCreated(variantTree, taskProvider)
     }

@@ -17,7 +17,7 @@ class LanguageResourcesHandler(
         var resources = when (language) {
             Language.Default -> getDefaultResourceCollection()
             else -> languageCollectionProvider.getCollectionByLanguage(language)
-        } ?: throw IllegalArgumentException("No resources found for language: '${language.id}'")
+        } ?: return getDefaultResourceCollection() ?: throw UnsupportedOperationException("No resources available")
 
         if (language != Language.Default) {
             resources = mergeResourcesWithDefaults(resources, language)

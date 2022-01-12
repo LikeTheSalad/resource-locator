@@ -15,6 +15,6 @@ class StringResourceLocatorPlugin : AndroidResourceLocatorPlugin() {
     override fun getLocatorId(): String = "string"
 
     override fun getResourceCollector(variantTree: VariantTree): ResourceCollector {
-        return AndroidResourceCollector.newInstance(getAndroidExtension(), variantTree, extractor)
+        return AndroidResourceCollector.newInstance(variantTree, extractor)
     }
 }

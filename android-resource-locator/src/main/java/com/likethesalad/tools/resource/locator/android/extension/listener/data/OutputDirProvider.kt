@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android.extension.observer.data
+package com.likethesalad.tools.resource.locator.android.extension.listener.data
 
 import com.likethesalad.tools.resource.locator.android.ResourceLocatorTask
 import org.gradle.api.file.Directory

@@ -1,16 +1,13 @@
 package com.likethesalad.tools.resource.collector.android
 
-import com.likethesalad.tools.android.plugin.data.AndroidExtension
 import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.collector.ResourceCollector
-import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.di.CollectorComponentProvider
 import com.likethesalad.tools.resource.collector.android.extractor.DefaultResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
 import com.likethesalad.tools.resource.collector.android.merger.VariantResourceMerger
 import com.likethesalad.tools.resource.collector.android.source.providers.ComposableResourceSourceProvider
-import com.likethesalad.tools.resource.collector.android.source.providers.VariantTreeResourceSourceProvider
 import com.likethesalad.tools.resource.collector.extractor.ResourceExtractorProvider
 import com.likethesalad.tools.resource.collector.merger.ResourceMerger
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
@@ -32,41 +29,13 @@ class AndroidResourceCollector @AssistedInject internal constructor(
     }
 
     companion object {
-
         fun newInstance(
-            sourceProvider: ResourceSourceProvider,
             variantTree: VariantTree,
             resourceExtractor: XmlResourceExtractor<out AndroidResource>
         ): AndroidResourceCollector {
-            val collector = CollectorComponentProvider.getComponent()
+            return CollectorComponentProvider.getComponent()
                 .androidResourceCollectorFactory()
                 .create(variantTree, resourceExtractor)
-
-            collector.getComposableSourceProvider().addProvider(sourceProvider)
-
-            return collector
-        }
-
-        fun newInstance(
-            androidExtension: AndroidExtension,
-            variantTree: VariantTree,
-            resourceExtractor: XmlResourceExtractor<out AndroidResource>
-        ): AndroidResourceCollector {
-            val variantTreeResourceProvider = createVariantTreeResourceProvider(
-                variantTree,
-                ResDirFinder(androidExtension)
-            )
-
-            return newInstance(variantTreeResourceProvider, variantTree, resourceExtractor)
-        }
-
-        private fun createVariantTreeResourceProvider(
-            variantTree: VariantTree,
-            resDirFinder: ResDirFinder
-        ): VariantTreeResourceSourceProvider {
-            return CollectorComponentProvider.getComponent()
-                .variantTreeResourceSourceProviderFactory()
-                .create(variantTree, resDirFinder)
         }
     }
 

@@ -15,12 +15,12 @@ class AndroidRawSourceConfiguration(
     ResourceSourceConfiguration(variantTree) {
 
     private val variantTreeResourceProvider: VariantTreeResourceSourceProvider by lazy {
-        createVariantTreeResourceProvider(
+        val provider = createVariantTreeResourceProvider(
             variantTree,
             resDirFinder
         )
-        variantTreeResourceProvider.addFilterRules(sourceFilterRules)
-        variantTreeResourceProvider
+        provider.addFilterRules(sourceFilterRules)
+        provider
     }
 
     override fun getSourceProviders(): List<ResourceSourceProvider> {

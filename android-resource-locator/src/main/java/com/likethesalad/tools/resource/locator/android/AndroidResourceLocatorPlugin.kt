@@ -7,7 +7,9 @@ import com.likethesalad.tools.android.plugin.data.AndroidVariantData
 import com.likethesalad.tools.android.plugin.extension.AndroidToolsPluginExtension
 import com.likethesalad.tools.resource.collector.android.AndroidResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
-import com.likethesalad.tools.resource.collector.android.di.CollectorComponentProvider
+import com.likethesalad.tools.resource.collector.android.di.CollectorComponent
+import com.likethesalad.tools.resource.collector.android.di.CollectorModule
+import com.likethesalad.tools.resource.collector.android.di.DaggerCollectorComponent
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorComponentProvider
 import com.likethesalad.tools.resource.locator.android.extension.AndroidResourceLocatorExtension
 import com.likethesalad.tools.resource.locator.android.extension.configuration.data.OutputDirProvider
@@ -32,7 +34,6 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
         this.project = project
         val androidToolsPluginExtension = findAndroidToolsPluginExtension()
         androidExtension = androidToolsPluginExtension.androidExtension
-        CollectorComponentProvider.initialize(androidExtension)
         val resourceLocatorExtension = createExtension(project)
 
         androidToolsPluginExtension.onVariant { variant ->
@@ -101,6 +102,12 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
 
     override fun findTaskByName(name: String): TaskProvider<Task> {
         return project.tasks.named(name)
+    }
+
+    internal fun getCollectorComponent(): CollectorComponent {
+        return DaggerCollectorComponent.builder()
+            .collectorModule(CollectorModule(androidExtension))
+            .build()
     }
 
     abstract fun getLocatorId(): String

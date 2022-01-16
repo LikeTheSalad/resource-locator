@@ -16,7 +16,7 @@ class TestAndroidResourceLocatorPlugin : AndroidResourceLocatorPlugin() {
     override fun getResourceCollector(
         variantTree: VariantTree
     ): AndroidResourceCollector {
-        return AndroidResourceCollector.newInstance(variantTree, resourceExtractor)
+        return AndroidResourceCollector(variantTree, resourceExtractor)
     }
 
 }

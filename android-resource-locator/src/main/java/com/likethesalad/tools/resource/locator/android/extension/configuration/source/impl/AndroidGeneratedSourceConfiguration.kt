@@ -12,13 +12,17 @@ import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.TaskProvider
 import java.io.File
 
-class AndroidGeneratedSourceConfiguration(variantTree: VariantTree, private val taskFinder: TaskFinder) :
+class AndroidGeneratedSourceConfiguration(
+    variantTree: VariantTree,
+    private val taskFinder: TaskFinder,
+    private val resDirSourceProviderFactory: ResDirResourceSourceProvider.Factory
+) :
     ResourceSourceConfiguration(variantTree) {
 
     private lateinit var generatedFiles: FileCollection
 
     override fun getSourceProviders(): List<ResourceSourceProvider> {
-        return listOf(ResDirResourceSourceProvider.createInstance(ResDir(Variant.Default, generatedFiles.singleFile)))
+        return listOf(resDirSourceProviderFactory.create(ResDir(Variant.Default, generatedFiles.singleFile)))
     }
 
     override fun getSourceFiles(): Iterable<File> {

@@ -10,7 +10,10 @@ import com.likethesalad.tools.resource.locator.android.utils.AndroidResourcesHel
 import org.gradle.api.file.FileCollection
 import java.io.File
 
-class AndroidLibrariesSourceConfiguration(variantTree: VariantTree) : ResourceSourceConfiguration(variantTree) {
+class AndroidLibrariesSourceConfiguration(
+    variantTree: VariantTree,
+    private val resDirSourceProviderFactory: ResDirResourceSourceProvider.Factory
+) : ResourceSourceConfiguration(variantTree) {
 
     private lateinit var libraryResources: FileCollection
 
@@ -18,7 +21,7 @@ class AndroidLibrariesSourceConfiguration(variantTree: VariantTree) : ResourceSo
         val providers = mutableListOf<ResourceSourceProvider>()
 
         for (file in libraryResources.files) {
-            val provider = ResDirResourceSourceProvider.createInstance(ResDir(Variant.Dependency, file))
+            val provider = resDirSourceProviderFactory.create(ResDir(Variant.Dependency, file))
             providers.add(provider)
         }
 

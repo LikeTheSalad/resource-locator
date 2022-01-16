@@ -4,13 +4,12 @@ import com.likethesalad.tools.resource.locator.android.AndroidResourceLocatorPlu
 import com.likethesalad.tools.resource.locator.android.providers.TaskFinder
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class ResourceLocatorModule(private val plugin: AndroidResourceLocatorPlugin) {
 
     @Provides
-    @Singleton
+    @LocatorScope
     fun provideTaskFinder(): TaskFinder {
         return plugin
     }

@@ -9,6 +9,7 @@ object ResourceLocatorComponentProvider {
     fun getComponent(plugin: AndroidResourceLocatorPlugin): ResourceLocatorComponent {
         if (component == null) {
             component = DaggerResourceLocatorComponent.builder()
+                .collectorComponent(plugin.getCollectorComponent())
                 .resourceLocatorModule(ResourceLocatorModule(plugin))
                 .build()
         }

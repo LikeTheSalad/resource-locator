@@ -2,7 +2,7 @@ package com.likethesalad.tools.resource.collector.android.source
 
 import com.likethesalad.tools.resource.api.ResourceScope
 import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
-import com.likethesalad.tools.resource.collector.source.ResourceSource
+import com.likethesalad.tools.resource.collector.source.base.FileResourceSource
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -12,7 +12,7 @@ class AndroidXmlResourceSource @AssistedInject constructor(
     @Assisted private val xmlFile: File,
     @Assisted private val scope: ResourceScope,
     private val documentFactory: AndroidXmlResDocument.Factory
-) : ResourceSource {
+) : FileResourceSource(xmlFile) {
 
     @AssistedFactory
     interface Factory {
@@ -23,9 +23,5 @@ class AndroidXmlResourceSource @AssistedInject constructor(
         documentFactory.fromFile(xmlFile)
     }
 
-    override fun getSource(): Any = xmlFile
-
     override fun getScope(): ResourceScope = scope
-
-    fun getFileSource() = getSource() as File
 }

@@ -1,26 +1,30 @@
-package com.likethesalad.tools.resource.locator.android.extension.configuration
+package com.likethesalad.tools.resource.locator.android.extension.configuration.source.impl
 
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.di.CollectorComponentProvider
 import com.likethesalad.tools.resource.collector.android.source.providers.VariantTreeResourceSourceProvider
-import com.likethesalad.tools.resource.collector.filter.ResourceSourceFilterRule
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
-import com.likethesalad.tools.resource.locator.android.extension.data.ResourceLocatorConfiguration
+import com.likethesalad.tools.resource.locator.android.extension.configuration.source.ResourceSourceConfiguration
+import java.io.File
 
-open class DefaultResourceLocatorConfiguration : ResourceLocatorConfiguration {
+class AndroidRawSourceConfiguration(variantTree: VariantTree) : ResourceSourceConfiguration(variantTree) {
 
-    override fun getSourceFilterRules(variantTree: VariantTree): List<ResourceSourceFilterRule<*>> {
-        return emptyList()
-    }
-
-    override fun getSourceProviders(variantTree: VariantTree): List<ResourceSourceProvider> {
-        val variantTreeResourceProvider = createVariantTreeResourceProvider(
+    private val variantTreeResourceProvider: VariantTreeResourceSourceProvider by lazy {
+        createVariantTreeResourceProvider(
             variantTree,
             ResDirFinder.newInstance()
         )
+        variantTreeResourceProvider.addFilterRules(sourceFilterRules)
+        variantTreeResourceProvider
+    }
 
+    override fun getSourceProviders(): List<ResourceSourceProvider> {
         return listOf(variantTreeResourceProvider)
+    }
+
+    override fun getSourceFiles(): Iterable<File> {
+        return variantTreeResourceProvider.getSources().map { it.getSource() as File }
     }
 
     private fun createVariantTreeResourceProvider(

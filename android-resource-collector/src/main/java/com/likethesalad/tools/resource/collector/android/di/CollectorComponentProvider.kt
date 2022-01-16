@@ -12,7 +12,7 @@ object CollectorComponentProvider {
 
     fun initialize(androidExtension: AndroidExtension) {
         if (component != null) {
-            throw IllegalStateException("Collector component already initialized")
+            return
         }
         component = DaggerCollectorComponent.builder()
             .collectorModule(CollectorModule(androidExtension))

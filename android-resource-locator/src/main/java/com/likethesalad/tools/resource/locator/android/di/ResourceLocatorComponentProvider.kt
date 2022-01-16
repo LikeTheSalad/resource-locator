@@ -6,16 +6,12 @@ object ResourceLocatorComponentProvider {
 
     private var component: ResourceLocatorComponent? = null
 
-    fun init(plugin: AndroidResourceLocatorPlugin) {
+    fun getComponent(plugin: AndroidResourceLocatorPlugin): ResourceLocatorComponent {
         if (component == null) {
-            return
+            component = DaggerResourceLocatorComponent.builder()
+                .resourceLocatorModule(ResourceLocatorModule(plugin))
+                .build()
         }
-        component = DaggerResourceLocatorComponent.builder()
-            .resourceLocatorModule(ResourceLocatorModule(plugin))
-            .build()
-    }
-
-    fun getComponent(): ResourceLocatorComponent {
         return component!!
     }
 }

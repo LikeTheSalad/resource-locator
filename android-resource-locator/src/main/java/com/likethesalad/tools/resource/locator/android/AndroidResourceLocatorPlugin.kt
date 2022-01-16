@@ -32,7 +32,6 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
         this.project = project
         val androidToolsPluginExtension = findAndroidToolsPluginExtension()
         androidExtension = androidToolsPluginExtension.androidExtension
-        ResourceLocatorComponentProvider.init(this)
         CollectorComponentProvider.initialize(androidExtension)
         val resourceLocatorExtension = createExtension(project)
 
@@ -58,7 +57,7 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
             "${getLocatorId()}ResourceLocator",
             AndroidResourceLocatorExtension::class.java,
             serializer,
-            ResourceLocatorComponentProvider.getComponent().commonSourceConfigurationCreator()
+            ResourceLocatorComponentProvider.getComponent(this).commonSourceConfigurationCreator()
         )
     }
 

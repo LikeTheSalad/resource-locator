@@ -25,7 +25,7 @@ import org.gradle.api.tasks.TaskAction
 import java.io.File
 import javax.inject.Inject
 
-@Suppress("UnstableApiUsage")
+@Suppress("UnstableApiUsage", "UNCHECKED_CAST")
 open class ResourceLocatorTask @Inject constructor(
     private val collector: ResourceCollector,
     private val serializer: ResourceSerializer,
@@ -38,14 +38,15 @@ open class ResourceLocatorTask @Inject constructor(
     private val sourceConfigurations = entryPoint.getResourceSourceConfigurations(variantTree)
 
     @InputFiles
-    val inputResources: SetProperty<File> = project.objects.setProperty(File::class.java)
+    val inputResources: SetProperty<Iterable<File>> =
+        project.objects.setProperty(Iterable::class.java) as SetProperty<Iterable<File>>
 
     @OutputDirectory
     val outputDir: DirectoryProperty = project.objects.directoryProperty()
 
     init {
         sourceConfigurations.forEach { sources ->
-            inputResources.addAll(sources.getSourceFiles())
+            inputResources.add(sources.getSourceFiles())
         }
         outputDir.set(outputDirProvider)
     }

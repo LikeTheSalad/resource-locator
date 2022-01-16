@@ -4,15 +4,10 @@ import com.likethesalad.tools.resource.locator.android.AndroidResourceLocatorPlu
 
 object ResourceLocatorComponentProvider {
 
-    private var component: ResourceLocatorComponent? = null
-
     fun getComponent(plugin: AndroidResourceLocatorPlugin): ResourceLocatorComponent {
-        if (component == null) {
-            component = DaggerResourceLocatorComponent.builder()
-                .collectorComponent(plugin.getCollectorComponent())
-                .resourceLocatorModule(ResourceLocatorModule(plugin))
-                .build()
-        }
-        return component!!
+        return DaggerResourceLocatorComponent.builder()
+            .collectorComponent(plugin.getCollectorComponent())
+            .resourceLocatorModule(ResourceLocatorModule(plugin))
+            .build()
     }
 }

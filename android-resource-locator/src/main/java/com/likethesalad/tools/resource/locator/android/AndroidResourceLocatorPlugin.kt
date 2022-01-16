@@ -10,6 +10,7 @@ import com.likethesalad.tools.resource.collector.android.data.variant.VariantTre
 import com.likethesalad.tools.resource.collector.android.di.CollectorComponent
 import com.likethesalad.tools.resource.collector.android.di.CollectorModule
 import com.likethesalad.tools.resource.collector.android.di.DaggerCollectorComponent
+import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorComponent
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorComponentProvider
 import com.likethesalad.tools.resource.locator.android.extension.AndroidResourceLocatorExtension
 import com.likethesalad.tools.resource.locator.android.extension.configuration.data.OutputDirProvider
@@ -27,14 +28,15 @@ import org.gradle.api.tasks.TaskProvider
 abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
 
     private lateinit var project: Project
-    private lateinit var androidExtension: AndroidExtension
     private val serializer by lazy { AndroidResourceSerializer() }
+    internal lateinit var androidExtension: AndroidExtension
 
     override fun apply(project: Project) {
         this.project = project
         val androidToolsPluginExtension = findAndroidToolsPluginExtension()
         androidExtension = androidToolsPluginExtension.androidExtension
-        val resourceLocatorExtension = createExtension(project)
+        val component = ResourceLocatorComponentProvider.getComponent(this)
+        val resourceLocatorExtension = createExtension(project, component)
 
         androidToolsPluginExtension.onVariant { variant ->
             createResourceLocatorTasksForVariant(variant, resourceLocatorExtension)
@@ -52,13 +54,14 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
     }
 
     private fun createExtension(
-        project: Project
+        project: Project,
+        component: ResourceLocatorComponent
     ): AndroidResourceLocatorExtension {
         return project.extensions.create(
             "${getLocatorId()}ResourceLocator",
             AndroidResourceLocatorExtension::class.java,
             serializer,
-            ResourceLocatorComponentProvider.getComponent(this).commonSourceConfigurationCreator()
+            component.commonSourceConfigurationCreator()
         )
     }
 

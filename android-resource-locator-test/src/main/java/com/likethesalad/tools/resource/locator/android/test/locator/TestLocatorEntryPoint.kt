@@ -2,7 +2,7 @@ package com.likethesalad.tools.resource.locator.android.test.locator
 
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.locator.android.extension.configuration.ResourceLocatorEntryPoint
-import com.likethesalad.tools.resource.locator.android.extension.configuration.data.ResourceLocatorTaskInfo
+import com.likethesalad.tools.resource.locator.android.extension.configuration.data.ResourceLocatorInfo
 import com.likethesalad.tools.resource.locator.android.extension.configuration.source.ResourceSourceConfiguration
 import com.likethesalad.tools.resource.locator.android.extension.configuration.utils.CommonSourceConfigurationCreator
 
@@ -17,7 +17,7 @@ class TestLocatorEntryPoint(private val commonSourceConfigurationCreator: Common
         )
     }
 
-    override fun onLocatorReady(variantTree: VariantTree, info: ResourceLocatorTaskInfo) {
+    override fun onLocatorReady(variantTree: VariantTree, info: ResourceLocatorInfo) {
         // No op
     }
 }

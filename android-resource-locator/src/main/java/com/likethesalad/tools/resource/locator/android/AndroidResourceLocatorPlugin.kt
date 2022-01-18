@@ -13,9 +13,13 @@ import com.likethesalad.tools.resource.collector.android.di.DaggerCollectorCompo
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorComponent
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorComponentProvider
 import com.likethesalad.tools.resource.locator.android.extension.AndroidResourceLocatorExtension
+import com.likethesalad.tools.resource.locator.android.extension.configuration.data.DirectoryFileProvider
 import com.likethesalad.tools.resource.locator.android.extension.configuration.data.OutputDirProvider
-import com.likethesalad.tools.resource.locator.android.extension.configuration.data.ResourceLocatorTaskInfo
+import com.likethesalad.tools.resource.locator.android.extension.configuration.data.ResourceLocatorInfo
+import com.likethesalad.tools.resource.locator.android.extension.configuration.data.ResourcesProvider
+import com.likethesalad.tools.resource.locator.android.extension.configuration.data.TaskInfo
 import com.likethesalad.tools.resource.locator.android.extension.data.ResourceLocatorRequest
+import com.likethesalad.tools.resource.locator.android.extension.resources.DirLanguageCollectorProvider
 import com.likethesalad.tools.resource.locator.android.providers.TaskFinder
 import com.likethesalad.tools.resource.locator.android.task.ResourceLocatorTask
 import org.gradle.api.Plugin
@@ -86,9 +90,11 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
                 variantTree
             )
 
+            val taskInfo = TaskInfo(taskName, OutputDirProvider(taskProvider))
+            val languageCollectionProvider = DirLanguageCollectorProvider(serializer, DirectoryFileProvider(outputDir))
             entryPoint.onLocatorReady(
                 variantTree,
-                ResourceLocatorTaskInfo(taskName, OutputDirProvider(taskProvider))
+                ResourceLocatorInfo(taskInfo, ResourcesProvider(languageCollectionProvider))
             )
         }
     }

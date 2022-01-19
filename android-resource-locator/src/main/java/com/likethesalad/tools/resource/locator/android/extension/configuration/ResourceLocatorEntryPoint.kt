@@ -6,5 +6,5 @@ import com.likethesalad.tools.resource.locator.android.extension.configuration.s
 
 interface ResourceLocatorEntryPoint {
     fun getResourceSourceConfigurations(variantTree: VariantTree): List<ResourceSourceConfiguration>
-    fun onLocatorReady(variantTree: VariantTree, info: ResourceLocatorInfo)
+    fun onLocatorCreated(info: ResourceLocatorInfo)
 }

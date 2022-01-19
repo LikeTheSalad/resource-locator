@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.locator.android.extension.configuration.utils
+package com.likethesalad.tools.resource.locator.android.extension.configuration.source.utils
 
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree

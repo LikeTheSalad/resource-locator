@@ -91,10 +91,9 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
 
             val taskInfo = TaskInfo(taskName, OutputDirProvider(taskProvider))
             val languageCollectionProvider = DirLanguageCollectorProvider(serializer, DirectoryFileProvider(outputDir))
-            entryPoint.onLocatorReady(
-                variantTree,
-                ResourceLocatorInfo(taskInfo, ResourcesProvider(languageCollectionProvider))
-            )
+            val info = ResourceLocatorInfo(variantTree, taskInfo, ResourcesProvider(languageCollectionProvider))
+            entryPoint.onLocatorCreated(info)
+            request.listener?.onLocatorReady(request.name, info)
         }
     }
 

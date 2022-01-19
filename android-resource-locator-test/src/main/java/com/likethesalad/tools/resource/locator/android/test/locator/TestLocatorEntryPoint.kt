@@ -17,7 +17,7 @@ class TestLocatorEntryPoint(private val commonSourceConfigurationCreator: Common
         )
     }
 
-    override fun onLocatorCreated(info: ResourceLocatorInfo) {
+    override fun onLocatorCreated(variantTree: VariantTree, info: ResourceLocatorInfo) {
         // No operation
     }
 }

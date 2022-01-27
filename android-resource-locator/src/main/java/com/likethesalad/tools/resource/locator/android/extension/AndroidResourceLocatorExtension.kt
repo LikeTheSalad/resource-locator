@@ -4,14 +4,20 @@ import com.likethesalad.tools.resource.locator.android.extension.configuration.R
 import com.likethesalad.tools.resource.locator.android.extension.configuration.source.utils.CommonSourceConfigurationCreator
 import com.likethesalad.tools.resource.locator.android.extension.data.ResourceLocatorRequest
 import com.likethesalad.tools.resource.locator.android.extension.listener.ResourceLocatorCreationListener
+import com.likethesalad.tools.resource.serializer.ResourceSerializer
 
 open class AndroidResourceLocatorExtension(
-    private val commonSourceConfigurationCreator: CommonSourceConfigurationCreator
+    private val commonSourceConfigurationCreator: CommonSourceConfigurationCreator,
+    private val serializer: ResourceSerializer
 ) {
     private val locatorRequests = mutableMapOf<String, ResourceLocatorRequest>()
 
     fun getCommonSourceConfigurationCreator(): CommonSourceConfigurationCreator {
         return commonSourceConfigurationCreator
+    }
+
+    fun getResourceSerializer(): ResourceSerializer {
+        return serializer
     }
 
     fun registerLocator(

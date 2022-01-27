@@ -64,7 +64,8 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
         return project.extensions.create(
             "${getLocatorId()}ResourceLocator",
             AndroidResourceLocatorExtension::class.java,
-            component.commonSourceConfigurationCreator()
+            component.commonSourceConfigurationCreator(),
+            serializer
         )
     }
 

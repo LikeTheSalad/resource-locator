@@ -7,11 +7,15 @@ import java.io.File
 
 abstract class ResourceSourceConfiguration(protected val variantTree: VariantTree) {
 
-    protected val sourceFilterRules = mutableListOf<ResourceSourceFilterRule<*>>()
+    private val sourceFilterRules = mutableListOf<ResourceSourceFilterRule<*>>()
     fun addFilterRule(rule: ResourceSourceFilterRule<*>) {
         sourceFilterRules.add(rule)
     }
 
-    abstract fun getSourceProviders(): List<ResourceSourceProvider>
+    fun getSourceProviders(): List<ResourceSourceProvider> {
+        return doGetSourceProviders().onEach { it.addFilterRules(sourceFilterRules) }
+    }
+
+    protected abstract fun doGetSourceProviders(): List<ResourceSourceProvider>
     abstract fun getSourceFiles(): Iterable<File>
 }

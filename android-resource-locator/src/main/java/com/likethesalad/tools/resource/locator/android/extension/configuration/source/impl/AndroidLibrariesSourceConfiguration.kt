@@ -17,7 +17,7 @@ class AndroidLibrariesSourceConfiguration(
 
     private lateinit var libraryResources: FileCollection
 
-    override fun getSourceProviders(): List<ResourceSourceProvider> {
+    override fun doGetSourceProviders(): List<ResourceSourceProvider> {
         val providers = mutableListOf<ResourceSourceProvider>()
 
         for (file in libraryResources.files) {

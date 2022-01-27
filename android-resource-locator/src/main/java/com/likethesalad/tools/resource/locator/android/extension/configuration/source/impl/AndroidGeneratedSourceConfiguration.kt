@@ -21,7 +21,7 @@ class AndroidGeneratedSourceConfiguration(
 
     private lateinit var generatedFiles: FileCollection
 
-    override fun getSourceProviders(): List<ResourceSourceProvider> {
+    override fun doGetSourceProviders(): List<ResourceSourceProvider> {
         return listOf(resDirSourceProviderFactory.create(ResDir(Variant.Default, generatedFiles.singleFile)))
     }
 

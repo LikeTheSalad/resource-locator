@@ -3,29 +3,26 @@ package com.likethesalad.tools.resource.locator.android.extension.configuration.
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
-import com.likethesalad.tools.resource.collector.android.source.providers.ResDirResourceSourceProvider
-import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
-import com.likethesalad.tools.resource.locator.android.extension.configuration.source.ResourceSourceConfiguration
+import com.likethesalad.tools.resource.locator.android.extension.configuration.source.base.ResDirResourceSourceConfiguration
 import com.likethesalad.tools.resource.locator.android.utils.AndroidResourcesHelper
 import org.gradle.api.file.FileCollection
 import java.io.File
 
 class AndroidLibrariesSourceConfiguration(
-    variantTree: VariantTree,
-    private val resDirSourceProviderFactory: ResDirResourceSourceProvider.Factory
-) : ResourceSourceConfiguration(variantTree) {
+    variantTree: VariantTree
+) : ResDirResourceSourceConfiguration(variantTree) {
 
     private lateinit var libraryResources: FileCollection
 
-    override fun doGetSourceProviders(): List<ResourceSourceProvider> {
-        val providers = mutableListOf<ResourceSourceProvider>()
+    override fun getResDirs(): List<ResDir> {
+        val resDirs = mutableListOf<ResDir>()
 
         for (file in libraryResources.files) {
-            val provider = resDirSourceProviderFactory.create(ResDir(Variant.Dependency, file))
-            providers.add(provider)
+            val resDir = ResDir(Variant.Dependency, file)
+            resDirs.add(resDir)
         }
 
-        return providers
+        return resDirs
     }
 
     override fun getSourceFiles(): Iterable<File> {

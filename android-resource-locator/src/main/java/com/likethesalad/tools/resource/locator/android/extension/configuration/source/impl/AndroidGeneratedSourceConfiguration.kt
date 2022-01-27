@@ -3,9 +3,7 @@ package com.likethesalad.tools.resource.locator.android.extension.configuration.
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
-import com.likethesalad.tools.resource.collector.android.source.providers.ResDirResourceSourceProvider
-import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
-import com.likethesalad.tools.resource.locator.android.extension.configuration.source.ResourceSourceConfiguration
+import com.likethesalad.tools.resource.locator.android.extension.configuration.source.base.ResDirResourceSourceConfiguration
 import com.likethesalad.tools.resource.locator.android.providers.TaskFinder
 import org.gradle.api.Task
 import org.gradle.api.file.FileCollection
@@ -14,15 +12,13 @@ import java.io.File
 
 class AndroidGeneratedSourceConfiguration(
     variantTree: VariantTree,
-    private val taskFinder: TaskFinder,
-    private val resDirSourceProviderFactory: ResDirResourceSourceProvider.Factory
-) :
-    ResourceSourceConfiguration(variantTree) {
+    private val taskFinder: TaskFinder
+) : ResDirResourceSourceConfiguration(variantTree) {
 
     private lateinit var generatedFiles: FileCollection
 
-    override fun doGetSourceProviders(): List<ResourceSourceProvider> {
-        return listOf(resDirSourceProviderFactory.create(ResDir(Variant.Default, generatedFiles.singleFile)))
+    override fun getResDirs(): List<ResDir> {
+        return listOf(ResDir(Variant.Default, generatedFiles.singleFile))
     }
 
     override fun getSourceFiles(): Iterable<File> {

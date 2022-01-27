@@ -11,8 +11,7 @@ class AndroidRawSourceConfiguration(
     variantTree: VariantTree,
     resDirFinder: ResDirFinder,
     private val variantTreeResourceSourceProviderFactory: VariantTreeResourceSourceProvider.Factory
-) :
-    ResourceSourceConfiguration(variantTree) {
+) : ResourceSourceConfiguration(variantTree) {
 
     private val variantTreeResourceProvider: VariantTreeResourceSourceProvider by lazy {
         createVariantTreeResourceProvider(

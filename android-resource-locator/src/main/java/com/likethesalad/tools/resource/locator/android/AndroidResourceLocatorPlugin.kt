@@ -39,7 +39,8 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
         this.project = project
         val androidToolsPluginExtension = findAndroidToolsPluginExtension()
         androidExtension = androidToolsPluginExtension.androidExtension
-        val component = ResourceLocatorComponentProvider.getComponent(this)
+        ResourceLocatorComponentProvider.init(this)
+        val component = ResourceLocatorComponentProvider.getComponent()
         val resourceLocatorExtension = createExtension(project, component)
 
         androidToolsPluginExtension.onVariant { variant ->

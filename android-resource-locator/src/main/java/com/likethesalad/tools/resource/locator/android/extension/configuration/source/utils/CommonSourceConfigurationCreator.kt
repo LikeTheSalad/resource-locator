@@ -2,7 +2,6 @@ package com.likethesalad.tools.resource.locator.android.extension.configuration.
 
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
-import com.likethesalad.tools.resource.collector.android.source.providers.ResDirResourceSourceProvider
 import com.likethesalad.tools.resource.collector.android.source.providers.VariantTreeResourceSourceProvider
 import com.likethesalad.tools.resource.locator.android.di.LocatorScope
 import com.likethesalad.tools.resource.locator.android.extension.configuration.source.impl.AndroidGeneratedSourceConfiguration
@@ -15,8 +14,7 @@ import javax.inject.Inject
 class CommonSourceConfigurationCreator @Inject constructor(
     private val taskFinder: TaskFinder,
     private val resDirFinder: ResDirFinder,
-    private val variantTreeResourceSourceProviderFactory: VariantTreeResourceSourceProvider.Factory,
-    private val resDirResourceSourceProviderFactory: ResDirResourceSourceProvider.Factory
+    private val variantTreeResourceSourceProviderFactory: VariantTreeResourceSourceProvider.Factory
 ) {
 
     fun createAndroidRawConfiguration(variantTree: VariantTree): AndroidRawSourceConfiguration {
@@ -24,10 +22,10 @@ class CommonSourceConfigurationCreator @Inject constructor(
     }
 
     fun createAndroidGeneratedResConfiguration(variantTree: VariantTree): AndroidGeneratedSourceConfiguration {
-        return AndroidGeneratedSourceConfiguration(variantTree, taskFinder, resDirResourceSourceProviderFactory)
+        return AndroidGeneratedSourceConfiguration(variantTree, taskFinder)
     }
 
     fun createAndroidAndroidLibrariesConfiguration(variantTree: VariantTree): AndroidLibrariesSourceConfiguration {
-        return AndroidLibrariesSourceConfiguration(variantTree, resDirResourceSourceProviderFactory)
+        return AndroidLibrariesSourceConfiguration(variantTree)
     }
 }

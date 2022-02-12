@@ -35,7 +35,7 @@ open class ResourceLocatorTask @Inject constructor(
 ) : DefaultTask() {
 
     @Internal
-    private val sourceConfigurations = entryPoint.getResourceSourceConfigurations(variantTree)
+    val sourceConfigurations = entryPoint.getResourceSourceConfigurations(variantTree)
 
     @InputFiles
     val inputResources: SetProperty<Iterable<File>> =

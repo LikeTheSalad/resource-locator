@@ -4,11 +4,10 @@ import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.locator.android.extension.configuration.source.base.ResDirResourceSourceConfiguration
-import com.likethesalad.tools.resource.locator.android.utils.AndroidResourcesHelper
 import org.gradle.api.file.FileCollection
 import java.io.File
 
-class AndroidLibrariesSourceConfiguration(
+open class AndroidLibrariesSourceConfiguration(
     variantTree: VariantTree
 ) : ResDirResourceSourceConfiguration(variantTree) {
 
@@ -26,7 +25,11 @@ class AndroidLibrariesSourceConfiguration(
     }
 
     override fun getSourceFiles(): Iterable<File> {
-        libraryResources = AndroidResourcesHelper.getLibrariesResourceFileCollection(variantTree.androidVariantData)
+        return getLibrariesResourcesFileCollection()
+    }
+
+    protected open fun getLibrariesResourcesFileCollection(): FileCollection {
+        libraryResources = variantTree.androidVariantData.getLibrariesResources()
         return libraryResources
     }
 }

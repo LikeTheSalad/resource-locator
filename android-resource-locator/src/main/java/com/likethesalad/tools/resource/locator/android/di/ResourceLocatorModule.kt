@@ -1,15 +1,22 @@
 package com.likethesalad.tools.resource.locator.android.di
 
-import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
-import com.likethesalad.tools.resource.serializer.ResourceSerializer
+import com.likethesalad.tools.android.plugin.data.AndroidExtension
+import com.likethesalad.tools.resource.locator.android.AndroidResourceLocatorPlugin
+import com.likethesalad.tools.resource.locator.android.providers.TaskFinder
 import dagger.Module
 import dagger.Provides
 
 @Module
-class ResourceLocatorModule {
+class ResourceLocatorModule(private val plugin: AndroidResourceLocatorPlugin) {
 
     @Provides
-    fun provideResourceSerializer(): ResourceSerializer {
-        return AndroidResourceSerializer()
+    @LocatorScope
+    fun provideTaskFinder(): TaskFinder {
+        return plugin
+    }
+
+    @Provides
+    fun provideAndroidExtension(): AndroidExtension {
+        return plugin.androidExtension
     }
 }

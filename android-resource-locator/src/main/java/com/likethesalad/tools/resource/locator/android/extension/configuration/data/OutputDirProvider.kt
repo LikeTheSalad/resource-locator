@@ -1,6 +1,6 @@
-package com.likethesalad.tools.resource.locator.android.extension.observer.data
+package com.likethesalad.tools.resource.locator.android.extension.configuration.data
 
-import com.likethesalad.tools.resource.locator.android.ResourceLocatorTask
+import com.likethesalad.tools.resource.locator.android.task.ResourceLocatorTask
 import org.gradle.api.file.Directory
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskProvider

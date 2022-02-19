@@ -4,11 +4,13 @@ import com.google.common.truth.Truth
 import com.likethesalad.tools.functional.testing.AndroidProjectTest
 import com.likethesalad.tools.functional.testing.app.content.ValuesResFoldersPlacer
 import com.likethesalad.tools.functional.testing.app.layout.AndroidAppProjectDescriptor
+import com.likethesalad.tools.functional.testing.app.layout.GradleBlockItem
 import com.likethesalad.tools.functional.testing.app.layout.items.DefaultConfigAndroidBlockItem
 import com.likethesalad.tools.functional.testing.app.layout.items.FlavorAndroidBlockItem
 import com.likethesalad.tools.functional.testing.layout.AndroidLibProjectDescriptor
 import com.likethesalad.tools.functional.testing.layout.ProjectDescriptor
 import com.likethesalad.tools.functional.testing.utils.TestAssetsProvider
+import com.likethesalad.tools.resource.locator.android.test.data.PluginGradleBlockItem
 import org.gradle.testkit.runner.BuildResult
 import org.junit.Test
 import java.io.File
@@ -16,6 +18,7 @@ import java.io.File
 class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
     private val testsDirName = "test"
+    private val locatorPrefix = "prefix"
     private val inputAssetsProvider = TestAssetsProvider(testsDirName, "inputs")
     private val outputAssetsProvider = TestAssetsProvider(testsDirName, "outputs")
 
@@ -28,7 +31,7 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     fun `Check gathering strings from single variant and single file twice`() {
         val variantNames = listOf("debug")
         val inOutDirName = "basic-repeated"
-        val descriptor = AndroidAppProjectDescriptor(inOutDirName, getPluginId())
+        val descriptor = createAppProjectDescriptor(inOutDirName)
         val inputDir = getInputTestAsset(inOutDirName)
         descriptor.projectDirectoryBuilder.register(ValuesResFoldersPlacer(inputDir))
         val commandList = variantNamesToTaskCommands(variantNames)
@@ -37,21 +40,21 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         val result1 = buildProject(commandList, inOutDirName)
 
         verifyVariantResults(variantNames, inOutDirName, inOutDirName)
-        verifyResultContainsLine(result1, "> Task :basic-repeated:testDebugResourceLocator")
+        verifyResultContainsLine(result1, "> Task :basic-repeated:prefixTestDebugResourceLocator")
 
         // Second time
 
         val result2 = buildProject(commandList, inOutDirName)
 
         verifyVariantResults(variantNames, inOutDirName, inOutDirName)
-        verifyResultContainsLine(result2, "> Task :basic-repeated:testDebugResourceLocator UP-TO-DATE")
+        verifyResultContainsLine(result2, "> Task :basic-repeated:prefixTestDebugResourceLocator UP-TO-DATE")
     }
 
     @Test
     fun `Check gathering strings from single variant and single file twice after changes to inputs`() {
         val variantNames = listOf("debug")
         val inOutDirName = "basic-repeated-changed"
-        val descriptor = AndroidAppProjectDescriptor(inOutDirName, getPluginId())
+        val descriptor = createAppProjectDescriptor(inOutDirName)
         val inputDir = getInputTestAsset(inOutDirName)
         val resFoldersPlacer = ValuesResFoldersPlacer(inputDir)
         descriptor.projectDirectoryBuilder.register(resFoldersPlacer)
@@ -61,11 +64,11 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         val result1 = buildProject(commandList, inOutDirName)
 
         verifyVariantResults(variantNames, inOutDirName, inOutDirName)
-        verifyResultContainsLine(result1, "> Task :basic-repeated-changed:testDebugResourceLocator")
+        verifyResultContainsLine(result1, "> Task :basic-repeated-changed:prefixTestDebugResourceLocator")
 
         // Second time
         val dirNames2 = "basic-repeated-changed2"
-        val descriptor2 = AndroidAppProjectDescriptor(inOutDirName, getPluginId())
+        val descriptor2 = createAppProjectDescriptor(inOutDirName)
         val inputDir2 = getInputTestAsset(dirNames2)
         descriptor2.projectDirectoryBuilder.register(ValuesResFoldersPlacer(inputDir2))
         val projectDir = getProjectDir(inOutDirName)
@@ -75,14 +78,14 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         val result2 = buildProject(commandList, inOutDirName)
 
         verifyVariantResults(variantNames, inOutDirName, dirNames2)
-        verifyResultContainsLine(result2, "> Task :basic-repeated-changed:testDebugResourceLocator")
+        verifyResultContainsLine(result2, "> Task :basic-repeated-changed:prefixTestDebugResourceLocator")
     }
 
     @Test
     fun `Check gathering strings from single variant and multiple languages twice after changes to inputs`() {
         val variantNames = listOf("debug")
         val inOutDirName = "multiplelanguages-changed"
-        val descriptor = AndroidAppProjectDescriptor(inOutDirName, getPluginId())
+        val descriptor = createAppProjectDescriptor(inOutDirName)
         val inputDir = getInputTestAsset(inOutDirName)
         val resFoldersPlacer = ValuesResFoldersPlacer(inputDir)
         descriptor.projectDirectoryBuilder.register(resFoldersPlacer)
@@ -92,11 +95,11 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         val result1 = buildProject(commandList, inOutDirName)
 
         verifyVariantResults(variantNames, inOutDirName, inOutDirName)
-        verifyResultContainsLine(result1, "> Task :multiplelanguages-changed:testDebugResourceLocator")
+        verifyResultContainsLine(result1, "> Task :multiplelanguages-changed:prefixTestDebugResourceLocator")
 
         // Second time
         val dirNames2 = "multiplelanguages-changed2"
-        val descriptor2 = AndroidAppProjectDescriptor(inOutDirName, getPluginId())
+        val descriptor2 = createAppProjectDescriptor(inOutDirName)
         val inputDir2 = getInputTestAsset(dirNames2)
         descriptor2.projectDirectoryBuilder.register(ValuesResFoldersPlacer(inputDir2))
         val projectDir = getProjectDir(inOutDirName)
@@ -106,16 +109,16 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         val result2 = buildProject(commandList, inOutDirName)
 
         verifyVariantResults(variantNames, inOutDirName, dirNames2)
-        verifyResultContainsLine(result2, "> Task :multiplelanguages-changed:testDebugResourceLocator")
+        verifyResultContainsLine(result2, "> Task :multiplelanguages-changed:prefixTestDebugResourceLocator")
     }
 
     @Test
     fun `Check gathering strings from resources and also android generating task`() {
         val inOutDirName = "android-generated"
         val generatedStrings = mapOf("android_generated" to "This string was generated using Androids build plugin")
-        val appDescriptor = AndroidAppProjectDescriptor(
+        val appDescriptor = createAppProjectDescriptor(
             inOutDirName,
-            getPluginId(), listOf(
+            listOf(
                 DefaultConfigAndroidBlockItem(generatedStrings)
             )
         )
@@ -140,9 +143,8 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         val environmentFlavors = listOf("stable", "prod")
         flavors.add(FlavorAndroidBlockItem.FlavorDescriptor("mode", modeFlavors))
         flavors.add(FlavorAndroidBlockItem.FlavorDescriptor("environment", environmentFlavors))
-        val flavoredDescriptor = AndroidAppProjectDescriptor(
+        val flavoredDescriptor = createAppProjectDescriptor(
             inOutDirName,
-            getPluginId(),
             listOf(FlavorAndroidBlockItem(flavors))
         )
 
@@ -169,9 +171,8 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
         // Set up app
         val appName = "with-library"
-        val appDescriptor = AndroidAppProjectDescriptor(
+        val appDescriptor = createAppProjectDescriptor(
             appName,
-            getPluginId(),
             dependencies = listOf("implementation project(':$libName')"),
         )
 
@@ -193,9 +194,8 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
         // Set up app
         val appName = "with-libraries"
-        val appDescriptor = AndroidAppProjectDescriptor(
+        val appDescriptor = createAppProjectDescriptor(
             appName,
-            getPluginId(),
             dependencies = listOf(
                 "implementation project(':$libName')",
                 "implementation project(':$libName2')"
@@ -208,9 +208,8 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     private fun runInputOutputComparisonTest(
         inOutDirName: String,
         variantNames: List<String>,
-        descriptor: AndroidAppProjectDescriptor = AndroidAppProjectDescriptor(
-            inOutDirName,
-            getPluginId()
+        descriptor: AndroidAppProjectDescriptor = createAppProjectDescriptor(
+            inOutDirName
         )
     ) {
         val inputDir = getInputTestAsset(inOutDirName)
@@ -221,11 +220,21 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
         verifyVariantResults(variantNames, inOutDirName, inOutDirName)
     }
 
+    private fun createAppProjectDescriptor(
+        inOutDirName: String,
+        blockItems: List<GradleBlockItem> = emptyList(),
+        dependencies: List<String> = emptyList()
+    ): AndroidAppProjectDescriptor {
+        val gradleItems = listOf(PluginGradleBlockItem(locatorPrefix)) + blockItems
+        return AndroidAppProjectDescriptor(inOutDirName, getPluginId(), gradleItems, dependencies)
+    }
+
     private fun variantNamesToTaskCommands(variantNames: List<String>): List<String> {
         return variantNames.map { variantNameToTaskName(it) }
     }
 
-    private fun variantNameToTaskName(it: String) = "${getLocatorId()}${it.capitalize()}ResourceLocator"
+    private fun variantNameToTaskName(it: String) =
+        "${locatorPrefix}${getLocatorId().capitalize()}${it.capitalize()}ResourceLocator"
 
     private fun verifyVariantResults(variantNames: List<String>, projectName: String, outputDirName: String) {
         variantNames.forEach {

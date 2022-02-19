@@ -1,6 +1,5 @@
 package com.likethesalad.tools.resource.locator.android.test
 
-import com.likethesalad.tools.resource.collector.ResourceCollector
 import com.likethesalad.tools.resource.collector.android.AndroidResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.locator.android.AndroidResourceLocatorPlugin
@@ -16,8 +15,8 @@ class TestAndroidResourceLocatorPlugin : AndroidResourceLocatorPlugin() {
 
     override fun getResourceCollector(
         variantTree: VariantTree
-    ): ResourceCollector {
-        return AndroidResourceCollector.newInstance(getAndroidExtension(), variantTree, resourceExtractor)
+    ): AndroidResourceCollector {
+        return AndroidResourceCollector(variantTree, resourceExtractor)
     }
 
 }

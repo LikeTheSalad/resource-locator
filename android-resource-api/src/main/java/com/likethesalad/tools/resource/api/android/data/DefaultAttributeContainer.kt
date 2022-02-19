@@ -37,4 +37,8 @@ internal class DefaultAttributeContainer(base: Map<String, String> = emptyMap())
     override fun hashCode(): Int {
         return map.hashCode()
     }
+
+    override fun toString(): String {
+        return "DefaultAttributeContainer(map=$map)"
+    }
 }

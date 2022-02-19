@@ -27,4 +27,8 @@ open class BasicResourceCollection(
     override fun hashCode(): Int {
         return resources.hashCode()
     }
+
+    override fun toString(): String {
+        return "BasicResourceCollection(resources=$resources)"
+    }
 }

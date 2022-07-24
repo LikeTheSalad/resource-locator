@@ -1,10 +1,10 @@
 package com.likethesalad.tools.resource.api.android.data
 
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.parser.SealedParseable
 import com.likethesalad.tools.resource.api.android.parser.SealedParser
-import com.likethesalad.tools.resource.api.data.ResourceType
 
-sealed class AndroidResourceType(private val name: String) : ResourceType, SealedParseable {
+sealed class AndroidResourceType(private val name: String) : Resource.Type, SealedParseable {
     object StringType : AndroidResourceType("string")
     object IntegerType : AndroidResourceType("integer")
     class Unknown(name: String) : AndroidResourceType(name)

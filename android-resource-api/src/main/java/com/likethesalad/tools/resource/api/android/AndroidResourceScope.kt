@@ -1,13 +1,13 @@
 package com.likethesalad.tools.resource.api.android
 
-import com.likethesalad.tools.resource.api.ResourceScope
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
 
 data class AndroidResourceScope(
     val variant: Variant,
     val language: Language
-) : ResourceScope {
+) : Resource.Scope {
 
     companion object {
         private const val ITEM_VARIANT_POSITION = 0

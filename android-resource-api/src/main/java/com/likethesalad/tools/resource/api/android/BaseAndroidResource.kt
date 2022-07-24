@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.api.android
 
-import com.likethesalad.tools.resource.api.ResourceScope
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.data.DefaultAttributeContainer
 import com.likethesalad.tools.resource.api.data.AttributeContainer
 import java.util.Objects
@@ -31,7 +31,7 @@ abstract class BaseAndroidResource<T : Any>(
 
     override fun attributes(): AttributeContainer = attributeContainer
 
-    override fun scope(): ResourceScope = scope
+    override fun scope(): Resource.Scope = scope
 
     override fun value(): Any = value
 

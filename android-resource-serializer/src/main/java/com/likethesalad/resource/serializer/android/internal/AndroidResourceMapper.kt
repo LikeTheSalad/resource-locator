@@ -1,12 +1,12 @@
 package com.likethesalad.resource.serializer.android.internal
 
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.BaseAndroidResource
 import com.likethesalad.tools.resource.api.android.data.AndroidResourceType
 import com.likethesalad.tools.resource.api.android.modules.integer.IntegerAndroidResource
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
-import com.likethesalad.tools.resource.api.data.ResourceType
 
 internal object AndroidResourceMapper {
 
@@ -29,7 +29,7 @@ internal object AndroidResourceMapper {
         type: AndroidResourceType
     ): AndroidResource {
         return object : BaseAndroidResource<Any>(attributes, value, scope) {
-            override fun type(): ResourceType = type
+            override fun type(): Resource.Type = type
         }
     }
 

@@ -1,6 +1,6 @@
 package com.likethesalad.android.string.resources.locator.extractor
 
-import com.likethesalad.tools.resource.api.ResourceScope
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
@@ -16,14 +16,14 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
 
     override fun getResourcesFromAndroidDocument(
         document: AndroidXmlResDocument,
-        scope: ResourceScope
+        scope: Resource.Scope
     ): List<StringAndroidResource> {
         return getStringAndroidResources(document, scope)
     }
 
     private fun getStringAndroidResources(
         document: AndroidXmlResDocument,
-        scope: ResourceScope
+        scope: Resource.Scope
     ): List<StringAndroidResource> {
         val stringList = mutableListOf<StringAndroidResource>()
         val nodeList = getStringNodeList(document)
@@ -35,7 +35,7 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
         return stringList
     }
 
-    private fun parseNodeToStringAndroidResource(node: Node, scope: ResourceScope): StringAndroidResource {
+    private fun parseNodeToStringAndroidResource(node: Node, scope: Resource.Scope): StringAndroidResource {
         val attributesMap = mutableMapOf<String, String>()
         val value = trimQuotes(node.textContent)
         val attributesNodes = node.attributes

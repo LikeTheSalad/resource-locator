@@ -1,9 +1,9 @@
 package com.likethesalad.tools.resource.api.android.modules.integer
 
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.BaseAndroidResource
 import com.likethesalad.tools.resource.api.android.data.AndroidResourceType
-import com.likethesalad.tools.resource.api.data.ResourceType
 
 class IntegerAndroidResource : BaseAndroidResource<Int> {
 
@@ -15,5 +15,5 @@ class IntegerAndroidResource : BaseAndroidResource<Int> {
 
     constructor(name: String, value: Int, scope: AndroidResourceScope) : super(name, value, scope)
 
-    override fun type(): ResourceType = AndroidResourceType.IntegerType
+    override fun type(): Resource.Type = AndroidResourceType.IntegerType
 }

@@ -1,11 +1,14 @@
 package com.likethesalad.tools.resource.api
 
+import com.likethesalad.tools.resource.api.common.Named
 import com.likethesalad.tools.resource.api.data.AttributeContainer
-import com.likethesalad.tools.resource.api.data.ResourceType
 
 interface Resource {
     fun value(): Any
     fun attributes(): AttributeContainer
-    fun scope(): ResourceScope
-    fun type(): ResourceType
+    fun scope(): Scope
+    fun type(): Type
+
+    interface Type : Named
+    interface Scope : Named
 }

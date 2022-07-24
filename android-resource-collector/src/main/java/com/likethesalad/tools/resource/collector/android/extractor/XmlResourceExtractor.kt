@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.collector.android.extractor
 
-import com.likethesalad.tools.resource.api.ResourceScope
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.AndroidResource
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
@@ -18,6 +18,6 @@ abstract class XmlResourceExtractor<T : AndroidResource> : ResourceExtractor<And
 
     abstract fun getResourcesFromAndroidDocument(
         document: AndroidXmlResDocument,
-        scope: ResourceScope
+        scope: Resource.Scope
     ): List<T>
 }

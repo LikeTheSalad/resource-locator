@@ -1,28 +1,29 @@
 package com.likethesalad.tools.resource.api.android.data
 
 import com.likethesalad.tools.resource.api.data.AttributeContainer
+import com.likethesalad.tools.resource.api.data.AttributeKey
 
-internal class DefaultAttributeContainer(base: Map<String, String> = emptyMap()) : AttributeContainer {
-    private val map: MutableMap<String, String> = mutableMapOf()
+internal class DefaultAttributeContainer(base: Map<AttributeKey, String> = emptyMap()) : AttributeContainer {
+    private val map: MutableMap<AttributeKey, String> = mutableMapOf()
 
     init {
         map.putAll(base)
     }
 
-    override fun get(name: String): String? {
-        return map[name]
+    override fun get(key: AttributeKey): String? {
+        return map[key]
     }
 
-    override fun set(name: String, value: String) {
-        map[name] = value
+    override fun set(key: AttributeKey, value: String) {
+        map[key] = value
     }
 
-    override fun remove(name: String) {
-        map.remove(name)
+    override fun remove(key: AttributeKey) {
+        map.remove(key)
     }
 
     override fun asMap(): Map<String, String> {
-        return map
+        return map.mapKeys { it.key.getName() }
     }
 
     override fun equals(other: Any?): Boolean {

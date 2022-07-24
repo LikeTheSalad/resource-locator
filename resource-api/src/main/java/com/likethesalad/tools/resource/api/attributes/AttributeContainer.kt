@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.api.data
+package com.likethesalad.tools.resource.api.attributes
 
 interface AttributeContainer {
     fun get(key: AttributeKey): String?

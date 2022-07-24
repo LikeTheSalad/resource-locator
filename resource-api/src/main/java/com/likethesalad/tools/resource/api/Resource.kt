@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.api
 
 import com.likethesalad.tools.resource.api.common.Named
-import com.likethesalad.tools.resource.api.data.AttributeContainer
+import com.likethesalad.tools.resource.api.attributes.AttributeContainer
 
 interface Resource {
     fun value(): Any

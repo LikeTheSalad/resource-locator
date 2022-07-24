@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.api.android.data
+package com.likethesalad.tools.resource.api.android.attributes
 
 import com.likethesalad.tools.resource.api.android.impl.AndroidResourceType
 import com.likethesalad.tools.resource.api.android.testutils.BaseSealedParseableTest

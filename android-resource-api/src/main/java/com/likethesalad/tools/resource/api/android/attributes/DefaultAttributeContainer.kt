@@ -1,7 +1,7 @@
-package com.likethesalad.tools.resource.api.android.data
+package com.likethesalad.tools.resource.api.android.attributes
 
-import com.likethesalad.tools.resource.api.data.AttributeContainer
-import com.likethesalad.tools.resource.api.data.AttributeKey
+import com.likethesalad.tools.resource.api.attributes.AttributeContainer
+import com.likethesalad.tools.resource.api.attributes.AttributeKey
 
 internal class DefaultAttributeContainer(base: Map<AttributeKey, String> = emptyMap()) : AttributeContainer {
     private val map: MutableMap<AttributeKey, String> = mutableMapOf()

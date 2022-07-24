@@ -1,9 +1,9 @@
 package com.likethesalad.tools.resource.api.android
 
 import com.likethesalad.tools.resource.api.Resource
-import com.likethesalad.tools.resource.api.android.data.DefaultAttributeContainer
+import com.likethesalad.tools.resource.api.android.attributes.DefaultAttributeContainer
 import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
-import com.likethesalad.tools.resource.api.data.AttributeContainer
+import com.likethesalad.tools.resource.api.attributes.AttributeContainer
 import java.util.Objects
 
 abstract class BaseAndroidResource<T : Any>(

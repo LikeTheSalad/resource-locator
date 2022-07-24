@@ -1,4 +1,4 @@
-package com.likethesalad.tools.resource.api.android
+package com.likethesalad.tools.resource.api.android.impl
 
 import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.environment.Language

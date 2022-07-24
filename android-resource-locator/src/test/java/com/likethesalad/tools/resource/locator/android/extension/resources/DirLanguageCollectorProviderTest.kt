@@ -2,7 +2,7 @@ package com.likethesalad.tools.resource.locator.android.extension.resources
 
 import com.google.common.truth.Truth
 import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
-import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource

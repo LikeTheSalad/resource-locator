@@ -2,6 +2,7 @@ package com.likethesalad.tools.resource.api.android
 
 import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.data.DefaultAttributeContainer
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.data.AttributeContainer
 import java.util.Objects
 

@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.locator.android.test.extractor
 
 import com.likethesalad.tools.resource.api.Resource
-import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor

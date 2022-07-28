@@ -3,7 +3,5 @@ package com.likethesalad.tools.resource.api.attributes
 import com.likethesalad.tools.resource.api.common.Named
 
 interface AttributeKey : Named {
-    fun type(): Type
-
-    interface Type : Named
+    fun value(): String
 }

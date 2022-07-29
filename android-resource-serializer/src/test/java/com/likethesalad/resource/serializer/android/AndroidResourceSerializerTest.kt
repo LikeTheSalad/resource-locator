@@ -3,9 +3,10 @@ package com.likethesalad.resource.serializer.android
 import com.google.common.truth.Truth
 import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.AndroidResource
-import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.attributes.plain
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.modules.integer.IntegerAndroidResource
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
@@ -34,8 +35,8 @@ class AndroidResourceSerializerTest {
     fun `Test serialize AndroidResource collection`() {
         val resource1 = StringAndroidResource(
             mapOf(
-                "name" to "someName",
-                "translatable" to "false"
+                plain("name") to "someName",
+                plain("translatable") to "false"
             ), "someValue", AndroidResourceScope(Variant.Default, Language.Default)
         )
         val resource2 = IntegerAndroidResource(

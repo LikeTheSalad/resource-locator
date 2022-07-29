@@ -2,9 +2,10 @@ package com.likethesalad.resource.serializer.android.internal
 
 import com.google.common.truth.Truth
 import com.likethesalad.tools.resource.api.android.AndroidResource
-import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.attributes.plain
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.modules.integer.IntegerAndroidResource
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import org.junit.Test
@@ -15,7 +16,7 @@ class AndroidResourceMapperTest {
     fun `Map Json to AndroidResource`() {
         verifyMappingToAndroidResource(
             AndroidResourceJsonStructure(
-                mapOf("name" to "someName"), "someValue",
+                mapOf("plain|name|" to "someName"), "someValue",
                 "main:main", "string"
             ),
             StringAndroidResource("someName", "someValue", AndroidResourceScope(Variant.Default, Language.Default))
@@ -23,11 +24,11 @@ class AndroidResourceMapperTest {
 
         verifyMappingToAndroidResource(
             AndroidResourceJsonStructure(
-                mapOf("name" to "anotherName", "translatable" to "false"),
+                mapOf("plain|name|" to "anotherName", "plain|translatable|" to "false"),
                 "10", "main:es", "integer"
             ),
             IntegerAndroidResource(
-                mapOf("name" to "anotherName", "translatable" to "false"), 10,
+                mapOf(plain("name") to "anotherName", plain("translatable") to "false"), 10,
                 AndroidResourceScope(Variant.Default, Language.Custom("es"))
             )
         )
@@ -47,13 +48,13 @@ class AndroidResourceMapperTest {
         verifyMappingToJson(
             resource1,
             AndroidResourceJsonStructure(
-                mapOf("name" to "someName"), "someValue", "--dependency--:main", "string"
+                mapOf("plain|name|" to "someName"), "someValue", "--dependency--:main", "string"
             )
         )
         verifyMappingToJson(
             resource2,
             AndroidResourceJsonStructure(
-                mapOf("name" to "otherName"), "15", "demo:es", "integer"
+                mapOf("plain|name|" to "otherName"), "15", "demo:es", "integer"
             )
         )
     }

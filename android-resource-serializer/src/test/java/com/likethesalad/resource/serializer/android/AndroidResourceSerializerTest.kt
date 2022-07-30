@@ -3,6 +3,7 @@ package com.likethesalad.resource.serializer.android
 import com.google.common.truth.Truth
 import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.AndroidResource
+import com.likethesalad.tools.resource.api.android.attributes.namespaced
 import com.likethesalad.tools.resource.api.android.attributes.plain
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
@@ -20,7 +21,10 @@ class AndroidResourceSerializerTest {
     @Test
     fun `Serialize AndroidResource`() {
         val resource = StringAndroidResource(
-            "someName", "someValue",
+            mapOf(
+                plain("name") to "someName",
+                namespaced("someNamespacedKey", "http://the.namespace.value") to "someNamespacedValue"
+            ), "someValue",
             AndroidResourceScope(Variant.Default, Language.Custom("es"))
         )
 

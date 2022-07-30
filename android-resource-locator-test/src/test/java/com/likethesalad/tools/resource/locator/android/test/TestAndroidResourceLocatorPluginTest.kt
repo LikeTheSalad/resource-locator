@@ -28,6 +28,11 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     }
 
     @Test
+    fun `Check gathering namespaced strings`() {
+        runInputOutputComparisonTest("namespaced_strings", listOf("debug"))
+    }
+
+    @Test
     fun `Check gathering strings from single variant and single file twice`() {
         val variantNames = listOf("debug")
         val inOutDirName = "basic-repeated"

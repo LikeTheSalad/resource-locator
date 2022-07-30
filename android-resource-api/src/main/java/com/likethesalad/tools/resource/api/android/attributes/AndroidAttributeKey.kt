@@ -45,11 +45,16 @@ sealed class AndroidAttributeKey(
 
         if (value != other.value) return false
         if (type != other.type) return false
+        if (getExtraValue() != other.getExtraValue()) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(value, type)
+        return Objects.hash(value, type, getExtraValue())
+    }
+
+    override fun toString(): String {
+        return "AndroidAttributeKey(${getName()})"
     }
 }

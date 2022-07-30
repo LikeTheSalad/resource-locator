@@ -10,7 +10,7 @@ class CollectorModule(private val androidExtension: AndroidExtension) {
 
     @Provides
     fun provideDocumentBuilderFactory(): DocumentBuilderFactory {
-        return DocumentBuilderFactory.newInstance()
+        return DocumentBuilderFactory.newInstance().apply { isNamespaceAware = true }
     }
 
     @Provides

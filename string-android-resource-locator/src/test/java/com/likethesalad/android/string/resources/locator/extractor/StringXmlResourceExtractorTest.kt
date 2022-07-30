@@ -19,7 +19,8 @@ class StringXmlResourceExtractorTest {
 
     @Before
     fun setUp() {
-        androidXmlResDocumentFactory = AndroidXmlResDocument.Factory(DocumentBuilderFactory.newInstance())
+        val documentBuilderFactory = DocumentBuilderFactory.newInstance().apply { isNamespaceAware = true }
+        androidXmlResDocumentFactory = AndroidXmlResDocument.Factory(documentBuilderFactory)
     }
 
     @Test
@@ -70,6 +71,7 @@ class StringXmlResourceExtractorTest {
             StringAndroidResource(
                 mapOf(
                     plain("name") to "string_4",
+                    plain("somePlainName") to "somePlainValue",
                     namespaced("sth", "http://schemas.android.com/tools") to "sthValue",
                     namespaced("nsname2", "http://schemas.android.com/apk/res-auto") to "nsname2Value"
                 ), "Some string with many namespaces", scope

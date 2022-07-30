@@ -1,22 +1,8 @@
 package com.likethesalad.tools.resource.locator.android.test
 
-import com.likethesalad.tools.resource.collector.android.AndroidResourceCollector
-import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
-import com.likethesalad.tools.resource.locator.android.AndroidResourceLocatorPlugin
-import com.likethesalad.tools.resource.locator.android.test.extractor.TestXmlResourceExtractor
+import com.likethesalad.android.string.resources.locator.StringResourceLocatorPlugin
 
-class TestAndroidResourceLocatorPlugin : AndroidResourceLocatorPlugin() {
-
-    private val resourceExtractor by lazy {
-        TestXmlResourceExtractor()
-    }
+class TestAndroidResourceLocatorPlugin : StringResourceLocatorPlugin() {
 
     override fun getLocatorId(): String = "test"
-
-    override fun getResourceCollector(
-        variantTree: VariantTree
-    ): AndroidResourceCollector {
-        return AndroidResourceCollector(variantTree, resourceExtractor)
-    }
-
 }

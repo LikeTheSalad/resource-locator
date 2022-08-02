@@ -1,0 +1,4 @@
+<resources xmlns:lib="http://schemas.android.com/tools">
+    <string name="library_name">Library Strings playground</string>
+    <string name="library_welcome_message" lib:someNamespacedKey="Some namespaced value">Welcome to the library</string>
+</resources>

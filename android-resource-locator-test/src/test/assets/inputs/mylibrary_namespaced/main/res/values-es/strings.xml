@@ -1,0 +1,4 @@
+<resources>
+    <string name="library_name">Library Strings pruebas</string>
+    <string name="library_welcome_message">Bienvenido a la librería</string>
+</resources>

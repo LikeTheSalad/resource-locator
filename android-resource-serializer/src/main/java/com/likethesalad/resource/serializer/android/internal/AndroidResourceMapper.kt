@@ -38,7 +38,7 @@ internal object AndroidResourceMapper {
 
     fun mapToJson(resource: AndroidResource): AndroidResourceJsonStructure {
         return AndroidResourceJsonStructure(
-            resource.attributes().asMap(),
+            resource.attributes().asMap().mapKeys { it.key.getName() },
             resource.value().toString(),
             resource.scope().getName(),
             resource.type().getName()

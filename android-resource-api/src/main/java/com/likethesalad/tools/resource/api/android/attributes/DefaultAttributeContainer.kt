@@ -22,8 +22,8 @@ internal class DefaultAttributeContainer(base: Map<AttributeKey, String> = empty
         map.remove(key)
     }
 
-    override fun asMap(): Map<String, String> {
-        return map.mapKeys { it.key.getName() }
+    override fun asMap(): Map<AttributeKey, String> {
+        return map
     }
 
     override fun equals(other: Any?): Boolean {

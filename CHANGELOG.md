@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.0.0
+---
+
+* Adding namespaced XML items support.
+
 Version 1.1.1
 ---
 

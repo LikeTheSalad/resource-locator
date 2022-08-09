@@ -1,0 +1,9 @@
+<resources xmlns:someNamespace="http://schemas.android.com/tools" xmlns:ns2="http://schemas.android.com/apk/res-auto">
+    <string name="string_1">Some string</string>
+    <string name="string_2" someNamespace:something="somethingValue1">Some string with namespace</string>
+    <string name="string_3" ns2:nsname="nsnameValue1">Some string with another namespace</string>
+    <string name="string_4" somePlainName="somePlainValue" someNamespace:sth="sthValue" ns2:nsname2="nsname2Value">Some string with many namespaces</string>
+    <integer name="number_1">1</integer>
+    <bool name="bool_1">true</bool>
+    <string name="string_5">Just one more string</string>
+</resources>

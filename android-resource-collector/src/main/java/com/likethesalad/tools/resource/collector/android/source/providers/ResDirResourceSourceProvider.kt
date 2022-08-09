@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.collector.android.source.providers
 
-import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder

@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.locator.android.merger
 
 import com.likethesalad.tools.resource.api.android.AndroidResource
-import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
 import com.likethesalad.tools.resource.api.collection.ResourceCollection

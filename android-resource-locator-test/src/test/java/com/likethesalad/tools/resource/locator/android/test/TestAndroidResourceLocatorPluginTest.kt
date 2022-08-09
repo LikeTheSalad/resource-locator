@@ -28,6 +28,11 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
     }
 
     @Test
+    fun `Check gathering namespaced strings`() {
+        runInputOutputComparisonTest("namespaced_strings", listOf("debug"))
+    }
+
+    @Test
     fun `Check gathering strings from single variant and single file twice`() {
         val variantNames = listOf("debug")
         val inOutDirName = "basic-repeated"
@@ -171,6 +176,25 @@ class TestAndroidResourceLocatorPluginTest : AndroidProjectTest() {
 
         // Set up app
         val appName = "with-library"
+        val appDescriptor = createAppProjectDescriptor(
+            appName,
+            dependencies = listOf("implementation project(':$libName')"),
+        )
+
+        runInputOutputComparisonTest(appName, listOf("debug"), appDescriptor)
+    }
+
+    @Test
+    fun `Taking namespaced strings from libraries`() {
+        // Create library
+        val libName = "mylibrary_namespaced"
+        val libDescriptor = AndroidLibProjectDescriptor(libName)
+        libDescriptor.projectDirectoryBuilder
+            .register(ValuesResFoldersPlacer(getInputTestAsset(libName)))
+        createProject(libDescriptor)
+
+        // Set up app
+        val appName = "with-library-namespaced"
         val appDescriptor = createAppProjectDescriptor(
             appName,
             dependencies = listOf("implementation project(':$libName')"),

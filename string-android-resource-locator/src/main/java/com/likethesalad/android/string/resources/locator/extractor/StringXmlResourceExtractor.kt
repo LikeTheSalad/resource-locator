@@ -1,8 +1,11 @@
 package com.likethesalad.android.string.resources.locator.extractor
 
-import com.likethesalad.tools.resource.api.ResourceScope
-import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.Resource
+import com.likethesalad.tools.resource.api.android.attributes.namespaced
+import com.likethesalad.tools.resource.api.android.attributes.plain
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
+import com.likethesalad.tools.resource.api.attributes.AttributeKey
 import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
 import org.w3c.dom.Node
@@ -16,14 +19,14 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
 
     override fun getResourcesFromAndroidDocument(
         document: AndroidXmlResDocument,
-        scope: ResourceScope
+        scope: Resource.Scope
     ): List<StringAndroidResource> {
         return getStringAndroidResources(document, scope)
     }
 
     private fun getStringAndroidResources(
         document: AndroidXmlResDocument,
-        scope: ResourceScope
+        scope: Resource.Scope
     ): List<StringAndroidResource> {
         val stringList = mutableListOf<StringAndroidResource>()
         val nodeList = getStringNodeList(document)
@@ -35,13 +38,19 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
         return stringList
     }
 
-    private fun parseNodeToStringAndroidResource(node: Node, scope: ResourceScope): StringAndroidResource {
-        val attributesMap = mutableMapOf<String, String>()
+    private fun parseNodeToStringAndroidResource(node: Node, scope: Resource.Scope): StringAndroidResource {
+        val attributesMap = mutableMapOf<AttributeKey, String>()
         val value = trimQuotes(node.textContent)
         val attributesNodes = node.attributes
         for (index in 0 until attributesNodes.length) {
             val attr = attributesNodes.item(index)
-            attributesMap[attr.nodeName] = attr.textContent
+            val attrName = attr.localName
+            val key = attr.namespaceURI?.let { namespaceValue ->
+                namespaced(attrName, namespaceValue)
+            } ?: run {
+                plain(attrName)
+            }
+            attributesMap[key] = attr.textContent
         }
         return StringAndroidResource(attributesMap, value, scope as AndroidResourceScope)
     }

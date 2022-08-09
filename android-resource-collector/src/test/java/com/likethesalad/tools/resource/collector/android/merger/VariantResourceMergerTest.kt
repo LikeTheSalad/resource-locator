@@ -1,19 +1,18 @@
 package com.likethesalad.tools.resource.collector.android.merger
 
 import com.google.common.truth.Truth
-import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.BaseAndroidResource
-import com.likethesalad.tools.resource.api.android.data.AndroidResourceType
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceType
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
-import com.likethesalad.tools.resource.api.data.ResourceType
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.testing.BaseMockable
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import org.junit.Assert
 import org.junit.Test
 
@@ -145,7 +144,7 @@ class VariantResourceMergerTest : BaseMockable() {
     class StringResource(name: String, value: String, scope: AndroidResourceScope) :
         BaseAndroidResource<String>(name, value, scope) {
 
-        override fun type(): ResourceType {
+        override fun type(): Resource.Type {
             return AndroidResourceType.StringType
         }
     }

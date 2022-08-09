@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation project(':android-resource-locator')
+    implementation project(':string-android-resource-locator')
     compileOnly("com.android.tools.build:gradle:3.3.3")
     compileOnly "com.google.dagger:dagger:$dagger_version"
     testImplementation "com.likethesalad.tools.testing:android-gradle:$testingUtilities_version"

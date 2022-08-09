@@ -1,13 +1,14 @@
 package com.likethesalad.tools.resource.api.android.modules.string
 
-import com.likethesalad.tools.resource.api.android.AndroidResourceScope
+import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.BaseAndroidResource
-import com.likethesalad.tools.resource.api.android.data.AndroidResourceType
-import com.likethesalad.tools.resource.api.data.ResourceType
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceType
+import com.likethesalad.tools.resource.api.attributes.AttributeKey
 
 class StringAndroidResource : BaseAndroidResource<String> {
 
-    constructor(attributes: Map<String, String>, value: String, scope: AndroidResourceScope) : super(
+    constructor(attributes: Map<AttributeKey, String>, value: String, scope: AndroidResourceScope) : super(
         attributes,
         value,
         scope
@@ -15,7 +16,7 @@ class StringAndroidResource : BaseAndroidResource<String> {
 
     constructor(name: String, value: String, scope: AndroidResourceScope) : super(name, value, scope)
 
-    override fun type(): ResourceType = AndroidResourceType.StringType
+    override fun type(): Resource.Type = AndroidResourceType.StringType
 
     fun stringValue() = value() as String
 }

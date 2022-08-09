@@ -3,6 +3,7 @@ package com.likethesalad.tools.resource.api.android
 import com.google.common.truth.Truth
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.modules.integer.IntegerAndroidResource
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import org.junit.Test

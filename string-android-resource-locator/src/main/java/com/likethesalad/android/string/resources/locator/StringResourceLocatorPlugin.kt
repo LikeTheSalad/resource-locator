@@ -5,7 +5,7 @@ import com.likethesalad.tools.resource.collector.android.AndroidResourceCollecto
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.locator.android.AndroidResourceLocatorPlugin
 
-class StringResourceLocatorPlugin : AndroidResourceLocatorPlugin() {
+open class StringResourceLocatorPlugin : AndroidResourceLocatorPlugin() {
 
     private val extractor by lazy {
         StringXmlResourceExtractor()

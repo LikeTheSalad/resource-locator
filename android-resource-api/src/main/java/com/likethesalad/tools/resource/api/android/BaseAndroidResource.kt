@@ -1,12 +1,15 @@
 package com.likethesalad.tools.resource.api.android
 
-import com.likethesalad.tools.resource.api.ResourceScope
-import com.likethesalad.tools.resource.api.android.data.DefaultAttributeContainer
-import com.likethesalad.tools.resource.api.data.AttributeContainer
+import com.likethesalad.tools.resource.api.Resource
+import com.likethesalad.tools.resource.api.android.attributes.DefaultAttributeContainer
+import com.likethesalad.tools.resource.api.android.attributes.plain
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
+import com.likethesalad.tools.resource.api.attributes.AttributeContainer
+import com.likethesalad.tools.resource.api.attributes.AttributeKey
 import java.util.Objects
 
 abstract class BaseAndroidResource<T : Any>(
-    attributes: Map<String, String>,
+    attributes: Map<AttributeKey, String>,
     private val value: T,
     private val scope: AndroidResourceScope
 ) : AndroidResource {
@@ -19,11 +22,11 @@ abstract class BaseAndroidResource<T : Any>(
     }
 
     init {
-        name = attributeContainer.get(ATTR_NAME)!!
+        name = attributeContainer.get(plain(ATTR_NAME))!!
     }
 
     constructor(name: String, value: T, scope: AndroidResourceScope)
-            : this(mapOf(ATTR_NAME to name), value, scope)
+            : this(mapOf(plain(ATTR_NAME) to name), value, scope)
 
     fun getAndroidScope(): AndroidResourceScope {
         return scope() as AndroidResourceScope
@@ -31,7 +34,7 @@ abstract class BaseAndroidResource<T : Any>(
 
     override fun attributes(): AttributeContainer = attributeContainer
 
-    override fun scope(): ResourceScope = scope
+    override fun scope(): Resource.Scope = scope
 
     override fun value(): Any = value
 

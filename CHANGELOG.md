@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.0.1
+---
+
+* Updating android tools
+
 Version 2.0.0
 ---
 

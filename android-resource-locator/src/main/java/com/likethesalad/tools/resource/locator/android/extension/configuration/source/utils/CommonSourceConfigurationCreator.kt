@@ -15,12 +15,11 @@ import javax.inject.Inject
 class CommonSourceConfigurationCreator @Inject constructor(
     private val taskFinder: TaskFinder,
     private val resDirFinder: ResDirFinder,
-    private val variantTreeResourceSourceProviderFactory: VariantTreeResourceSourceProvider.Factory,
-    private val instancesProvider: InstancesProvider
+    private val variantTreeResourceSourceProviderFactory: VariantTreeResourceSourceProvider.Factory
 ) {
 
     fun createAndroidRawConfiguration(variantTree: VariantTree): AndroidRawSourceConfiguration {
-        return AndroidRawSourceConfiguration(variantTree, resDirFinder, variantTreeResourceSourceProviderFactory, instancesProvider)
+        return AndroidRawSourceConfiguration(variantTree, resDirFinder, variantTreeResourceSourceProviderFactory)
     }
 
     fun createAndroidGeneratedResConfiguration(variantTree: VariantTree): AndroidGeneratedSourceConfiguration {
@@ -28,6 +27,6 @@ class CommonSourceConfigurationCreator @Inject constructor(
     }
 
     fun createAndroidAndroidLibrariesConfiguration(variantTree: VariantTree): AndroidLibrariesSourceConfiguration {
-        return AndroidLibrariesSourceConfiguration(variantTree, instancesProvider)
+        return AndroidLibrariesSourceConfiguration(variantTree)
     }
 }

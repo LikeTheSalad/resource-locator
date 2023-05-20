@@ -20,16 +20,17 @@ import com.likethesalad.tools.resource.locator.android.extension.configuration.d
 import com.likethesalad.tools.resource.locator.android.extension.configuration.data.TaskInfo
 import com.likethesalad.tools.resource.locator.android.extension.data.ResourceLocatorRequest
 import com.likethesalad.tools.resource.locator.android.extension.resources.DirLanguageCollectorProvider
+import com.likethesalad.tools.resource.locator.android.providers.InstancesProvider
 import com.likethesalad.tools.resource.locator.android.providers.TaskFinder
 import com.likethesalad.tools.resource.locator.android.task.ResourceLocatorTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.file.Directory
 import org.gradle.api.provider.Provider
-import org.gradle.api.tasks.TaskProvider
+import java.io.File
+import java.util.concurrent.Callable
 
-abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
+abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder, InstancesProvider {
 
     private lateinit var project: Project
     private val serializer by lazy { AndroidResourceSerializer() }
@@ -108,8 +109,14 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder {
         return project.layout.buildDirectory.dir("intermediates/incremental/$name")
     }
 
-    override fun findTaskByName(name: String): TaskProvider<Task> {
-        return project.tasks.named(name)
+    override fun findTaskOutputsByName(name: String): Provider<Iterable<File>> {
+        return project.provider {
+            project.tasks.getByName(name).outputs.files
+        }
+    }
+
+    override fun <T> createProvider(callable: Callable<T>): Provider<T> {
+        return project.provider(callable)
     }
 
     internal fun getCollectorComponent(): CollectorComponent {

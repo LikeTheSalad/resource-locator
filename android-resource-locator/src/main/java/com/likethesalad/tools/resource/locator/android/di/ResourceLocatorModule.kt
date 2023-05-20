@@ -2,6 +2,7 @@ package com.likethesalad.tools.resource.locator.android.di
 
 import com.likethesalad.tools.android.plugin.data.AndroidExtension
 import com.likethesalad.tools.resource.locator.android.AndroidResourceLocatorPlugin
+import com.likethesalad.tools.resource.locator.android.providers.InstancesProvider
 import com.likethesalad.tools.resource.locator.android.providers.TaskFinder
 import dagger.Module
 import dagger.Provides
@@ -12,6 +13,12 @@ class ResourceLocatorModule(private val plugin: AndroidResourceLocatorPlugin) {
     @Provides
     @LocatorScope
     fun provideTaskFinder(): TaskFinder {
+        return plugin
+    }
+
+    @Provides
+    @LocatorScope
+    fun provideInstancesProvider(): InstancesProvider {
         return plugin
     }
 

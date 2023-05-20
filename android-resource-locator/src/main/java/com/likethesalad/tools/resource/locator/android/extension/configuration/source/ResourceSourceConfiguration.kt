@@ -3,6 +3,7 @@ package com.likethesalad.tools.resource.locator.android.extension.configuration.
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.filter.ResourceSourceFilterRule
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
+import org.gradle.api.provider.Provider
 import java.io.File
 
 abstract class ResourceSourceConfiguration(protected val variantTree: VariantTree) {
@@ -17,5 +18,5 @@ abstract class ResourceSourceConfiguration(protected val variantTree: VariantTre
     }
 
     protected abstract fun doGetSourceProviders(): List<ResourceSourceProvider>
-    abstract fun getSourceFiles(): Iterable<File>
+    abstract fun getSourceFiles(): Provider<Iterable<File>>
 }

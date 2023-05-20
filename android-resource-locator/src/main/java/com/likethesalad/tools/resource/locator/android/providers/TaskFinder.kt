@@ -1,8 +1,8 @@
 package com.likethesalad.tools.resource.locator.android.providers
 
-import org.gradle.api.Task
-import org.gradle.api.tasks.TaskProvider
+import org.gradle.api.provider.Provider
+import java.io.File
 
 interface TaskFinder {
-    fun findTaskByName(name: String): TaskProvider<Task>
+    fun findTaskOutputsByName(name: String): Provider<Iterable<File>>
 }

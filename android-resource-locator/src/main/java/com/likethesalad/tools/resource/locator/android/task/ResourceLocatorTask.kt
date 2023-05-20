@@ -1,8 +1,8 @@
 package com.likethesalad.tools.resource.locator.android.task
 
 import com.likethesalad.tools.resource.api.android.AndroidResource
-import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.collection.BasicResourceCollection
 import com.likethesalad.tools.resource.api.collection.ResourceCollection
 import com.likethesalad.tools.resource.collector.ResourceCollector
@@ -14,10 +14,10 @@ import com.likethesalad.tools.resource.locator.android.extension.configuration.R
 import com.likethesalad.tools.resource.locator.android.utils.CollectedFilesHelper
 import com.likethesalad.tools.resource.serializer.ResourceSerializer
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.Directory
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Provider
-import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
@@ -38,15 +38,14 @@ open class ResourceLocatorTask @Inject constructor(
     val sourceConfigurations = entryPoint.getResourceSourceConfigurations(variantTree)
 
     @InputFiles
-    val inputResources: SetProperty<Iterable<File>> =
-        project.objects.setProperty(Iterable::class.java) as SetProperty<Iterable<File>>
+    val inputResources: ConfigurableFileCollection = project.files()
 
     @OutputDirectory
     val outputDir: DirectoryProperty = project.objects.directoryProperty()
 
     init {
         sourceConfigurations.forEach { sources ->
-            inputResources.add(sources.getSourceFiles())
+            inputResources.from(sources.getSourceFiles())
         }
         outputDir.set(outputDirProvider)
     }

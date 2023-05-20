@@ -5,9 +5,7 @@ import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.locator.android.extension.configuration.source.base.ResDirResourceSourceConfiguration
 import com.likethesalad.tools.resource.locator.android.providers.TaskFinder
-import org.gradle.api.Task
-import org.gradle.api.file.FileCollection
-import org.gradle.api.tasks.TaskProvider
+import org.gradle.api.provider.Provider
 import java.io.File
 
 class AndroidGeneratedSourceConfiguration(
@@ -15,19 +13,19 @@ class AndroidGeneratedSourceConfiguration(
     private val taskFinder: TaskFinder
 ) : ResDirResourceSourceConfiguration(variantTree) {
 
-    private lateinit var generatedFiles: FileCollection
+    private lateinit var generatedFiles: Provider<Iterable<File>>
 
     override fun getResDirs(): List<ResDir> {
-        return listOf(ResDir(Variant.Default, generatedFiles.singleFile))
+        return listOf(ResDir(Variant.Default, generatedFiles.get().iterator().next()))
     }
 
-    override fun getSourceFiles(): Iterable<File> {
-        generatedFiles = getAndroidGenerateResourcesTask().get().outputs.files
+    override fun getSourceFiles(): Provider<Iterable<File>> {
+        generatedFiles = getAndroidGenerateResourcesTask()
         return generatedFiles
     }
 
-    private fun getAndroidGenerateResourcesTask(): TaskProvider<Task> {
+    private fun getAndroidGenerateResourcesTask(): Provider<Iterable<File>> {
         val variantName = variantTree.androidVariantData.getVariantName()
-        return taskFinder.findTaskByName("generate${variantName.capitalize()}ResValues")
+        return taskFinder.findTaskOutputsByName("generate${variantName.capitalize()}ResValues")
     }
 }

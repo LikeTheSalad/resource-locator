@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.0.2
+---
+
+* Providing input files lazily to ResourceLocator task
+
 Version 2.0.1
 ---
 

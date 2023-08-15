@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.locator.android.di
 
-import com.likethesalad.tools.android.plugin.data.AndroidExtension
+import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
 import com.likethesalad.tools.resource.locator.android.AndroidResourceLocatorPlugin
 import com.likethesalad.tools.resource.locator.android.providers.InstancesProvider
 import com.likethesalad.tools.resource.locator.android.providers.TaskFinder

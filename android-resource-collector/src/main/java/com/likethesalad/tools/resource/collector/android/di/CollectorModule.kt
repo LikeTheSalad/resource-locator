@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.collector.android.di
 
-import com.likethesalad.tools.android.plugin.data.AndroidExtension
+import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
 import dagger.Module
 import dagger.Provides
 import javax.xml.parsers.DocumentBuilderFactory

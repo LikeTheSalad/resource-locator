@@ -1,7 +1,7 @@
 package com.likethesalad.tools.resource.collector.android.data.resdir
 
 import com.google.common.truth.Truth
-import com.likethesalad.tools.android.plugin.data.AndroidExtension
+import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.testing.BaseMockable
 import io.mockk.every

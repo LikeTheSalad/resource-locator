@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.1.0
+---
+
+* Updating android gradle plugin tool.
+
 Version 2.0.2
 ---
 

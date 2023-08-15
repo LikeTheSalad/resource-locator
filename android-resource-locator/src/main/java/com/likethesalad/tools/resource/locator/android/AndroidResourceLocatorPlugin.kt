@@ -1,9 +1,9 @@
 package com.likethesalad.tools.resource.locator.android
 
 import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
+import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
+import com.likethesalad.tools.agpcompat.api.bridges.AndroidVariantData
 import com.likethesalad.tools.android.plugin.AndroidToolsPlugin
-import com.likethesalad.tools.android.plugin.data.AndroidExtension
-import com.likethesalad.tools.android.plugin.data.AndroidVariantData
 import com.likethesalad.tools.android.plugin.extension.AndroidToolsPluginExtension
 import com.likethesalad.tools.resource.collector.android.AndroidResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree

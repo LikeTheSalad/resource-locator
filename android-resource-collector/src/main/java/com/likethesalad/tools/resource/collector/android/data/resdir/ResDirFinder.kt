@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.collector.android.data.resdir
 
-import com.likethesalad.tools.android.plugin.data.AndroidExtension
+import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import javax.inject.Inject
 import javax.inject.Singleton

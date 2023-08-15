@@ -21,7 +21,7 @@ ext {
     dagger_version = '2.39.1'
     gson_version = '2.8.7'
     testingUtilities_version = '1.0.5'
-    androidTools_version = '1.3.0'
+    androidTools_version = '1.4.0'
 }
 
 artifactPublisher {
@@ -32,7 +32,7 @@ artifactPublisher {
 }
 
 group 'com.likethesalad.tools.resources'
-version '2.0.2'
+version '2.1.0'
 description 'Plugin that gathers resources from Android projects for compilation purposes.'
 
 subprojects {

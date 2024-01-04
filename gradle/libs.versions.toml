@@ -1,0 +1,12 @@
+[versions]
+project-utilities = "3.0.2"
+
+[libraries]
+androidToolsPlugin = "com.likethesalad.tools:android-tools-plugin:1.5.1"
+dagger = "com.google.dagger:dagger:2.50"
+gson = "com.google.code.gson:gson:2.8.7"
+unitTesting = { module = "com.likethesalad.tools:unit-testing", version.ref = "project-utilities" }
+
+[plugins]
+java-library = { id = "com.likethesalad.tools.java-library", version.ref = "project-utilities" }
+artifactPublisher = { id = "com.likethesalad.artifact-publisher", version = "2.0.2" }

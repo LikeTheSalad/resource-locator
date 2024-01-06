@@ -10,9 +10,13 @@ dependencies {
     api project(':android-resource-serializer')
     api "com.likethesalad.tools:android-tools-plugin:$androidTools_version"
     implementation libs.gson
-    compileOnly libs.dagger
+    embedded libs.dagger
     kapt libs.dagger.compiler
     testImplementation libs.unitTesting
+}
+
+shadowExtension {
+    relocate("dagger", "${group}.resourcelocator.dagger")
 }
 
 libConventions {

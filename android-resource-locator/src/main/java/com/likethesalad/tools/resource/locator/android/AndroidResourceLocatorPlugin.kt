@@ -1,10 +1,9 @@
 package com.likethesalad.tools.resource.locator.android
 
+import com.likethesalad.plugins.agpbrigde.base.AndroidBridgePluginConsumer
 import com.likethesalad.resource.serializer.android.AndroidResourceSerializer
 import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
 import com.likethesalad.tools.agpcompat.api.bridges.AndroidVariantData
-import com.likethesalad.tools.android.plugin.AndroidToolsPlugin
-import com.likethesalad.tools.android.plugin.extension.AndroidToolsPluginExtension
 import com.likethesalad.tools.resource.collector.android.AndroidResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.di.CollectorComponent
@@ -23,14 +22,13 @@ import com.likethesalad.tools.resource.locator.android.extension.resources.DirLa
 import com.likethesalad.tools.resource.locator.android.providers.InstancesProvider
 import com.likethesalad.tools.resource.locator.android.providers.TaskFinder
 import com.likethesalad.tools.resource.locator.android.task.ResourceLocatorTask
-import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
 import org.gradle.api.provider.Provider
 import java.io.File
 import java.util.concurrent.Callable
 
-abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder, InstancesProvider {
+abstract class AndroidResourceLocatorPlugin : AndroidBridgePluginConsumer(), TaskFinder, InstancesProvider {
 
     private lateinit var project: Project
     private val serializer by lazy { AndroidResourceSerializer() }
@@ -38,25 +36,14 @@ abstract class AndroidResourceLocatorPlugin : Plugin<Project>, TaskFinder, Insta
 
     override fun apply(project: Project) {
         this.project = project
-        val androidToolsPluginExtension = findAndroidToolsPluginExtension()
-        androidExtension = androidToolsPluginExtension.androidExtension
+        androidExtension = androidBridge.androidExtension
         ResourceLocatorComponentProvider.init(this)
         val component = ResourceLocatorComponentProvider.getComponent()
         val resourceLocatorExtension = createExtension(project, component)
 
-        androidToolsPluginExtension.onVariant { variant ->
+        androidBridge.onVariant { variant ->
             createResourceLocatorTasksForVariant(variant, resourceLocatorExtension)
         }
-    }
-
-    private fun findAndroidToolsPluginExtension(): AndroidToolsPluginExtension {
-        val toolsPluginExtension = project.extensions.findByType(AndroidToolsPluginExtension::class.java)
-        if (toolsPluginExtension == null) {
-            project.plugins.apply(AndroidToolsPlugin::class.java)
-            return project.extensions.getByType(AndroidToolsPluginExtension::class.java)
-        }
-
-        return toolsPluginExtension
     }
 
     private fun createExtension(

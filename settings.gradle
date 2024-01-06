@@ -18,6 +18,11 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            version('kotlin', getProperty("kotlin.version"))
+        }
+    }
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         mavenLocal()
@@ -31,8 +36,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"
-        classpath 'com.likethesalad.dagger:remapper-plugin:1.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getProperty("kotlin.version")}"
     }
 }
 rootProject.name = 'resource-locator'

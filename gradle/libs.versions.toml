@@ -9,6 +9,7 @@ gson = "com.google.code.gson:gson:2.8.7"
 unitTesting = { module = "com.likethesalad.tools:unit-testing", version.ref = "project-utilities" }
 androidCompatApi = { module = "com.likethesalad.tools:agp-compatibility-api", version.ref = "project-utilities" }
 pluginTools = { module = "com.likethesalad.tools:plugin-tools", version.ref = "project-utilities" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
 [plugins]
 java-library = { id = "com.likethesalad.tools.java-library", version.ref = "project-utilities" }

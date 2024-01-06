@@ -5,4 +5,5 @@ plugins {
 dependencies {
     api project(":resource-api")
     testImplementation libs.unitTesting
+    testImplementation libs.kotlin.reflect
 }

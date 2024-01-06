@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.locator.android.test.data
 
-import com.likethesalad.tools.functional.testing.app.layout.GradleBlockItem
+import com.likethesalad.tools.functional.testing.blocks.GradleBlockItem
 
 class PluginGradleBlockItem(private val locatorName: String) : GradleBlockItem {
 

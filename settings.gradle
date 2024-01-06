@@ -1,3 +1,44 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            def pluginId = it.requested.id.id
+            if (pluginId == "com.likethesalad.artifact-publisher") {
+                useModule("com.likethesalad.tools:artifact-publisher:${it.requested.version}")
+            }
+            if (it.requested.id.namespace == "com.likethesalad.tools") {
+                useModule("com.likethesalad.tools:plugin-tools:${it.requested.version}")
+            }
+        }
+    }
+}
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            version('kotlin', getProperty("kotlin.version"))
+        }
+    }
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+    }
+}
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getProperty("kotlin.version")}"
+    }
+}
 rootProject.name = 'resource-locator'
 include ':android-resource-locator'
 include ":resource-collector"

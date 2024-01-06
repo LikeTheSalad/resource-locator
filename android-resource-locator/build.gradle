@@ -1,6 +1,5 @@
 plugins {
-    id 'java-library'
-    id 'org.jetbrains.kotlin.jvm'
+    alias(libs.plugins.java.library)
     id 'kotlin-kapt'
 }
 
@@ -9,20 +8,21 @@ dependencies {
     api project(":android-resource-api")
     api project(":android-resource-collector")
     api project(':android-resource-serializer')
-    api "com.likethesalad.tools:android-tools-plugin:$androidTools_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "com.google.code.gson:gson:$gson_version"
-    compileOnly "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    testImplementation "com.likethesalad.tools.testing:unit-testing:$testingUtilities_version"
+    api libs.pluginTools
+    implementation libs.gson
+    embedded libs.dagger
+    kapt libs.dagger.compiler
+    testImplementation libs.unitTesting
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+shadowExtension {
+    relocate("dagger", "${group}.resourcelocator.dagger")
 }
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+
+libConventions {
+    setJavaVersion("11")
 }
+
 kapt {
     correctErrorTypes = true
 }

@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.2.0
+---
+
+* Updating utilities.
+
 Version 2.1.0
 ---
 

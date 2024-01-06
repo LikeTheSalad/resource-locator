@@ -11,7 +11,7 @@ dependencies {
     api "com.likethesalad.tools:android-tools-plugin:$androidTools_version"
     implementation libs.gson
     compileOnly libs.dagger
-    kapt libs.dagger
+    kapt libs.dagger.compiler
     testImplementation libs.unitTesting
 }
 

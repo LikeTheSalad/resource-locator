@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.artifactPublisher)
-    id "com.likethesalad.dagger-remapper"
 }
 
 ext {

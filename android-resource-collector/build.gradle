@@ -8,7 +8,7 @@ dependencies {
     implementation "com.likethesalad.tools:android-tools-plugin:$androidTools_version"
     implementation project(':android-resource-api')
     compileOnly libs.dagger
-    kapt libs.dagger
+    kapt libs.dagger.compiler
     testImplementation libs.unitTesting
     testImplementation gradleApi()
 }

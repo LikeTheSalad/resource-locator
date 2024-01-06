@@ -2,13 +2,6 @@ plugins {
     alias(libs.plugins.artifactPublisher)
 }
 
-ext {
-    dagger_version = '2.39.1'
-    gson_version = '2.8.7'
-    testingUtilities_version = '1.0.5'
-    androidTools_version = '1.4.0'
-}
-
 artifactPublisher {
     displayName = "Resource locator"
     url = "https://github.com/LikeTheSalad/resource-locator"

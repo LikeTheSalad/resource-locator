@@ -1,21 +1,17 @@
 plugins {
     alias(libs.plugins.java.library)
+    alias(libs.plugins.androidTestTools)
     id 'java-gradle-plugin'
 }
 
 dependencies {
     implementation project(':string-android-resource-locator')
-    compileOnly("com.android.tools.build:gradle:3.3.3")
-    compileOnly libs.dagger
-    testImplementation "com.likethesalad.tools.testing:android-gradle:$testingUtilities_version"
+    testPluginClasspath "com.android.tools.build:gradle:7.4.0"
+    testPluginClasspath libs.dagger
 }
 
 libConventions {
     setJavaVersion("11")
-}
-
-tasks.withType(PluginUnderTestMetadata).configureEach {
-    pluginClasspath.from(configurations.compileOnly)
 }
 
 gradlePlugin {

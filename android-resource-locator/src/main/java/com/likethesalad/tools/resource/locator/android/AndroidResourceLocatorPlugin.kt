@@ -35,6 +35,7 @@ abstract class AndroidResourceLocatorPlugin : AndroidBridgePluginConsumer(), Tas
     internal lateinit var androidExtension: AndroidExtension
 
     override fun apply(project: Project) {
+        super.apply(project)
         this.project = project
         androidExtension = androidBridge.androidExtension
         ResourceLocatorComponentProvider.init(this)

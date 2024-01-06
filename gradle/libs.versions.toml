@@ -13,3 +13,4 @@ pluginTools = { module = "com.likethesalad.tools:plugin-tools", version.ref = "p
 [plugins]
 java-library = { id = "com.likethesalad.tools.java-library", version.ref = "project-utilities" }
 artifactPublisher = { id = "com.likethesalad.artifact-publisher", version = "3.0.0" }
+androidTestTools = { id = "com.likethesalad.tools.android-compilation-testing", version.ref = "project-utilities" }

@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.java.library)
     id 'java-gradle-plugin'
-    id 'kotlin-kapt'
 }
 
 dependencies {

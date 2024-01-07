@@ -6,9 +6,6 @@ import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
 import com.likethesalad.tools.agpcompat.api.bridges.AndroidVariantData
 import com.likethesalad.tools.resource.collector.android.AndroidResourceCollector
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
-import com.likethesalad.tools.resource.collector.android.di.CollectorComponent
-import com.likethesalad.tools.resource.collector.android.di.CollectorModule
-import com.likethesalad.tools.resource.collector.android.di.DaggerCollectorComponent
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorComponent
 import com.likethesalad.tools.resource.locator.android.di.ResourceLocatorComponentProvider
 import com.likethesalad.tools.resource.locator.android.extension.AndroidResourceLocatorExtension
@@ -105,12 +102,6 @@ abstract class AndroidResourceLocatorPlugin : AndroidBridgePluginConsumer(), Tas
 
     override fun <T> createProvider(callable: Callable<T>): Provider<T> {
         return project.provider(callable)
-    }
-
-    internal fun getCollectorComponent(): CollectorComponent {
-        return DaggerCollectorComponent.builder()
-            .collectorModule(CollectorModule(androidExtension))
-            .build()
     }
 
     abstract fun getLocatorId(): String

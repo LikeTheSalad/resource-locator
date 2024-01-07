@@ -1,6 +1,6 @@
 package com.likethesalad.tools.resource.locator.android.extension.configuration.source.impl
 
-import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
+import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
 import com.likethesalad.tools.resource.collector.android.source.providers.VariantTreeResourceSourceProvider
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
@@ -11,18 +11,16 @@ import org.gradle.api.provider.Provider
 import java.io.File
 
 class AndroidRawSourceConfiguration(
-    variantTree: VariantTree,
-    resDirFinder: ResDirFinder,
-    private val variantTreeResourceSourceProviderFactory: VariantTreeResourceSourceProvider.Factory
+    private val androidExtension: AndroidExtension,
+    variantTree: VariantTree
 ) : ResourceSourceConfiguration(variantTree) {
 
-    private val instancesProvider:InstancesProvider by lazy {
+    private val instancesProvider: InstancesProvider by lazy {
         ResourceLocatorComponentProvider.getComponent().instancesProvider()
     }
     private val variantTreeResourceProvider: VariantTreeResourceSourceProvider by lazy {
         createVariantTreeResourceProvider(
-            variantTree,
-            resDirFinder
+            variantTree
         )
     }
 
@@ -37,9 +35,8 @@ class AndroidRawSourceConfiguration(
     }
 
     private fun createVariantTreeResourceProvider(
-        variantTree: VariantTree,
-        resDirFinder: ResDirFinder
+        variantTree: VariantTree
     ): VariantTreeResourceSourceProvider {
-        return VariantTreeResourceSourceProvider(variantTree, resDirFinder)
+        return VariantTreeResourceSourceProvider(androidExtension, variantTree)
     }
 }

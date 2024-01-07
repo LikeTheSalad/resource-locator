@@ -8,8 +8,6 @@ import org.w3c.dom.NodeList
 import org.xml.sax.InputSource
 import java.io.File
 import java.io.StringReader
-import javax.inject.Inject
-import javax.inject.Singleton
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.OutputKeys
 import javax.xml.transform.TransformerFactory
@@ -20,6 +18,24 @@ class AndroidXmlResDocument(private val document: Document) {
 
     companion object {
         private const val XML_RESOURCES_TAG = "resources"
+        private val documentBuilderFactory by lazy {
+            DocumentBuilderFactory.newInstance().apply { isNamespaceAware = true }
+        }
+
+        fun fromFile(xmlFile: File): AndroidXmlResDocument {
+            val dBuilder = documentBuilderFactory.newDocumentBuilder()
+            val xmlInput = InputSource(StringReader(xmlFile.readText()))
+            return AndroidXmlResDocument(
+                dBuilder.parse(xmlInput)
+            )
+        }
+
+        fun createNewDocument(): AndroidXmlResDocument {
+            val document = documentBuilderFactory.newDocumentBuilder().newDocument().apply {
+                xmlStandalone = true
+            }
+            return AndroidXmlResDocument(document)
+        }
     }
 
     private val resources: Element by lazy { getOrCreateResources() }
@@ -64,22 +80,4 @@ class AndroidXmlResDocument(private val document: Document) {
         return resources
     }
 
-    @Singleton
-    class Factory @Inject constructor(private val documentBuilderFactory: DocumentBuilderFactory) {
-
-        fun fromFile(xmlFile: File): AndroidXmlResDocument {
-            val dBuilder = documentBuilderFactory.newDocumentBuilder()
-            val xmlInput = InputSource(StringReader(xmlFile.readText()))
-            return AndroidXmlResDocument(
-                dBuilder.parse(xmlInput)
-            )
-        }
-
-        fun createNewDocument(): AndroidXmlResDocument {
-            val document = documentBuilderFactory.newDocumentBuilder().newDocument().apply {
-                xmlStandalone = true
-            }
-            return AndroidXmlResDocument(document)
-        }
-    }
 }

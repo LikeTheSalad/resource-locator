@@ -1,26 +1,15 @@
 plugins {
     alias(libs.plugins.java.library)
-    id 'kotlin-kapt'
 }
 
 dependencies {
     api project(':resource-collector')
     implementation project(':android-resource-api')
     implementation libs.androidCompatApi
-    embedded libs.dagger
-    kapt libs.dagger.compiler
     testImplementation libs.unitTesting
     testImplementation gradleApi()
 }
 
-shadowExtension {
-    relocate("dagger", "${group}.resourcecollector.dagger")
-}
-
 libConventions {
     setJavaVersion("11")
-}
-
-kapt {
-    correctErrorTypes = true
 }

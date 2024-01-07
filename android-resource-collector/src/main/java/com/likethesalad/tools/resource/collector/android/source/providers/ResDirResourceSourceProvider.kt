@@ -8,26 +8,13 @@ import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import java.io.File
 
-class ResDirResourceSourceProvider @AssistedInject constructor(
-    @Assisted private val resDir: ResDir,
-    private val valueDirFinder: ValueDirFinder,
-    private val xmlFileFinder: XmlFileFinder,
-    private val sourceFactory: AndroidXmlResourceSource.Factory
-) : ResourceSourceProvider() {
-
-    @AssistedFactory
-    interface Factory {
-        fun create(resDir: ResDir): ResDirResourceSourceProvider
-    }
+class ResDirResourceSourceProvider(private val resDir: ResDir) : ResourceSourceProvider() {
 
     override fun doGetSources(): List<ResourceSource> {
         val sources = mutableListOf<ResourceSource>()
-        val valueDirs = valueDirFinder.findValueDirs(resDir)
+        val valueDirs = ValueDirFinder.findValueDirs(resDir)
 
         for (valueDir in valueDirs) {
             sources.addAll(extractSourcesFromValueDir(valueDir))
@@ -38,7 +25,7 @@ class ResDirResourceSourceProvider @AssistedInject constructor(
 
     private fun extractSourcesFromValueDir(valueDir: ValueDir): Collection<ResourceSource> {
         val sources = mutableListOf<ResourceSource>()
-        val xmlFiles = xmlFileFinder.findXmlFiles(valueDir)
+        val xmlFiles = XmlFileFinder.findXmlFiles(valueDir)
         val scope = AndroidResourceScope(valueDir.resDir.variant, valueDir.language)
 
         for (file in xmlFiles) {
@@ -51,5 +38,5 @@ class ResDirResourceSourceProvider @AssistedInject constructor(
     private fun createAndroidResourceSource(
         file: File,
         scope: AndroidResourceScope
-    ): AndroidXmlResourceSource = sourceFactory.create(file, scope)
+    ): AndroidXmlResourceSource = AndroidXmlResourceSource(file, scope)
 }

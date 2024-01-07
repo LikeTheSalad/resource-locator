@@ -9,19 +9,9 @@ import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
 import com.likethesalad.tools.testing.DummyResourcesFinder
-import org.junit.Before
 import org.junit.Test
-import javax.xml.parsers.DocumentBuilderFactory
 
 class StringXmlResourceExtractorTest {
-
-    private lateinit var androidXmlResDocumentFactory: AndroidXmlResDocument.Factory
-
-    @Before
-    fun setUp() {
-        val documentBuilderFactory = DocumentBuilderFactory.newInstance().apply { isNamespaceAware = true }
-        androidXmlResDocumentFactory = AndroidXmlResDocument.Factory(documentBuilderFactory)
-    }
 
     @Test
     fun `Get string resources from Android XML file`() {
@@ -29,7 +19,7 @@ class StringXmlResourceExtractorTest {
         val scope = AndroidResourceScope(Variant.Default, Language.Default)
         val instance = StringXmlResourceExtractor()
 
-        val result = instance.getResourcesFromAndroidDocument(androidXmlResDocumentFactory.fromFile(file), scope)
+        val result = instance.getResourcesFromAndroidDocument(AndroidXmlResDocument.fromFile(file), scope)
 
         Truth.assertThat(result).containsExactly(
             StringAndroidResource("string_1", "Some string", scope),
@@ -52,7 +42,7 @@ class StringXmlResourceExtractorTest {
         val scope = AndroidResourceScope(Variant.Default, Language.Default)
         val instance = StringXmlResourceExtractor()
 
-        val result = instance.getResourcesFromAndroidDocument(androidXmlResDocumentFactory.fromFile(file), scope)
+        val result = instance.getResourcesFromAndroidDocument(AndroidXmlResDocument.fromFile(file), scope)
 
         Truth.assertThat(result).containsExactly(
             StringAndroidResource("string_1", "Some string", scope),

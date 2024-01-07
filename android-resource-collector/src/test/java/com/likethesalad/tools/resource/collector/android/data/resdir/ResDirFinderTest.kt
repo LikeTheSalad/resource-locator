@@ -6,7 +6,6 @@ import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.testing.BaseMockable
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import org.junit.Before
 import org.junit.Test
 import java.io.File
 
@@ -17,18 +16,13 @@ class ResDirFinderTest : BaseMockable() {
 
     private lateinit var resDirFinder: ResDirFinder
 
-    @Before
-    fun setUp() {
-        resDirFinder = ResDirFinder(androidExtensionHelper)
-    }
-
     @Test
     fun `Get res dirs from variant`() {
         val variant = Variant.Default
         val dirs = setOf(createExistingFileMock(), createExistingFileMock(), createExistingFileMock())
         prepareExtensionHelperWithDirs(variant, dirs)
 
-        val result = resDirFinder.findResDirs(variant)
+        val result = ResDirFinder.findResDirs(androidExtensionHelper, variant)
 
         Truth.assertThat(result).containsExactlyElementsIn(dirsToResDir(variant, dirs))
     }
@@ -41,7 +35,7 @@ class ResDirFinderTest : BaseMockable() {
         val dirs = existingDirs + nonExistingDirs
         prepareExtensionHelperWithDirs(variant, dirs)
 
-        val result = resDirFinder.findResDirs(variant)
+        val result = ResDirFinder.findResDirs(androidExtensionHelper, variant)
 
         Truth.assertThat(result).containsExactlyElementsIn(dirsToResDir(variant, existingDirs))
     }

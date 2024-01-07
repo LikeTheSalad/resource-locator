@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.2.2
+---
+
+* Removing gradle from android-resource-collector.
+
 Version 2.2.0
 ---
 

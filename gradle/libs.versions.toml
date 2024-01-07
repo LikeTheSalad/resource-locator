@@ -5,7 +5,7 @@ project-utilities = "3.1.0"
 [libraries]
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
-gson = "com.google.code.gson:gson:2.8.7"
+gson = "com.google.code.gson:gson:2.10.1"
 unitTesting = { module = "com.likethesalad.tools:unit-testing", version.ref = "project-utilities" }
 androidCompatApi = { module = "com.likethesalad.tools:agp-compatibility-api", version.ref = "project-utilities" }
 pluginTools = { module = "com.likethesalad.tools:plugin-tools", version.ref = "project-utilities" }
@@ -13,5 +13,5 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 
 [plugins]
 java-library = { id = "com.likethesalad.tools.java-library", version.ref = "project-utilities" }
-artifactPublisher = { id = "com.likethesalad.artifact-publisher", version = "3.0.0" }
+artifactPublisher = { id = "com.likethesalad.artifact-publisher", version = "3.0.2" }
 androidTestTools = { id = "com.likethesalad.tools.android-compilation-testing", version.ref = "project-utilities" }

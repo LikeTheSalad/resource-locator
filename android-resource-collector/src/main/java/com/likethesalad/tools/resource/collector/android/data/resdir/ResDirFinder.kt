@@ -2,13 +2,10 @@ package com.likethesalad.tools.resource.collector.android.data.resdir
 
 import com.likethesalad.tools.agpcompat.api.bridges.AndroidExtension
 import com.likethesalad.tools.resource.api.android.environment.Variant
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ResDirFinder @Inject constructor(private val androidExtension: AndroidExtension) {
+object ResDirFinder {
 
-    fun findResDirs(variant: Variant): List<ResDir> {
+    fun findResDirs(androidExtension: AndroidExtension, variant: Variant): List<ResDir> {
         return androidExtension.getVariantSrcDirs(variant.name)
             .filter { it.exists() }
             .map { ResDir(variant, it) }

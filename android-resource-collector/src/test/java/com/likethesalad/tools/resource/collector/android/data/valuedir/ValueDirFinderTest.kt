@@ -9,14 +9,12 @@ import org.junit.Test
 
 class ValueDirFinderTest {
 
-    private val finder = ValueDirFinder()
-
     @Test
     fun `Find values dirs`() {
         val resFolder = getResourceFile("res")
         val resDir = ResDir(Variant.Default, resFolder)
 
-        val result = finder.findValueDirs(resDir)
+        val result = ValueDirFinder.findValueDirs(resDir)
 
         Truth.assertThat(result).containsExactly(
             ValueDir(resDir, getResourceFile("res/values"), Language.Default),

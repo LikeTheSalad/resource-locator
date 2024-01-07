@@ -6,21 +6,14 @@ import com.likethesalad.tools.resource.api.Resource
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
 import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
-import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
-import com.likethesalad.tools.resource.collector.android.data.resdir.ResDirFinder
-import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
 import com.likethesalad.tools.resource.collector.android.data.variant.VariantTree
-import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
-import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.testing.BaseMockable
 import com.likethesalad.tools.testing.DummyResourcesFinder.getResourceFile
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import org.junit.Before
 import org.junit.Test
 import java.io.File
-import javax.xml.parsers.DocumentBuilderFactory
 
 class VariantTreeResourceSourceProviderTest : BaseMockable() {
 
@@ -30,32 +23,9 @@ class VariantTreeResourceSourceProviderTest : BaseMockable() {
     @MockK
     lateinit var androidExtension: AndroidExtension
 
-    @MockK
-    lateinit var resDirResourceSourceProviderFactory: ResDirResourceSourceProvider.Factory
-
-    @MockK
-    lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSource.Factory
-
     private val main = Variant.Default
     private val demo = Variant.Custom("demo")
     private val paid = Variant.Custom("paid")
-
-    @Before
-    fun setUp() {
-        every { androidXmlResourceSourceFactory.create(any(), any()) } answers {
-            AndroidXmlResourceSource(
-                firstArg(),
-                secondArg(),
-                AndroidXmlResDocument.Factory(DocumentBuilderFactory.newInstance())
-            )
-        }
-        every { resDirResourceSourceProviderFactory.create(any()) } answers {
-            ResDirResourceSourceProvider(
-                firstArg(), ValueDirFinder(), XmlFileFinder(),
-                androidXmlResourceSourceFactory
-            )
-        }
-    }
 
     @Test
     fun `Provide android xml resource sources`() {
@@ -104,9 +74,8 @@ class VariantTreeResourceSourceProviderTest : BaseMockable() {
 
     private fun getInstance(): VariantTreeResourceSourceProvider {
         return VariantTreeResourceSourceProvider(
-            variantTree,
-            ResDirFinder(androidExtension),
-            resDirResourceSourceProviderFactory
+            androidExtension,
+            variantTree
         )
     }
 

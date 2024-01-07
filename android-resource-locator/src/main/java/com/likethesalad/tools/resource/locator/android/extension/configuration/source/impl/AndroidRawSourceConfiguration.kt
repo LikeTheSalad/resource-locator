@@ -40,7 +40,6 @@ class AndroidRawSourceConfiguration(
         variantTree: VariantTree,
         resDirFinder: ResDirFinder
     ): VariantTreeResourceSourceProvider {
-        return variantTreeResourceSourceProviderFactory
-            .create(variantTree, resDirFinder)
+        return VariantTreeResourceSourceProvider(variantTree, resDirFinder)
     }
 }

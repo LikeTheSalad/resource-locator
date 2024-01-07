@@ -3,15 +3,10 @@ package com.likethesalad.tools.resource.collector.android.data.valuedir
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import java.io.File
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ValueDirFinder @Inject constructor() {
+object ValueDirFinder {
 
-    companion object {
-        private val VALUES_FOLDER_NAME_REGEX = Regex("values(-([a-z]{2}(-r[A-Z]{2})*))*")
-    }
+    private val VALUES_FOLDER_NAME_REGEX = Regex("values(-([a-z]{2}(-r[A-Z]{2})*))*")
 
     fun findValueDirs(resDir: ResDir): List<ValueDir> {
         val valueFolders = resDir.dir.listFiles { _, name ->

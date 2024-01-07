@@ -11,8 +11,6 @@ import java.io.File
 
 class XmlFileFinderTest {
 
-    private val xmlFileFinder = XmlFileFinder()
-
     @Test
     fun `Find xml files`() {
         val files = findXmlFilesFromFolder(getResourceFile("res/values"))
@@ -41,6 +39,6 @@ class XmlFileFinderTest {
         val resDir = mockk<ResDir>()
         val valuesDir = ValueDir(resDir, folder, Language.Default)
 
-        return xmlFileFinder.findXmlFiles(valuesDir)
+        return XmlFileFinder.findXmlFiles(valuesDir)
     }
 }

@@ -2,39 +2,17 @@ package com.likethesalad.tools.resource.collector.android.source.providers
 
 import com.google.common.truth.Truth
 import com.likethesalad.tools.resource.api.Resource
-import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.environment.Language
 import com.likethesalad.tools.resource.api.android.environment.Variant
-import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
+import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
-import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
-import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
-import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.testing.BaseMockable
 import com.likethesalad.tools.testing.DummyResourcesFinder
-import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import org.junit.Before
 import org.junit.Test
 import java.io.File
-import javax.xml.parsers.DocumentBuilderFactory
 
 class ResDirResourceSourceProviderTest : BaseMockable() {
-
-    @MockK
-    lateinit var androidXmlResourceSourceFactory: AndroidXmlResourceSource.Factory
-
-    @Before
-    fun setUp() {
-        every { androidXmlResourceSourceFactory.create(any(), any()) } answers {
-            AndroidXmlResourceSource(
-                firstArg(),
-                secondArg(),
-                AndroidXmlResDocument.Factory(DocumentBuilderFactory.newInstance())
-            )
-        }
-    }
 
     @Test
     fun `Provide android xml resource sources`() {
@@ -60,10 +38,7 @@ class ResDirResourceSourceProviderTest : BaseMockable() {
 
     private fun getInstance(resDir: ResDir): ResDirResourceSourceProvider {
         return ResDirResourceSourceProvider(
-            resDir,
-            ValueDirFinder(),
-            XmlFileFinder(),
-            androidXmlResourceSourceFactory
+            resDir
         )
     }
 

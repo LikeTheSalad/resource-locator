@@ -73,9 +73,9 @@ class TestAndroidResourceLocatorPluginTest {
 
         // Second time
         val inputDirName2 = "basic-repeated-changed2"
-        val secondInputDir = getInputTestAsset(inputDirName2)
-        val projectSrcDir = getTempFile(projectName, "src")
-        copyContents(secondInputDir, projectSrcDir)
+        val descriptor2 = createAppProjectDescriptor(inputDirName2)
+        descriptor.projectDirBuilder.clearFilesCreated()
+        descriptor2.projectDirBuilder.buildDirectory(getTempFile(projectName))
 
         val result2 = project.runGradle(projectName, commandList)
 
@@ -99,10 +99,9 @@ class TestAndroidResourceLocatorPluginTest {
 
         // Second time
         val dirNames2 = "multiplelanguages-changed2"
-        val inputDir2 = getInputTestAsset(dirNames2)
-        val projectSrcDir = getTempFile(inOutDirName, "src")
-        removeMatchingFiles(getInputTestAsset(inOutDirName), projectSrcDir)
-        copyContents(inputDir2, projectSrcDir)
+        val descriptor2 = createAppProjectDescriptor(dirNames2)
+        descriptor.projectDirBuilder.clearFilesCreated()
+        descriptor2.projectDirBuilder.buildDirectory(getTempFile(inOutDirName))
 
         val result2 = project.runGradle(inOutDirName, commandList)
 
@@ -360,21 +359,5 @@ class TestAndroidResourceLocatorPluginTest {
     private fun verifyResultContainsLine(result: BuildResult, line: String) {
         val lines = result.output.lines()
         Truth.assertThat(lines).contains(line)
-    }
-
-    private fun verifyResultContainsText(result: BuildResult, text: String) {
-        Truth.assertThat(result.output).contains(text)
-    }
-
-    private fun copyContents(fromDir: File, intoDir: File) {
-        fromDir.copyRecursively(intoDir, true)
-    }
-
-    private fun removeMatchingFiles(referenceDir: File, targetDir: File) {
-        referenceDir.walkTopDown().forEach {
-            if (it.isFile) {
-                File(targetDir, it.toRelativeString(referenceDir)).delete()
-            }
-        }
     }
 }

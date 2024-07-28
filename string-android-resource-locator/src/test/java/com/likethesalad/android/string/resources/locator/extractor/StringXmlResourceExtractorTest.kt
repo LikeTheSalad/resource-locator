@@ -27,6 +27,7 @@ class StringXmlResourceExtractorTest {
             StringAndroidResource("string_4", "Some partially quoted string", scope),
             StringAndroidResource("string_5", "Some partially quoted escaped \\\"string\\\"", scope),
             StringAndroidResource("string_7", "Just one more string", scope),
+            StringAndroidResource("string_8", "Some string with <b>tags</b>", scope),
             StringAndroidResource("string_3", "Some quoted string", scope),
             StringAndroidResource(
                 mapOf(plain("name") to "string_2", plain("translatable") to "false"),

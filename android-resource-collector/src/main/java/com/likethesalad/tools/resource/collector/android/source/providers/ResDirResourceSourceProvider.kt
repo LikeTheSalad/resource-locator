@@ -4,7 +4,7 @@ import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.collector.android.data.resdir.ResDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
 import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDirFinder
-import com.likethesalad.tools.resource.collector.android.data.xml.XmlFileFinder
+import com.likethesalad.tools.resource.collector.android.data.xml.XmlUtils
 import com.likethesalad.tools.resource.collector.android.source.AndroidXmlResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSource
 import com.likethesalad.tools.resource.collector.source.ResourceSourceProvider
@@ -25,7 +25,7 @@ class ResDirResourceSourceProvider(private val resDir: ResDir) : ResourceSourceP
 
     private fun extractSourcesFromValueDir(valueDir: ValueDir): Collection<ResourceSource> {
         val sources = mutableListOf<ResourceSource>()
-        val xmlFiles = XmlFileFinder.findXmlFiles(valueDir)
+        val xmlFiles = XmlUtils.findXmlFiles(valueDir)
         val scope = AndroidResourceScope(valueDir.resDir.variant, valueDir.language)
 
         for (file in xmlFiles) {

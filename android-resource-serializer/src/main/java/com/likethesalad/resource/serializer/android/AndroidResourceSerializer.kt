@@ -1,6 +1,6 @@
 package com.likethesalad.resource.serializer.android
 
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.likethesalad.resource.serializer.android.internal.AndroidResourceJsonCollection
 import com.likethesalad.resource.serializer.android.internal.AndroidResourceJsonStructure
 import com.likethesalad.resource.serializer.android.internal.AndroidResourceMapper
@@ -12,7 +12,11 @@ import com.likethesalad.tools.resource.serializer.ResourceSerializer
 
 class AndroidResourceSerializer : ResourceSerializer {
 
-    private val gson by lazy { Gson() }
+    private val gson by lazy {
+        GsonBuilder()
+            .disableHtmlEscaping()
+            .create()
+    }
 
     override fun serialize(resource: Resource): String {
         val jsonStructure = AndroidResourceMapper.mapToJson(resource as AndroidResource)

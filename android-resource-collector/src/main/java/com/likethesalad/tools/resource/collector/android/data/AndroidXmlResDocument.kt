@@ -13,6 +13,9 @@ import javax.xml.transform.OutputKeys
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
+import javax.xml.xpath.XPath
+import javax.xml.xpath.XPathConstants
+import javax.xml.xpath.XPathFactory
 
 class AndroidXmlResDocument(private val document: Document) {
 
@@ -39,6 +42,7 @@ class AndroidXmlResDocument(private val document: Document) {
     }
 
     private val resources: Element by lazy { getOrCreateResources() }
+    private val xPath: XPath by lazy { XPathFactory.newInstance().newXPath() }
 
     fun saveToFile(file: File, indentSpaces: Int = 4) {
         val transformerFactory = TransformerFactory.newInstance()
@@ -66,8 +70,8 @@ class AndroidXmlResDocument(private val document: Document) {
         }
     }
 
-    fun getElementsByTagName(name: String): NodeList {
-        return resources.getElementsByTagName(name)
+    fun getElementsByXPath(xpath: String): NodeList {
+        return xPath.compile(xpath).evaluate(document, XPathConstants.NODESET) as NodeList
     }
 
     private fun getOrCreateResources(): Element {

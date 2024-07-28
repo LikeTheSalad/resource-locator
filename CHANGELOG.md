@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.3.0
+---
+
+* Keeping xml tags from xml string body.
+
 Version 2.2.2
 ---
 

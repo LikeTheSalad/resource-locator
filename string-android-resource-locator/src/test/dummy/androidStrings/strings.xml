@@ -8,4 +8,5 @@
     <integer name="number_1">1</integer>
     <bool name="bool_1">true</bool>
     <string name="string_7">Just one more string</string>
+    <string name="string_8">Some string with <b>tags</b></string>
 </resources>

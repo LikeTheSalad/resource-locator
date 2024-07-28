@@ -7,6 +7,7 @@ import com.likethesalad.tools.resource.api.android.impl.AndroidResourceScope
 import com.likethesalad.tools.resource.api.android.modules.string.StringAndroidResource
 import com.likethesalad.tools.resource.api.attributes.AttributeKey
 import com.likethesalad.tools.resource.collector.android.data.AndroidXmlResDocument
+import com.likethesalad.tools.resource.collector.android.data.xml.XmlUtils
 import com.likethesalad.tools.resource.collector.android.extractor.XmlResourceExtractor
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
@@ -14,7 +15,7 @@ import org.w3c.dom.NodeList
 class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>() {
 
     companion object {
-        private const val XML_STRING_TAG = "string"
+        private const val STRING_RESOURCE_PATH = "/resources/string"
     }
 
     override fun getResourcesFromAndroidDocument(
@@ -40,7 +41,7 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
 
     private fun parseNodeToStringAndroidResource(node: Node, scope: Resource.Scope): StringAndroidResource {
         val attributesMap = mutableMapOf<AttributeKey, String>()
-        val value = trimQuotes(node.textContent)
+        val value = trimQuotes(getNodeText(node))
         val attributesNodes = node.attributes
         for (index in 0 until attributesNodes.length) {
             val attr = attributesNodes.item(index)
@@ -55,11 +56,15 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
         return StringAndroidResource(attributesMap, value, scope as AndroidResourceScope)
     }
 
+    private fun getNodeText(node: Node): String {
+        return XmlUtils.getContents(node)
+    }
+
     private fun trimQuotes(text: String): String {
         return text.replace(Regex("(?<!\\\\)\""), "")
     }
 
     private fun getStringNodeList(document: AndroidXmlResDocument): NodeList {
-        return document.getElementsByTagName(XML_STRING_TAG)
+        return document.getElementsByXPath(STRING_RESOURCE_PATH)
     }
 }

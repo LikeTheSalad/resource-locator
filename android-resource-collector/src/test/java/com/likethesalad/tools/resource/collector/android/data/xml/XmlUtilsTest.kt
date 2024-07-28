@@ -7,9 +7,12 @@ import com.likethesalad.tools.resource.collector.android.data.valuedir.ValueDir
 import com.likethesalad.tools.testing.DummyResourcesFinder.getResourceFile
 import io.mockk.mockk
 import org.junit.Test
+import java.io.ByteArrayInputStream
 import java.io.File
+import javax.xml.parsers.DocumentBuilderFactory
 
-class XmlFileFinderTest {
+
+class XmlUtilsTest {
 
     @Test
     fun `Find xml files`() {
@@ -35,10 +38,21 @@ class XmlFileFinderTest {
         Truth.assertThat(files).isEmpty()
     }
 
+    @Test
+    fun `Extract text from node`() {
+        val node = DocumentBuilderFactory
+            .newInstance()
+            .newDocumentBuilder()
+            .parse(ByteArrayInputStream("<string name=\"the_name\">value <b>something bold</b></string>".toByteArray()))
+            .documentElement
+
+        Truth.assertThat(XmlUtils.getContents(node)).isEqualTo("value <b>something bold</b>")
+    }
+
     private fun findXmlFilesFromFolder(folder: File): List<File> {
         val resDir = mockk<ResDir>()
         val valuesDir = ValueDir(resDir, folder, Language.Default)
 
-        return XmlFileFinder.findXmlFiles(valuesDir)
+        return XmlUtils.findXmlFiles(valuesDir)
     }
 }

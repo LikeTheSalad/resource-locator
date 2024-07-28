@@ -31,18 +31,14 @@ object XmlUtils {
     }
 
     fun getContents(node: Node): String {
-        val text = transformToText(node)
-        return OUTER_XML_TAGS_PATTERN.replace(text, "")
-    }
-
-    private fun transformToText(doc: Node): String {
         val outText = StringWriter()
         val streamResult = StreamResult(outText)
         return try {
-            contentExtractor.transform(DOMSource(doc), streamResult)
-            outText.toString()
+            contentExtractor.transform(DOMSource(node), streamResult)
+            val text = outText.toString()
+            return OUTER_XML_TAGS_PATTERN.replace(text, "")
         } catch (e: TransformerException) {
-            doc.textContent
+            node.textContent
         }
     }
 }

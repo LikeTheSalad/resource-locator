@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.3.1
+---
+
+* Keeping string resources intact when extracting them from xml files.
+
 Version 2.3.0
 ---
 

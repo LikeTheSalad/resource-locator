@@ -41,7 +41,7 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
 
     private fun parseNodeToStringAndroidResource(node: Node, scope: Resource.Scope): StringAndroidResource {
         val attributesMap = mutableMapOf<AttributeKey, String>()
-        val value = trimQuotes(getNodeText(node))
+        val value = getNodeText(node)
         val attributesNodes = node.attributes
         for (index in 0 until attributesNodes.length) {
             val attr = attributesNodes.item(index)
@@ -58,10 +58,6 @@ class StringXmlResourceExtractor : XmlResourceExtractor<StringAndroidResource>()
 
     private fun getNodeText(node: Node): String {
         return XmlUtils.getContents(node)
-    }
-
-    private fun trimQuotes(text: String): String {
-        return text.replace(Regex("(?<!\\\\)\""), "")
     }
 
     private fun getStringNodeList(document: AndroidXmlResDocument): NodeList {

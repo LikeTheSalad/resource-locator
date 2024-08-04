@@ -2,11 +2,13 @@
     <string name="string_1">Some string</string>
     <string name="string_2" translatable="false">Some not translatable string</string>
     <string name="string_3">"Some quoted string"</string>
-    <string name="string_6">\"Some escaped quoted string\"</string>
     <string name="string_4">Some partially quoted "string"</string>
     <string name="string_5">Some partially quoted escaped \"string\"</string>
-    <integer name="number_1">1</integer>
-    <bool name="bool_1">true</bool>
+    <string name="string_6">\"Some escaped quoted string\"</string>
     <string name="string_7">Just one more string</string>
     <string name="string_8">Some string with <b>tags</b></string>
+    <string name="string_9">Some string with <a href="http://localhost">a link</a></string>
+    <string name="string_10">Some string with <font color="#000000">font color</font></string>
+    <integer name="number_1">1</integer>
+    <bool name="bool_1">true</bool>
 </resources>

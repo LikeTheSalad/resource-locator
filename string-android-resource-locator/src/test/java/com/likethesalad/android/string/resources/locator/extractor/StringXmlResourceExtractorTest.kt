@@ -23,12 +23,14 @@ class StringXmlResourceExtractorTest {
 
         Truth.assertThat(result).containsExactly(
             StringAndroidResource("string_1", "Some string", scope),
-            StringAndroidResource("string_6", "\\\"Some escaped quoted string\\\"", scope),
-            StringAndroidResource("string_4", "Some partially quoted string", scope),
+            StringAndroidResource("string_3", "\"Some quoted string\"", scope),
+            StringAndroidResource("string_4", "Some partially quoted \"string\"", scope),
             StringAndroidResource("string_5", "Some partially quoted escaped \\\"string\\\"", scope),
+            StringAndroidResource("string_6", "\\\"Some escaped quoted string\\\"", scope),
             StringAndroidResource("string_7", "Just one more string", scope),
             StringAndroidResource("string_8", "Some string with <b>tags</b>", scope),
-            StringAndroidResource("string_3", "Some quoted string", scope),
+            StringAndroidResource("string_9", "Some string with <a href=\"http://localhost\">a link</a>", scope),
+            StringAndroidResource("string_10", "Some string with <font color=\"#000000\">font color</font>", scope),
             StringAndroidResource(
                 mapOf(plain("name") to "string_2", plain("translatable") to "false"),
                 "Some not translatable string",

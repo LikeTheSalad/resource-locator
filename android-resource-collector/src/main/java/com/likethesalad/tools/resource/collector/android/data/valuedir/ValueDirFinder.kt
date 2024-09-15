@@ -6,7 +6,7 @@ import java.io.File
 
 object ValueDirFinder {
 
-    private val VALUES_FOLDER_NAME_REGEX = Regex("values(-([a-z]{2}(-r[A-Z]{2})*))*")
+    private val VALUES_FOLDER_NAME_REGEX = Regex("values(-(.+))*")
 
     fun findValueDirs(resDir: ResDir): List<ValueDir> {
         val valueFolders = resDir.dir.listFiles { _, name ->

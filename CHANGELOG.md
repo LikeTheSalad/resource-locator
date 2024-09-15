@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.4.0
+---
+
+* Allowing other values folder names.
+
 Version 2.3.1
 ---
 

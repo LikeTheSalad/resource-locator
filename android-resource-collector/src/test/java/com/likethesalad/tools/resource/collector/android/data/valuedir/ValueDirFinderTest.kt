@@ -19,7 +19,9 @@ class ValueDirFinderTest {
         Truth.assertThat(result).containsExactly(
             ValueDir(resDir, getResourceFile("res/values"), Language.Default),
             ValueDir(resDir, getResourceFile("res/values-es"), Language.Custom("es")),
-            ValueDir(resDir, getResourceFile("res/values-es-rUS"), Language.Custom("es-rUS"))
+            ValueDir(resDir, getResourceFile("res/values-es-rUS"), Language.Custom("es-rUS")),
+            ValueDir(resDir, getResourceFile("res/values-v5"), Language.Custom("v5")),
+            ValueDir(resDir, getResourceFile("res/values-v30"), Language.Custom("v30"))
         )
     }
 }
